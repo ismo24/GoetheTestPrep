@@ -7,44 +7,45 @@ import { colors } from '../../styles/colors';
 const LevelSelectionView = ({ levels, onBack, onSelectLevel, getUbungenForLevel, userNativeLanguage = "AR" }) => {
   
   // Traductions pour l'interface
-  const interfaceTranslations = {
-    newStoriesWaiting: {
-      "DE": "Neue Geschichten warten!",
-      "FR": "De nouvelles histoires vous attendent !",
-      "EN": "New stories are waiting!",
-      "ES": "¡Nuevas historias te esperan!",
-      "PT": "Novas histórias estão esperando!",
-      "PL": "Nowe historie czekają!",
-      "RU": "Новые истории ждут!",
-      "TR": "Yeni hikayeler bekliyor!",
-      "IT": "Nuove storie ti aspettano!",
-      "UK": "Нові історії чекають!",
-      "VI": "Những câu chuyện mới đang chờ!",
-      "TL": "Naghihintay ang mga bagong kwento!",
-      "ZH": "新故事在等待！",
-      "ID": "Cerita baru menunggu!",
-      "TH": "เรื่องราวใหม่รอคุณอยู่!",
-      "MS": "Cerita baru menanti!",
-      "AR": "قصص جديدة في الانتظار!"
+  const interfaceTranslations = { 
+    discovery: {
+      "DE": "Üben Sie das Sprechen!",
+    "FR": "Entraînez-vous à parler !",
+    "EN": "Practice speaking!",
+    "ES": "¡Practica hablar!",
+    "PT": "Pratique a fala!",
+    "PL": "Ćwicz mówienie!",
+    "RU": "Практикуйте речь!",
+    "TR": "Konuşma pratiği yapın!",
+    "IT": "Pratica il parlato!",
+    "UK": "Практикуйте мовлення!",
+    "VI": "Luyện tập nói!",
+    "TL": "Magsanay sa pagsasalita!",
+    "ZH": "练习口语！",
+    "ID": "Latihan berbicara!",
+    "TH": "ฝึกการพูด!",
+    "MS": "Berlatih bercakap!",
+    "AR": "تدرب على التحدث!"
     },
-    reading: {
-      "DE": "Lesen",
-      "FR": "Lecture",
-      "EN": "Reading",
-      "ES": "Lectura",
-      "PT": "Leitura",
-      "PL": "Czytanie",
-      "RU": "Чтение",
-      "TR": "Okuma",
-      "IT": "Lettura",
-      "UK": "Читання",
-      "VI": "Đọc",
-      "TL": "Pagbabasa",
-      "ZH": "阅读",
-      "ID": "Membaca",
-      "TH": "การอ่าน",
-      "MS": "Membaca",
-      "AR": "القراءة"
+    
+    writing: {
+      "DE": "Sprechen",
+    "FR": "Expression orale",
+    "EN": "Speaking",
+    "ES": "Expresión oral",
+    "PT": "Expressão oral",
+    "PL": "Mówienie",
+    "RU": "Говорение",
+    "TR": "Konuşma",
+    "IT": "Parlato",
+    "UK": "Говоріння",
+    "VI": "Nói",
+    "TL": "Pagsasalita",
+    "ZH": "口语",
+    "ID": "Berbicara",
+    "TH": "การพูด",
+    "MS": "Pertuturan",
+    "AR": "التحدث"
     }
   };
 
@@ -58,16 +59,16 @@ const LevelSelectionView = ({ levels, onBack, onSelectLevel, getUbungenForLevel,
           
           <View style={styles.titleContainer}>
             <Text style={styles.greeting}>
-              {interfaceTranslations.newStoriesWaiting[userNativeLanguage]}
+              {interfaceTranslations.discovery[userNativeLanguage]}
             </Text>
             <Text style={styles.title}>
-              {interfaceTranslations.reading[userNativeLanguage]}
+              {interfaceTranslations.writing[userNativeLanguage]}
             </Text>
           </View>
           
           <TouchableOpacity style={styles.profileButton}>
             <View style={styles.profileIcon}>
-              <Ionicons name="book" size={24} color={colors.white} />
+              <Ionicons name="library" size={24} color={colors.white} />
             </View>
           </TouchableOpacity>
         </View>

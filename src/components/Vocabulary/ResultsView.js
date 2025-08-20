@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../styles/colors";
+import SolutionCard from "./SolutionCard";
 
 const ResultsView = ({
   selectedUbung,
-  exerciseResults,
   levelInfo,
   onBack,
   onRestart,
@@ -21,23 +21,23 @@ const ResultsView = ({
   // Traductions pour les éléments spécifiés
   const translations = {
     results: {
-      DE: "Ergebnisse",
-      FR: "Résultats",
-      EN: "Results",
-      ES: "Resultados",
-      PT: "Resultados",
-      PL: "Wyniki",
-      RU: "Результаты",
-      TR: "Sonuçlar",
-      IT: "Risultati",
-      UK: "Результати",
-      VI: "Kết quả",
-      TL: "Mga Resulta",
-      ZH: "结果",
-      ID: "Hasil",
-      TH: "ผลลัพธ์",
-      MS: "Keputusan",
-      AR: "النتائج",
+      DE: "Beispiel",
+      FR: "Exemple",
+      EN: "Example",
+      ES: "Ejemplo",
+      PT: "Exemplo",
+      PL: "Przykład",
+      RU: "Пример",
+      TR: "Örnek",
+      IT: "Esempio",
+      UK: "Приклад",
+      VI: "Ví dụ",
+      TL: "Halimbawa",
+      ZH: "例子",
+      ID: "Contoh",
+      TH: "ตัวอย่าง",
+      MS: "Contoh",
+      AR: "مثال",
     },
     detailedEvaluation: {
       DE: "Detaillierte Auswertung",
@@ -135,23 +135,23 @@ const ResultsView = ({
       AR: "اقتراحات التحسين",
     },
     improvementTips: {
-      DE: "• Lesen Sie den Text noch einmal aufmerksam durch\n• Achten Sie auf Schlüsselwörter in den Fragen\n• Versuchen Sie, die Antworten im Text zu finden\n• Wiederholen Sie die Übung zur Festigung",
-      FR: "• Relisez le texte attentivement\n• Portez attention aux mots-clés dans les questions\n• Essayez de trouver les réponses dans le texte\n• Répétez l'exercice pour consolider",
-      EN: "• Read the text carefully again\n• Pay attention to keywords in the questions\n• Try to find the answers in the text\n• Repeat the exercise to consolidate",
-      ES: "• Lea el texto nuevamente con atención\n• Preste atención a las palabras clave en las preguntas\n• Trate de encontrar las respuestas en el texto\n• Repita el ejercicio para consolidar",
-      PT: "• Leia o texto novamente com atenção\n• Preste atenção às palavras-chave nas perguntas\n• Tente encontrar as respostas no texto\n• Repita o exercício para consolidar",
-      PL: "• Przeczytaj tekst ponownie uważnie\n• Zwróć uwagę na słowa kluczowe w pytaniach\n• Spróbuj znaleźć odpowiedzi w tekście\n• Powtórz ćwiczenie dla utrwalenia",
-      RU: "• Внимательно перечитайте текст еще раз\n• Обратите внимание на ключевые слова в вопросах\n• Попробуйте найти ответы в тексте\n• Повторите упражнение для закрепления",
-      TR: "• Metni tekrar dikkatli okuyun\n• Sorulardaki anahtar kelimelere dikkat edin\n• Cevapları metinde bulmaya çalışın\n• Pekiştirmek için alıştırmayı tekrarlayın",
-      IT: "• Rileggi il testo attentamente\n• Fai attenzione alle parole chiave nelle domande\n• Cerca di trovare le risposte nel testo\n• Ripeti l'esercizio per consolidare",
-      UK: "• Уважно перечитайте текст ще раз\n• Зверніть увагу на ключові слова в питаннях\n• Спробуйте знайти відповіді в тексті\n• Повторіть вправу для закріплення",
-      VI: "• Đọc lại văn bản một cách cẩn thận\n• Chú ý đến từ khóa trong câu hỏi\n• Cố gắng tìm câu trả lời trong văn bản\n• Lặp lại bài tập để củng cố",
-      TL: "• Basahin muli ang teksto nang maingat\n• Bigyang pansin ang mga susing salita sa mga tanong\n• Subukang hanapin ang mga sagot sa teksto\n• Ulitin ang ehersisyo para sa pagpapatibay",
-      ZH: "• 仔细重读文本\n• 注意问题中的关键词\n• 尝试在文本中找到答案\n• 重复练习以巩固",
-      ID: "• Baca teks dengan cermat lagi\n• Perhatikan kata kunci dalam pertanyaan\n• Coba temukan jawaban dalam teks\n• Ulangi latihan untuk memperkuat",
-      TH: "• อ่านข้อความอย่างระมัดระวังอีกครั้ง\n• ให้ความสำคัญกับคำสำคัญในคำถาม\n• พยายามหาคำตอบในข้อความ\n• ทำแบบฝึกหัดซ้ำเพื่อเสริมความแข็งแกร่ง",
-      MS: "• Baca teks dengan teliti sekali lagi\n• Beri perhatian kepada kata kunci dalam soalan\n• Cuba cari jawapan dalam teks\n• Ulang latihan untuk memantapkan",
-      AR: "• اقرأ النص بعناية مرة أخرى\n• انتبه للكلمات المفتاحية في الأسئلة\n• حاول العثور على الإجابات في النص\n• كرر التمرين للتعزيز",
+      DE: "• Lesen Sie die Aufgabenstellung mehrmals und verstehen Sie das Hauptthema vollständig\n• Planen Sie Ihren Text vor dem Schreiben (Struktur und Hauptpunkte)\n• Verwenden Sie einfache, klare Sätze und vermeiden Sie komplizierte Konstruktionen\n• Achten Sie auf die richtige Textsorte und den passenden Stil (formal/informell)\n• Überprüfen Sie Grammatik, Rechtschreibung und Wortstellung am Ende",
+      FR: "• Lisez plusieurs fois la consigne et identifiez clairement le thème principal\n• Planifiez votre texte avant d'écrire (structure et points principaux)\n• Utilisez des phrases simples et claires, évitez les constructions compliquées\n• Respectez le type de texte et le style approprié (formel/informel)\n• Vérifiez la grammaire, l'orthographe et l'ordre des mots à la fin",
+      EN: "• Read the instructions several times and clearly identify the main theme\n• Plan your text before writing (structure and main points)\n• Use simple, clear sentences and avoid complicated constructions\n• Respect the text type and appropriate style (formal/informal)\n• Check grammar, spelling and word order at the end",
+      ES: "• Lea las instrucciones varias veces e identifique claramente el tema principal\n• Planifique su texto antes de escribir (estructura y puntos principales)\n• Use oraciones simples y claras, evite construcciones complicadas\n• Respete el tipo de texto y el estilo apropiado (formal/informal)\n• Verifique gramática, ortografía y orden de palabras al final",
+      PT: "• Leia as instruções várias vezes e identifique claramente o tema principal\n• Planeje seu texto antes de escrever (estrutura e pontos principais)\n• Use frases simples e claras, evite construções complicadas\n• Respeite o tipo de texto e o estilo apropriado (formal/informal)\n• Verifique gramática, ortografia e ordem das palavras no final",
+      PL: "• Przeczytaj polecenie kilka razy i jasno zidentyfikuj główny temat\n• Zaplanuj swój tekst przed pisaniem (struktura i główne punkty)\n• Używaj prostych, jasnych zdań i unikaj skomplikowanych konstrukcji\n• Przestrzegaj typu tekstu i odpowiedniego stylu (formalny/nieformalny)\n• Sprawdź gramatykę, ortografię i szyk słów na końcu",
+      RU: "• Прочитайте задание несколько раз и четко определите основную тему\n• Планируйте текст перед написанием (структура и основные пункты)\n• Используйте простые, ясные предложения, избегайте сложных конструкций\n• Соблюдайте тип текста и подходящий стиль (формальный/неформальный)\n• Проверьте грамматику, орфографию и порядок слов в конце",
+      TR: "• Talimatları birkaç kez okuyun ve ana temayı net bir şekilde belirleyin\n• Yazmadan önce metninizi planlayın (yapı ve ana noktalar)\n• Basit, net cümleler kullanın, karmaşık yapılardan kaçının\n• Metin türüne ve uygun stile saygı gösterin (resmi/gayri resmi)\n• Sonunda dilbilgisi, yazım ve kelime sırasını kontrol edin",
+      IT: "• Leggi le istruzioni più volte e identifica chiaramente il tema principale\n• Pianifica il tuo testo prima di scrivere (struttura e punti principali)\n• Usa frasi semplici e chiare, evita costruzioni complicate\n• Rispetta il tipo di testo e lo stile appropriato (formale/informale)\n• Controlla grammatica, ortografia e ordine delle parole alla fine",
+      UK: "• Прочитайте інструкції кілька разів і чітко визначте основну тему\n• Плануйте текст перед написанням (структура та основні пункти)\n• Використовуйте прості, зрозумілі речення, уникайте складних конструкцій\n• Дотримуйтеся типу тексту та відповідного стилю (формальний/неформальний)\n• Перевірте граматику, орфографію та порядок слів наприкінці",
+      VI: "• Đọc hướng dẫn nhiều lần và xác định rõ chủ đề chính\n• Lập kế hoạch cho văn bản trước khi viết (cấu trúc và điểm chính)\n• Sử dụng câu đơn giản, rõ ràng, tránh cấu trúc phức tạp\n• Tôn trọng loại văn bản và phong cách thích hợp (trang trọng/thân mật)\n• Kiểm tra ngữ pháp, chính tả và trật tự từ ở cuối",
+      TL: "• Basahin ang mga tagubilin ng ilang ulit at malinaw na tukuyin ang pangunahing tema\n• Magplano ng inyong teksto bago magsulat (istraktura at mga pangunahing punto)\n• Gumamit ng mga simpleng, malinaw na pangungusap, iwasan ang mga komplikadong pagkakabuo\n• Igalang ang uri ng teksto at naaangkop na istilo (pormal/di-pormal)\n• Suriin ang gramatika, pagbabaybay at pagkakaayos ng mga salita sa dulo",
+      ZH: "• 多次阅读说明并清楚识别主题\n• 写作前规划文本（结构和要点）\n• 使用简单明了的句子，避免复杂的结构\n• 遵守文本类型和适当的风格（正式/非正式）\n• 最后检查语法、拼写和词序",
+      ID: "• Baca instruksi beberapa kali dan identifikasi tema utama dengan jelas\n• Rencanakan teks Anda sebelum menulis (struktur dan poin utama)\n• Gunakan kalimat sederhana dan jelas, hindari konstruksi rumit\n• Hormati jenis teks dan gaya yang tepat (formal/informal)\n• Periksa tata bahasa, ejaan, dan urutan kata di akhir",
+      TH: "• อ่านคำแนะนำหลายครั้งและระบุหัวข้อหลักให้ชัดเจน\n• วางแผนข้อความก่อนเขียน (โครงสร้างและประเด็นหลัก)\n• ใช้ประโยคง่ายๆ ที่ชัดเจน หลีกเลี่ยงโครงสร้างที่ซับซ้อน\n• เคารพประเภทข้อความและสไตล์ที่เหมาะสม (เป็นทางการ/ไม่เป็นทางการ)\n• ตรวจสอบไวยากรณ์ การสะกด และลำดับคำในตอนท้าย",
+      MS: "• Baca arahan beberapa kali dan kenal pasti tema utama dengan jelas\n• Rancang teks anda sebelum menulis (struktur dan perkara utama)\n• Gunakan ayat mudah dan jelas, elakkan binaan yang rumit\n• Hormati jenis teks dan gaya yang sesuai (formal/tidak formal)\n• Semak tatabahasa, ejaan dan susunan perkataan di akhir",
+      AR: "• اقرأ التعليمات عدة مرات وحدد الموضوع الرئيسي بوضوح\n• خطط لنصك قبل الكتابة (الهيكل والنقاط الرئيسية)\n• استخدم جملاً بسيطة وواضحة، تجنب التراكيب المعقدة\n• احترم نوع النص والأسلوب المناسب (رسمي/غير رسمي)\n• تحقق من القواعد والإملاء وترتيب الكلمات في النهاية",
     },
     scoreMessages: {
       excellent: {
@@ -312,83 +312,83 @@ const ResultsView = ({
       AR: "{correct} من أصل {total} أسئلة صحيحة",
     },
     questionLabel: {
-        "DE": "Frage",
-        "FR": "Question",
-        "EN": "Question",
-        "ES": "Pregunta",
-        "PT": "Pergunta",
-        "PL": "Pytanie",
-        "RU": "Вопрос",
-        "TR": "Soru",
-        "IT": "Domanda",
-        "UK": "Питання",
-        "VI": "Câu hỏi",
-        "TL": "Tanong",
-        "ZH": "问题",
-        "ID": "Pertanyaan",
-        "TH": "คำถาม",
-        "MS": "Soalan",
-        "AR": "سؤال"
+      DE: "Frage",
+      FR: "Question",
+      EN: "Question",
+      ES: "Pregunta",
+      PT: "Pergunta",
+      PL: "Pytanie",
+      RU: "Вопрос",
+      TR: "Soru",
+      IT: "Domanda",
+      UK: "Питання",
+      VI: "Câu hỏi",
+      TL: "Tanong",
+      ZH: "问题",
+      ID: "Pertanyaan",
+      TH: "คำถาม",
+      MS: "Soalan",
+      AR: "سؤال",
+    },
+    buttons: {
+      repeat: {
+        DE: "Wiederholen",
+        FR: "Répéter",
+        EN: "Repeat",
+        ES: "Repetir",
+        PT: "Repetir",
+        PL: "Powtórz",
+        RU: "Повторить",
+        TR: "Tekrarla",
+        IT: "Ripeti",
+        UK: "Повторити",
+        VI: "Lặp lại",
+        TL: "Ulitin",
+        ZH: "重复",
+        ID: "Ulangi",
+        TH: "ทำซ้ำ",
+        MS: "Ulang",
+        AR: "كرر",
       },
-      buttons: {
-        repeat: {
-          DE: "Wiederholen",
-          FR: "Répéter",
-          EN: "Repeat",
-          ES: "Repetir",
-          PT: "Repetir",
-          PL: "Powtórz",
-          RU: "Повторить",
-          TR: "Tekrarla",
-          IT: "Ripeti",
-          UK: "Повторити",
-          VI: "Lặp lại",
-          TL: "Ulitin",
-          ZH: "重复",
-          ID: "Ulangi",
-          TH: "ทำซ้ำ",
-          MS: "Ulang",
-          AR: "كرر",
-        },
-        continue: {
-          DE: "Weiter",
-          FR: "Continuer",
-          EN: "Continue",
-          ES: "Continuar",
-          PT: "Continuar",
-          PL: "Kontynuuj",
-          RU: "Продолжить",
-          TR: "Devam et",
-          IT: "Continua",
-          UK: "Продовжити",
-          VI: "Tiếp tục",
-          TL: "Magpatuloy",
-          ZH: "继续",
-          ID: "Lanjutkan",
-          TH: "ต่อไป",
-          MS: "Teruskan",
-          AR: "استمر",
-        },
-        exercises: {
-          DE: "Übungen",
-          FR: "Exercices",
-          EN: "Exercises",
-          ES: "Ejercicios",
-          PT: "Exercícios",
-          PL: "Ćwiczenia",
-          RU: "Упражнения",
-          TR: "Egzersizler",
-          IT: "Esercizi",
-          UK: "Вправи",
-          VI: "Bài tập",
-          TL: "Mga ehersisyo",
-          ZH: "练习",
-          ID: "Latihan",
-          TH: "แบบฝึกหัด",
-          MS: "Latihan",
-          AR: "التمارين",
-        },
-      }
+      continue: {
+        DE: "Weiter",
+        FR: "Continuer",
+        EN: "Continue",
+        ES: "Continuar",
+        PT: "Continuar",
+        PL: "Kontynuuj",
+        RU: "Продолжить",
+        TR: "Devam et",
+        IT: "Continua",
+        UK: "Продовжити",
+        VI: "Tiếp tục",
+        TL: "Magpatuloy",
+        ZH: "继续",
+        ID: "Lanjutkan",
+        TH: "ต่อไป",
+        MS: "Teruskan",
+        AR: "استمر",
+      },
+      exercises: {
+        DE: "Übungen",
+        FR: "Exercices",
+        EN: "Exercises",
+        ES: "Ejercicios",
+        PT: "Exercícios",
+        PL: "Ćwiczenia",
+        RU: "Упражнения",
+        TR: "Egzersizler",
+        IT: "Esercizi",
+        UK: "Вправи",
+        VI: "Bài tập",
+        TL: "Mga ehersisyo",
+        ZH: "练习",
+        ID: "Latihan",
+        TH: "แบบฝึกหัด",
+        MS: "Latihan",
+        AR: "التمارين",
+      },
+    },
   };
 
   // Fonction pour obtenir un message de félicitation basé sur le score
@@ -420,7 +420,7 @@ const ResultsView = ({
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
         <Text style={styles.title}>
-          {translations.results[userNativeLanguage]} 
+          {translations.results[userNativeLanguage]}
         </Text>
         <View style={{ width: 24 }} />
       </View>
@@ -430,201 +430,50 @@ const ResultsView = ({
         contentContainerStyle={{ paddingBottom: 120 }}
       >
         {/* Score principal */}
-        <View style={[styles.scoreCard, { backgroundColor: colors.success }]}>
-          <View style={styles.scoreHeader}>
-            <Ionicons
-              name={getScoreIcon(exerciseResults.percentage)}
-              size={32}
-              color={colors.white}
-            />
-            <Text style={styles.scoreTitle}>
-              {getScoreMessage(exerciseResults.percentage)}
-            </Text>
-          </View>
-          <Text style={styles.scorePercentage}>
-            {exerciseResults.percentage}%
-          </Text>
-         
-
-          {/* Indicateur de performance */}
-          <View style={styles.performanceIndicator}>
-            {exerciseResults.percentage >= 70 ? (
-              <View style={styles.passedIndicator}>
-                <Ionicons
-                  name="checkmark-circle"
-                  size={20}
-                  color={colors.white}
-                />
-                <Text style={styles.performanceText}>
-                  {translations.passedFailed.passed[userNativeLanguage]}
-                </Text>
-              </View>
-            ) : (
-              <View style={styles.failedIndicator}>
-                <Ionicons name="close-circle" size={20} color={colors.white} />
-                <Text style={styles.performanceText}>
-                  {translations.passedFailed.failed[userNativeLanguage]}
-                </Text>
-              </View>
-            )}
-          </View>
-        </View>
+        <SolutionCard selectedUbung={selectedUbung} />
 
         {/* Détails par question */}
-        <View style={styles.detailsSection}>
-         
-
-          {exerciseResults.detailedResults[0].questions.map(
-            (questionResult, qIndex) => (
-              <View key={qIndex} style={styles.questionResult}>
-                <View style={styles.questionResultHeader}>
-                  <Text style={styles.questionResultTitle}>
-                    {translations.questionLabel[userNativeLanguage]}{" "}
-                    {exerciseResults.detailedResults[0].questions.length!==1?questionResult.questionIndex:""}
-                  </Text>
-                  <View
-                    style={[
-                      styles.resultBadge,
-                      {
-                        backgroundColor: questionResult.isCorrect
-                          ? colors.success
-                          : colors.error,
-                      },
-                    ]}
-                  >
-                    <Ionicons
-                      name={questionResult.isCorrect ? "checkmark" : "close"}
-                      size={16}
-                      color={colors.white}
-                    />
-                  </View>
-                </View>
-
-                <Text style={styles.questionText}>
-                  {questionResult.questionText}
-                </Text>
-
-                <View style={styles.answersComparison}>
-                  <View style={styles.answerRow}>
-                    <Text style={styles.answerLabel}>
-                      {translations.yourAnswer[userNativeLanguage]}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.answerText,
-                        {
-                          color: questionResult.isCorrect
-                            ? colors.success
-                            : colors.error,
-                        },
-                      ]}
-                    >
-                      {questionResult.selectedAnswer}
-                    </Text>
-                  </View>
-
-                  {!questionResult.isCorrect && (
-                    <View style={styles.answerRow}>
-                      <Text style={styles.answerLabel}>
-                        {translations.correctAnswer[userNativeLanguage]}
-                      </Text>
-                      <Text
-                        style={[styles.answerText, { color: colors.success }]}
-                      >
-                        {questionResult.correctAnswer}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-
-                {questionResult.explanation && (
-  <View style={styles.explanationBox}>
-    <View style={styles.explanationHeader}>
-      <Ionicons
-        name="bulb-outline"
-        size={16}
-        color={colors.primary}
-      />
-      <Text style={styles.explanationTitle}>
-        {translations.explanation[userNativeLanguage]}
-      </Text>
-    </View>
-    
-    {/* Explication en allemand */}
-    <Text style={styles.explanationText}>
-      {questionResult.explanation}
-    </Text>
-    
-    {/* Explication en langue natale - AJOUT */}
-    {userNativeLanguage !== "DE" && questionResult.nativeExplanation && (
-      <View style={styles.nativeExplanationContainer}>
-        <View style={styles.nativeExplanationSeparator} />
-        <Text style={styles.nativeExplanationText}>
-          {questionResult.nativeExplanation}
-        </Text>
-      </View>
-    )}
-  </View>
-)}
-              </View>
-            )
-          )}
-        </View>
+        
 
         {/* Conseils d'amélioration */}
-        {exerciseResults.percentage < 70 && (
-          <View style={styles.improvementCard}>
-            <View style={styles.improvementHeader}>
-              <Ionicons
-                name="school-outline"
-                size={24}
-                color={colors.warning}
-              />
-              <Text style={styles.improvementTitle}>
-                {translations.improvementSuggestions[userNativeLanguage]}
-              </Text>
-            </View>
-            <Text style={styles.improvementText}>
-              {translations.improvementTips[userNativeLanguage]}
-            </Text>
-          </View>
-        )}
+        {/* Conseils d'amélioration */}
+        
       </ScrollView>
 
       {/* Boutons d'action sticky */}
       <View style={styles.stickyButtons}>
-  <TouchableOpacity
-    style={[styles.actionButton, styles.restartButton]}
-    onPress={onRestart}
-  >
-    <Ionicons name="refresh" size={20} color={colors.white} />
-    <Text style={styles.actionButtonText}>
-      {translations.buttons.repeat[userNativeLanguage]}
-    </Text>
-  </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.actionButton, styles.restartButton]}
+          onPress={onRestart}
+        >
+          <Ionicons name="refresh" size={20} color={colors.white} />
+          <Text style={styles.actionButtonText}>
+            {translations.buttons.repeat[userNativeLanguage]}
+          </Text>
+        </TouchableOpacity>
 
-  {onNext ? (
-    <TouchableOpacity
-      style={[styles.actionButton, { backgroundColor: colors.success }]}
-      onPress={onNext}
-    >
-      <Ionicons name="arrow-forward" size={20} color={colors.white} />
-      <Text style={styles.actionButtonText}>
-        {translations.buttons.continue[userNativeLanguage]}
-      </Text>
-    </TouchableOpacity>
-  ) : (
-    <TouchableOpacity
-      style={[styles.actionButton, { backgroundColor: colors.success }]}
-      onPress={onBack}
-    >
-      <Ionicons name="list" size={20} color={colors.white} />
-      <Text style={styles.actionButtonText}>
-        {translations.buttons.exercises[userNativeLanguage]}
-      </Text>
-    </TouchableOpacity>
-  )}
-</View>
+        {onNext ? (
+          <TouchableOpacity
+            style={[styles.actionButton, { backgroundColor: colors.success }]}
+            onPress={onNext}
+          >
+            <Ionicons name="arrow-forward" size={20} color={colors.white} />
+            <Text style={styles.actionButtonText}>
+              {translations.buttons.continue[userNativeLanguage]}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[styles.actionButton, { backgroundColor: colors.success }]}
+            onPress={onBack}
+          >
+            <Ionicons name="list" size={20} color={colors.white} />
+            <Text style={styles.actionButtonText}>
+              {translations.buttons.exercises[userNativeLanguage]}
+            </Text>
+          </TouchableOpacity>
+        )}
+      </View>
     </>
   );
 };
@@ -794,8 +643,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    borderLeftWidth: 4,
-    borderLeftColor: colors.warning,
+    // borderLeftWidth: 4,
+    // borderLeftColor: colors.warning,
   },
   improvementHeader: {
     flexDirection: "row",
@@ -874,8 +723,96 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.text,
     lineHeight: 20,
-    fontStyle: 'italic',
+    fontStyle: "italic",
     opacity: 0.8,
+  },
+  readingPassage: {
+    backgroundColor: colors.white,
+    margin: 16,
+    marginBottom: 16,
+    borderRadius: 12,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    overflow: "hidden",
+  },
+  passageHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  eyeButton: {
+    padding: 4,
+    borderRadius: 12,
+    backgroundColor: colors.lightGray,
+  },
+  separatorLine: {
+    height: 1,
+    backgroundColor: colors.lightGray,
+    marginBottom: 16,
+  },
+  passageText: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: colors.text,
+    marginBottom: 16,
+  },
+  questionCard: {
+    backgroundColor: colors.white,
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 16,
+    marginHorizontal: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  questionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  questionTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: colors.text,
+  },
+  optionsContainer: {
+    gap: 12,
+  },
+  optionButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: colors.lightGray,
+  },
+  optionCircle: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginRight: 12,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  optionDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: "black",
+  },
+  optionText: {
+    fontSize: 15,
+    color: colors.text,
+    flex: 1,
   },
 });
 

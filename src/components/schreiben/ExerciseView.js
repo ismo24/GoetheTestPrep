@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
+import ImageWrapper from './ImageWrapper';
 
 const ExerciseView = ({
   selectedUbung,
@@ -12,12 +13,22 @@ const ExerciseView = ({
   onNextText,
   onPreviousText,
   onSelectAnswer,
-  onFinishExercise
+  onFinishExercise,
+  onShowFullScreenImage
 }) => {
-  const currentText = selectedUbung.data[currentTextIndex];
+  const currentText = selectedUbung.data || selectedUbung;
   const [isTextHidden, setIsTextHidden] = useState(false);
   const [textHeight] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
+
+  const isValidImageUrl = (url) => {
+    if (!url || typeof url !== 'string' || url.trim() === '') {
+      return false;
+    }
+    
+    const trimmedUrl = url.trim();
+    return trimmedUrl.startsWith('http://') || trimmedUrl.startsWith('https://');
+  };
 
   const toggleTextVisibility = () => {
     const newHiddenState = !isTextHidden;
@@ -38,7 +49,7 @@ const ExerciseView = ({
   };
 
   // Vérifier si toutes les questions ont une réponse
-  const allQuestionsAnswered = currentText.questions?.every((_, index) => 
+  const allQuestionsAnswered = (currentText.questions || selectedUbung.data?.questions)?.every((_, index) => 
     selectedAnswers[index] !== undefined
   );
 
@@ -52,153 +63,176 @@ const ExerciseView = ({
           <View style={[styles.exerciseCounter]}>
             <Text style={styles.exerciseCounterText}>
               {/* {selectedUbung.title} */}
-             {/* Lesen  */}
-             {selectedUbung.title.replace('Übung ', '') || '1'}
+              {/* Lesen  */}
+              {selectedUbung.title.replace("Übung ", "") || "1"}
             </Text>
           </View>
         </View>
-        <TouchableOpacity style={{opacity:0}} >
-        <Text style={styles.exerciseCounterText}>
-              yes
-            </Text>
+        <TouchableOpacity style={{ opacity: 0 }}>
+          <Text style={styles.exerciseCounterText}>yes</Text>
         </TouchableOpacity>
       </View>
 
-      <ScrollView 
+      <ScrollView
         style={styles.exerciseContent}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
         {/* Passage de lecture */}
-        <Animated.View 
+        <Animated.View
           style={[
             styles.readingPassage,
             {
               maxHeight: textHeight.interpolate({
                 inputRange: [0, 1],
                 outputRange: [80, 1000],
-                extrapolate: 'clamp',
+                extrapolate: "clamp",
               }),
-            }
+            },
           ]}
         >
           <View style={styles.passageHeader}>
-            <Text style={styles.passageTitle}>Text</Text>
-            <TouchableOpacity onPress={toggleTextVisibility} style={styles.eyeButton}>
-              <Ionicons 
-                name={isTextHidden ? "eye-off-outline" : "eye-outline"} 
-                size={20} 
-                color={colors.gray} 
+            <Text style={styles.passageTitle}>Aufgabe</Text>
+            <TouchableOpacity
+              onPress={toggleTextVisibility}
+              style={styles.eyeButton}
+            >
+              <Ionicons
+                name={isTextHidden ? "eye-off-outline" : "eye-outline"}
+                size={20}
+                color={colors.gray}
               />
             </TouchableOpacity>
           </View>
 
-         
           
+
           <Animated.View
             style={{
               opacity: opacity,
-              transform: [{
-                scaleY: textHeight.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 1],
-                  extrapolate: 'clamp',
-                })
-              }],
+              transform: [
+                {
+                  scaleY: textHeight.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 1],
+                    extrapolate: "clamp",
+                  }),
+                },
+              ],
             }}
           >
-             <View style={styles.separatorLine} />
-            <Text style={styles.passageText}>
-              {currentText.Text}
-            </Text>
+            <View style={styles.separatorLine} />
+           {Array.isArray(currentText.Text) ? (
+  currentText.Text.map((value, index) => (
+    <Text key={index} style={styles.passageText}>
+      {value}
+    </Text>
+  ))
+) : (
+  <Text style={styles.passageText}>{currentText.Text}</Text>
+)}
+
           </Animated.View>
         </Animated.View>
 
+        {(selectedUbung.questionType === "graphik_description" || 
+          selectedUbung.questionType === "karikatur_description") && 
+          isValidImageUrl(selectedUbung.image_url) && (
+          <ImageWrapper 
+            imageUrl={selectedUbung.image_url} 
+            questionType={selectedUbung.questionType}
+            onImagePress={onShowFullScreenImage}
+          />
+        )}
+
+   {/* Partie montrant les formulaires s'il s'agit d'un formulaire */}
+{/* Partie montrant les formulaires s'il s'agit d'un formulaire */}
+{selectedUbung.questionType == "formular" ? (
+  <View style={styles.questionsSection}>
+    <View style={styles.questionCard}>
+      
+      
+      <View style={styles.formularContainer}>
+        {Object.entries(selectedUbung.formular_grid).map(([key, value]) => {
+          const [predefinedValue, characterCount] = value;
+          const displayValue = predefinedValue || "_".repeat(characterCount);
+          
+          // Formatage du label : exactement 10 caractères ou garder tel quel si plus long
+          const formattedLabel = key.length <= 10 
+            ? `${key}:`.padEnd(10, ' ') 
+            : `${key}: `;
+          
+          return (
+            <Text key={key} style={styles.formularRow}>
+              <Text style={styles.formularLabel}>
+                {formattedLabel}
+              </Text>
+              <Text style={styles.formularField}>
+                {displayValue}
+              </Text>
+            </Text>
+          );
+        })}
+      </View>
+    </View>
+  </View>
+) : null}
+
         {/* Questions */}
         <View style={styles.questionsSection}>
-          {/* <Text style={styles.questionsSectionTitle}>
-            Fragen ({currentText.questions?.length || 0})
-          </Text> */}
-          
-          {currentText.questions?.map((question, questionIndex) => {
-            const isAnswered = selectedAnswers[questionIndex] !== undefined;
-            
-            return (
-              <View key={questionIndex} style={styles.questionCard}>
-                <View style={styles.questionHeader}>
-                  <Text style={styles.questionTitle}>
-                    Frage {currentText.questions?.length!==1?questionIndex + 1:""} 
-                  </Text>
-                  {isAnswered && (
-                    <View style={styles.answeredBadge}>
-                      <Ionicons name="checkmark" size={16} color={colors.white} />
+          {/* return ( */}
+          <View style={styles.questionCard}>
+            <View style={styles.questionHeader}>
+              <Text style={styles.questionTitle}>Tipps</Text>
+            </View>
+
+            <View style={styles.optionsContainer}>
+            {(currentText.Tipps || selectedUbung.data?.Tipps)?.map((Tipp, TippIndex) => {
+                return (
+                  <View
+                    key={currentText.Tipps.indexOf(Tipp)}
+                    style={[styles.optionButton]}
+                  >
+                    <View style={[styles.optionCircle]}>
+                      {<View style={styles.optionDot} />}
                     </View>
-                  )}
-                </View>
-                
-                <Text style={styles.questionText}>
-                  {question.title}
-                </Text>
-                
-                <View style={styles.optionsContainer}>
-                  {question.options?.map((option) => {
-                    const isSelected = selectedAnswers[questionIndex] === option.id;
-                    
-                    return (
-                      <TouchableOpacity
-                        key={option.id}
-                        style={[
-                          styles.optionButton,
-                          isSelected && styles.optionSelected
-                        ]}
-                        onPress={() => onSelectAnswer(questionIndex, option.id)}
-                      >
-                        <View style={[
-                          styles.optionCircle,
-                          isSelected && styles.optionCircleSelected
-                        ]}>
-                          {isSelected && (
-                            <View style={styles.optionDot} />
-                          )}
-                        </View>
-                        <Text style={[
-                          styles.optionText,
-                          isSelected && styles.optionTextSelected
-                        ]}>
-                          ({option.id.toUpperCase()}) {option.text}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              </View>
-            );
-          })}
+                    <Text
+                      style={[
+                        styles.optionText,
+                        // isSelected && styles.optionTextSelected
+                      ]}
+                    >
+                      {Tipp}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+          {/* );
+          // })} */}
         </View>
 
         {/* Statut de progression */}
-        <View style={styles.progressInfo}>
+        {/* <View style={styles.progressInfo}>
           <Text style={styles.progressText}>
             {Object.keys(selectedAnswers).length} von {currentText.questions?.length || 0} Fragen beantwortet
           </Text>
-        </View>
+        </View> */}
       </ScrollView>
 
       {/* Bouton sticky "Beenden" */}
-      <View style={[styles.stickyButtonContainer,{opacity: allQuestionsAnswered ? 1 : 0}]}>
-        <TouchableOpacity 
+      <View style={[styles.stickyButtonContainer]}>
+        <TouchableOpacity
           style={[
-            styles.stickyButton, 
-            { 
-              backgroundColor: allQuestionsAnswered ? colors.success : colors.gray,
-              opacity: allQuestionsAnswered ? 1 : 0
-            }
+            styles.stickyButton,
+            {
+              backgroundColor: colors.success,
+            },
           ]}
           onPress={onFinishExercise}
-          disabled={!allQuestionsAnswered}
+          // disabled={!allQuestionsAnswered}
         >
-          <Text style={styles.stickyButtonText}>
-            {allQuestionsAnswered ? 'BEENDEN' : 'ALLE FRAGEN BEANTWORTEN'}
-          </Text>
+          <Text style={styles.stickyButtonText}>BEISPIEL SEHEN</Text>
           <Ionicons name="checkmark-circle" size={20} color={colors.white} />
         </TouchableOpacity>
       </View>
@@ -355,8 +389,8 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    borderWidth: 2,
-    borderColor: colors.gray,
+    // borderWidth: 2,
+    // borderColor: colors.gray,
     marginRight: 12,
     justifyContent: 'center',
     alignItems: 'center',
@@ -368,7 +402,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: colors.secondary,
+    backgroundColor: 'black',
   },
   optionText: {
     fontSize: 15,
@@ -426,6 +460,27 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  formularContainer: {
+    gap: 12,
+  },
+  formularRow: {
+    fontSize: 15,
+    lineHeight: 24,
+    color: colors.text,
+    paddingVertical: 4,
+    backgroundColor: colors.lightGray,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  formularLabel: {
+    fontWeight: '500',
+    color: colors.text,
+    fontFamily: 'monospace', // Important pour l'alignement des espaces
+  },
+  formularField: {
+    fontFamily: 'monospace', // Pour un alignement uniforme des traits
+    color: colors.text,
   },
 });
 

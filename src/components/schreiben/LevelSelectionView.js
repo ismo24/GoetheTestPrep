@@ -7,44 +7,45 @@ import { colors } from '../../styles/colors';
 const LevelSelectionView = ({ levels, onBack, onSelectLevel, getUbungenForLevel, userNativeLanguage = "AR" }) => {
   
   // Traductions pour l'interface
-  const interfaceTranslations = {
-    newStoriesWaiting: {
-      "DE": "Neue Geschichten warten!",
-      "FR": "De nouvelles histoires vous attendent !",
-      "EN": "New stories are waiting!",
-      "ES": "¡Nuevas historias te esperan!",
-      "PT": "Novas histórias estão esperando!",
-      "PL": "Nowe historie czekają!",
-      "RU": "Новые истории ждут!",
-      "TR": "Yeni hikayeler bekliyor!",
-      "IT": "Nuove storie ti aspettano!",
-      "UK": "Нові історії чекають!",
-      "VI": "Những câu chuyện mới đang chờ!",
-      "TL": "Naghihintay ang mga bagong kwento!",
-      "ZH": "新故事在等待！",
-      "ID": "Cerita baru menunggu!",
-      "TH": "เรื่องราวใหม่รอคุณอยู่!",
-      "MS": "Cerita baru menanti!",
-      "AR": "قصص جديدة في الانتظار!"
+  const interfaceTranslations = { 
+    discovery: {
+      "DE": "Entdecken Sie viele Beispiele!",
+      "FR": "Découvrez de nombreux exemples !",
+      "EN": "Discover many examples!",
+      "ES": "¡Descubre muchos ejemplos!",
+      "PT": "Descubra muitos exemplos!",
+      "PL": "Odkryj wiele przykładów!",
+      "RU": "Откройте для себя множество примеров!",
+      "TR": "Birçok örneği keşfedin!",
+      "IT": "Scopri molti esempi!",
+      "UK": "Відкрийте для себе багато прикладів!",
+      "VI": "Khám phá nhiều ví dụ!",
+      "TL": "Tuklasin ang maraming halimbawa!",
+      "ZH": "发现许多例子！",
+      "ID": "Temukan banyak contoh!",
+      "TH": "ค้นพบตัวอย่างมากมาย!",
+      "MS": "Temui banyak contoh!",
+      "AR": "اكتشف العديد من الأمثلة!"
     },
-    reading: {
-      "DE": "Lesen",
-      "FR": "Lecture",
-      "EN": "Reading",
-      "ES": "Lectura",
-      "PT": "Leitura",
-      "PL": "Czytanie",
-      "RU": "Чтение",
-      "TR": "Okuma",
-      "IT": "Lettura",
-      "UK": "Читання",
-      "VI": "Đọc",
-      "TL": "Pagbabasa",
-      "ZH": "阅读",
-      "ID": "Membaca",
-      "TH": "การอ่าน",
-      "MS": "Membaca",
-      "AR": "القراءة"
+    
+    writing: {
+      "DE": "Schreiben",
+      "FR": "Écriture",
+      "EN": "Writing",
+      "ES": "Escritura",
+      "PT": "Escrita",
+      "PL": "Pisanie",
+      "RU": "Письмо",
+      "TR": "Yazma",
+      "IT": "Scrittura",
+      "UK": "Письмо",
+      "VI": "Viết",
+      "TL": "Pagsusulat",
+      "ZH": "写作",
+      "ID": "Menulis",
+      "TH": "การเขียน",
+      "MS": "Menulis",
+      "AR": "الكتابة"
     }
   };
 
@@ -58,16 +59,16 @@ const LevelSelectionView = ({ levels, onBack, onSelectLevel, getUbungenForLevel,
           
           <View style={styles.titleContainer}>
             <Text style={styles.greeting}>
-              {interfaceTranslations.newStoriesWaiting[userNativeLanguage]}
+              {interfaceTranslations.discovery[userNativeLanguage]}
             </Text>
             <Text style={styles.title}>
-              {interfaceTranslations.reading[userNativeLanguage]}
+              {interfaceTranslations.writing[userNativeLanguage]}
             </Text>
           </View>
           
           <TouchableOpacity style={styles.profileButton}>
             <View style={styles.profileIcon}>
-              <Ionicons name="book" size={24} color={colors.white} />
+              <Ionicons name="library" size={24} color={colors.white} />
             </View>
           </TouchableOpacity>
         </View>

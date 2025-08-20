@@ -240,6 +240,14 @@ const ExerciseView = ({
   const currentAudio = selectedUbung.data[currentAudioIndex];
   const [audioStarted, setAudioStarted] = useState(false);
 
+  // Debug logs
+  console.log('🔍 ExerciseView Debug:');
+  console.log('selectedUbung:', selectedUbung);
+  console.log('currentAudioIndex:', currentAudioIndex);
+  console.log('currentAudio:', currentAudio);
+  console.log('audioStarted:', audioStarted);
+  console.log('questions:', currentAudio?.questions);
+
   // Reset audio state when changing audio
   useEffect(() => {
     setAudioStarted(false);
@@ -261,17 +269,18 @@ const ExerciseView = ({
   return (
     <>
       <View style={styles.header}>
-        <TouchableOpacity onPress={onBack}>
-          <Ionicons name="arrow-back" size={24} color={colors.text} />
+        <TouchableOpacity onPress={onBack} style={styles.closeButton}>
+          <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <View style={[styles.exerciseCounter, { backgroundColor: levelInfo.color }]}>
+          <View style={[styles.exerciseCounter]}>
             <Text style={styles.exerciseCounterText}>
-              {selectedUbung.title}
+              Hören {selectedUbung.title.replace('Übung ', '') || '1'}
             </Text>
           </View>
         </View>
         <TouchableOpacity>
+          {/* Espace pour équilibrer le header */}
         </TouchableOpacity>
       </View>
 
@@ -288,31 +297,30 @@ const ExerciseView = ({
             countdown={3}
           />
           
-          {!audioStarted && (
+          {
+        //   !audioStarted && 
+          (
             <View style={styles.instructionBox}>
               <View style={styles.instructionContent}>
                 <Ionicons name="information-circle" size={24} color={colors.primary} />
                 <Text style={styles.instructionText}>
-                  Hören Sie das Audio aufmerksam. Die Fragen werden nach der Wiedergabe angezeigt.
-                </Text>
-                <TouchableOpacity 
+                  Hören Sie das Audio aufmerksam und beantworten Sie die Fragen.</Text>
+                {/* <TouchableOpacity 
                   style={styles.skipButton}
                   onPress={showQuestionsManually}
                 >
                   <Text style={styles.skipButtonText}>Fragen jetzt anzeigen</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
           )}
         </View>
 
         {/* Questions - affichées seulement après que l'audio ait commencé */}
-        {audioStarted && (
+        {
+        // audioStarted &&
+         (
           <View style={styles.questionsSection}>
-            <Text style={styles.questionsSectionTitle}>
-              Fragen ({currentAudio.questions?.length || 0})
-            </Text>
-            
             {currentAudio.questions?.map((question, questionIndex) => {
               const isAnswered = selectedAnswers[questionIndex] !== undefined;
               
@@ -320,7 +328,7 @@ const ExerciseView = ({
                 <View key={questionIndex} style={styles.questionCard}>
                   <View style={styles.questionHeader}>
                     <Text style={styles.questionTitle}>
-                      Frage {questionIndex + 1}
+                      Frage {currentAudio.questions?.length !== 1 ? questionIndex + 1 : ""}
                     </Text>
                     {isAnswered && (
                       <View style={styles.answeredBadge}>
@@ -381,14 +389,16 @@ const ExerciseView = ({
       </ScrollView>
 
       {/* Bouton sticky "Beenden" */}
-      {audioStarted && (
-        <View style={styles.stickyButtonContainer}>
+      {
+    //   audioStarted && 
+      (
+        <View style={[styles.stickyButtonContainer, {opacity: allQuestionsAnswered ? 1 : 0}]}>
           <TouchableOpacity 
             style={[
               styles.stickyButton, 
               { 
-                backgroundColor: allQuestionsAnswered ? levelInfo.color : colors.gray,
-                opacity: allQuestionsAnswered ? 1 : 0.6 
+                backgroundColor: allQuestionsAnswered ? colors.success : colors.gray,
+                opacity: allQuestionsAnswered ? 1 : 0
               }
             ]}
             onPress={onFinishExercise}
@@ -420,18 +430,33 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  closeButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#D6D6DB',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
   exerciseCounter: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
   },
   exerciseCounterText: {
-    color: colors.white,
-    fontSize: 14,
+    color: colors.text,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   exerciseContent: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: colors.background,
   },
   
@@ -563,12 +588,6 @@ const styles = StyleSheet.create({
   questionsSection: {
     marginHorizontal: 16,
   },
-  questionsSectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.text,
-    marginBottom: 16,
-  },
   questionCard: {
     backgroundColor: colors.white,
     borderRadius: 12,
@@ -667,16 +686,8 @@ const styles = StyleSheet.create({
     bottom: '8%',
     left: 0,
     right: 0,
-    backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderTopWidth: 1,
-    borderTopColor: colors.lightGray,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 8,
   },
   stickyButton: {
     flexDirection: 'row',
@@ -685,6 +696,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 25,
     gap: 8,
+    marginHorizontal: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 8,
   },
   stickyButtonText: {
     color: colors.white,

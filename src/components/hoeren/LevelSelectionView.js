@@ -1,19 +1,76 @@
+// LevelSelectionView.js (pour Hören)
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
 
-const LevelSelectionView = ({ levels, onBack, onSelectLevel, getUbungenForLevel }) => {
+const LevelSelectionView = ({ levels, onBack, onSelectLevel, getUbungenForLevel, userNativeLanguage = "FR" }) => {
+  
+  // Traductions pour l'interface d'écoute
+  const interfaceTranslations = {
+    listenCarefully: {
+      "DE": "Höre aufmerksam zu!",
+      "FR": "Écoutez attentivement !",
+      "EN": "Listen carefully!",
+      "ES": "¡Escucha atentamente!",
+      "PT": "Ouça com atenção!",
+      "PL": "Słuchaj uważnie!",
+      "RU": "Слушайте внимательно!",
+      "TR": "Dikkatli dinleyin!",
+      "IT": "Ascolta attentamente!",
+      "UK": "Слухайте уважно!",
+      "VI": "Hãy nghe cẩn thận!",
+      "TL": "Makinig nang mabuti!",
+      "ZH": "仔细听！",
+      "ID": "Dengarkan dengan seksama!",
+      "TH": "ฟังให้ดี!",
+      "MS": "Dengar dengan teliti!",
+      "AR": "استمع بعناية!"
+    },
+    listening: {
+      "DE": "Hören",
+      "FR": "Écoute",
+      "EN": "Listening",
+      "ES": "Escucha",
+      "PT": "Audição",
+      "PL": "Słuchanie",
+      "RU": "Аудирование",
+      "TR": "Dinleme",
+      "IT": "Ascolto",
+      "UK": "Аудіювання",
+      "VI": "Nghe",
+      "TL": "Pakikinig",
+      "ZH": "听力",
+      "ID": "Mendengar",
+      "TH": "การฟัง",
+      "MS": "Mendengar",
+      "AR": "الاستماع"
+    }
+  };
+
   return (
     <>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={onBack}>
-          <Ionicons name="arrow-back" size={24} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={styles.title}>Hören</Text>
-        <TouchableOpacity style={{ opacity: 0 }}>
-          <Ionicons name="star" size={24} color={colors.primary} />
-        </TouchableOpacity>
+      <View style={styles.headerContainer}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={onBack} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} color={colors.white} />
+          </TouchableOpacity>
+          
+          <View style={styles.titleContainer}>
+            <Text style={styles.greeting}>
+              {interfaceTranslations.listenCarefully[userNativeLanguage]}
+            </Text>
+            <Text style={styles.title}>
+              {interfaceTranslations.listening[userNativeLanguage]}
+            </Text>
+          </View>
+          
+          <TouchableOpacity style={styles.profileButton}>
+            <View style={styles.profileIcon}>
+              <Ionicons name="headset" size={24} color={colors.white} />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView style={styles.content}>
@@ -51,59 +108,93 @@ const LevelSelectionView = ({ levels, onBack, onSelectLevel, getUbungenForLevel 
             );
           })}
         </View>
-
-        {/* <View style={styles.tipCard}>
-          <Ionicons name="bulb" size={24} color={colors.warning} />
-          <View style={styles.tipContent}>
-            <Text style={styles.tipTitle}>Tipp zum Hörverständnis</Text>
-            <Text style={styles.tipText}>
-              Verwenden Sie Kopfhörer für die beste Audioqualität und konzentrieren Sie sich auf den Kontext.
-            </Text>
-          </View>
-        </View> */}
       </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    position: 'relative',
+  },
   header: {
     flexDirection: 'row',
+    height: 200,
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: colors.white,
+    paddingHorizontal: 24,
+    paddingTop: 60,
+    paddingBottom: 24,
+    backgroundColor: colors.primary, // Bleu pour Hören
+    borderBottomLeftRadius: 60,
+    borderBottomRightRadius: 60,
+  },
+  backButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backdropFilter: 'blur(10px)',
+  },
+  titleContainer: {
+    flex: 1,
+    alignItems: 'center',
+    marginHorizontal: 16,
+  },
+  greeting: {
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.8)',
+    fontWeight: '500',
+    marginBottom: 4,
+    textAlign: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: colors.text,
-    flex: 1,
-    textAlign: 'center',
+    color: colors.white,
+    textShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',        // AJOUT : Centre le texte horizontalement
+    lineHeight: 32,             // AJOUT : Espacement entre les lignes
+    flexWrap: 'wrap',           // AJOUT : Permet le retour à la ligne
+  },
+  profileButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  profileIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   content: {
     padding: 20,
+    backgroundColor: colors.background,
   },
   levelsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     gap: 16,
-    marginBottom: 20,
+    marginTop: 15,
   },
   levelCard: {
     backgroundColor: colors.white,
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 16,
-    width: '47%', // Pour avoir 2 colonnes avec un peu d'espace
+    width: '47%',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
     minHeight: 140,
-    overflow: 'hidden', // Masque les parties qui dépassent
   },
   cardContent: {
     flex: 1,
@@ -113,11 +204,11 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   levelCode: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     color: colors.text,
     alignSelf: 'flex-start',
-    marginBottom: 2,
+    marginBottom: 4,
   },
   levelTextContainer: {
     position: 'absolute',
@@ -126,7 +217,7 @@ const styles = StyleSheet.create({
   },
   levelTitle: {
     fontSize: 12,
-    fontWeight: '400',
+    fontWeight: '500',
     color: colors.gray,
   },
   customIcon: {
@@ -134,35 +225,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
-  },
-  tipCard: {
-    backgroundColor: colors.white,
-    borderRadius: 12,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    borderLeftWidth: 4,
-    borderLeftColor: colors.warning,
-  },
-  tipContent: {
-    marginLeft: 12,
-    flex: 1,
-  },
-  tipTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: colors.text,
-    marginBottom: 4,
-  },
-  tipText: {
-    fontSize: 14,
-    color: colors.gray,
-    lineHeight: 20,
   },
 });
 

@@ -9,6 +9,70 @@ import { colors } from '../styles/colors';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+  // Variable de langue native (à définir selon vos besoins)
+  const nativeLanguage = "FR";
+
+  // Traductions pour les noms d'onglets
+  const tabTranslations = {
+    home: {
+      "DE": "Startseite",
+      "FR": "Accueil",
+      "EN": "Home",
+      "ES": "Inicio",
+      "PT": "Início",
+      "PL": "Główna",
+      "RU": "Главная",
+      "TR": "Ana Sayfa",
+      "IT": "Home",
+      "UK": "Головна",
+      "VI": "Trang chủ",
+      "TL": "Tahanan",
+      "ZH": "首页",
+      "ID": "Beranda",
+      "TH": "หน้าแรก",
+      "MS": "Utama",
+      "AR": "الرئيسية"
+    },
+    statistics: {
+      "DE": "Statistiken",
+      "FR": "Statistiques",
+      "EN": "Statistics",
+      "ES": "Estadísticas",
+      "PT": "Estatísticas",
+      "PL": "Statystyki",
+      "RU": "Статистика",
+      "TR": "İstatistikler",
+      "IT": "Statistiche",
+      "UK": "Статистика",
+      "VI": "Thống kê",
+      "TL": "Istatistika",
+      "ZH": "统计",
+      "ID": "Statistik",
+      "TH": "สстатิสติก",
+      "MS": "Statistik",
+      "AR": "الإحصائيات"
+    },
+    settings: {
+      "DE": "Einstellungen",
+      "FR": "Paramètres",
+      "EN": "Settings",
+      "ES": "Configuración",
+      "PT": "Configurações",
+      "PL": "Ustawienia",
+      "RU": "Настройки",
+      "TR": "Ayarlar",
+      "IT": "Impostazioni",
+      "UK": "Налаштування",
+      "VI": "Cài đặt",
+      "TL": "Mga Setting",
+      "ZH": "设置",
+      "ID": "Pengaturan",
+      "TH": "การตั้งค่า",
+      "MS": "Tetapan",
+      "AR": "الإعدادات"
+    }
+  };
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -30,9 +94,27 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Statistics" component={StatisticsScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen 
+        name="Home" 
+        component={HomeScreen}
+        options={{
+          tabBarLabel: tabTranslations.home[nativeLanguage]
+        }}
+      />
+      <Tab.Screen 
+        name="Statistics" 
+        component={StatisticsScreen}
+        options={{
+          tabBarLabel: tabTranslations.statistics[nativeLanguage]
+        }}
+      />
+      <Tab.Screen 
+        name="Settings" 
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: tabTranslations.settings[nativeLanguage]
+        }}
+      />
     </Tab.Navigator>
   );
 };

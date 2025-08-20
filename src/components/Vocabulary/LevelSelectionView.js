@@ -7,44 +7,45 @@ import { colors } from '../../styles/colors';
 const LevelSelectionView = ({ levels, onBack, onSelectLevel, getUbungenForLevel, userNativeLanguage = "AR" }) => {
   
   // Traductions pour l'interface
-  const interfaceTranslations = {
-    newStoriesWaiting: {
-      "DE": "Neue Geschichten warten!",
-      "FR": "De nouvelles histoires vous attendent !",
-      "EN": "New stories are waiting!",
-      "ES": "¡Nuevas historias te esperan!",
-      "PT": "Novas histórias estão esperando!",
-      "PL": "Nowe historie czekają!",
-      "RU": "Новые истории ждут!",
-      "TR": "Yeni hikayeler bekliyor!",
-      "IT": "Nuove storie ti aspettano!",
-      "UK": "Нові історії чекають!",
-      "VI": "Những câu chuyện mới đang chờ!",
-      "TL": "Naghihintay ang mga bagong kwento!",
-      "ZH": "新故事在等待！",
-      "ID": "Cerita baru menunggu!",
-      "TH": "เรื่องราวใหม่รอคุณอยู่!",
-      "MS": "Cerita baru menanti!",
-      "AR": "قصص جديدة في الانتظار!"
+  const interfaceTranslations = { 
+    discovery: {
+      "DE": "Lernen Sie neue Wörter!",
+      "FR": "Apprenez de nouveaux mots !",
+      "EN": "Learn new words!",
+      "ES": "¡Aprende nuevas palabras!",
+      "PT": "Aprenda novas palavras!",
+      "PL": "Ucz się nowych słów!",
+      "RU": "Изучайте новые слова!",
+      "TR": "Yeni kelimeler öğrenin!",
+      "IT": "Impara nuove parole!",
+      "UK": "Вивчайте нові слова!",
+      "VI": "Học từ mới!",
+      "TL": "Matuto ng mga bagong salita!",
+      "ZH": "学习新单词！",
+      "ID": "Pelajari kata-kata baru!",
+      "TH": "เรียนรู้คำศัพท์ใหม่!",
+      "MS": "Belajar perkataan baru!",
+      "AR": "تعلم كلمات جديدة!"
     },
-    reading: {
-      "DE": "Lesen",
-      "FR": "Lecture",
-      "EN": "Reading",
-      "ES": "Lectura",
-      "PT": "Leitura",
-      "PL": "Czytanie",
-      "RU": "Чтение",
-      "TR": "Okuma",
-      "IT": "Lettura",
-      "UK": "Читання",
-      "VI": "Đọc",
-      "TL": "Pagbabasa",
-      "ZH": "阅读",
-      "ID": "Membaca",
-      "TH": "การอ่าน",
-      "MS": "Membaca",
-      "AR": "القراءة"
+    
+    writing: {
+      "DE": "Wortschatz",
+      "FR": "Vocabulaire",
+      "EN": "Vocabulary",
+      "ES": "Vocabulario",
+      "PT": "Vocabulário",
+      "PL": "Słownictwo",
+      "RU": "Словарный запас",
+      "TR": "Kelime hazinesi",
+      "IT": "Vocabolario",
+      "UK": "Словниковий запас",
+      "VI": "Từ vựng",
+      "TL": "Bokabularyo",
+      "ZH": "词汇",
+      "ID": "Kosakata",
+      "TH": "คำศัพท์",
+      "MS": "Perbendaharaan kata",
+      "AR": "المفردات"
     }
   };
 
@@ -58,16 +59,16 @@ const LevelSelectionView = ({ levels, onBack, onSelectLevel, getUbungenForLevel,
           
           <View style={styles.titleContainer}>
             <Text style={styles.greeting}>
-              {interfaceTranslations.newStoriesWaiting[userNativeLanguage]}
+              {interfaceTranslations.discovery[userNativeLanguage]}
             </Text>
             <Text style={styles.title}>
-              {interfaceTranslations.reading[userNativeLanguage]}
+              {interfaceTranslations.writing[userNativeLanguage]}
             </Text>
           </View>
           
           <TouchableOpacity style={styles.profileButton}>
             <View style={styles.profileIcon}>
-              <Ionicons name="book" size={24} color={colors.white} />
+              <Ionicons name="library" size={24} color={colors.white} />
             </View>
           </TouchableOpacity>
         </View>
