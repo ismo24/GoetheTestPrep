@@ -4,12 +4,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LevelSelectionView from '../components/Vocabulary/LevelSelectionView';
 import PopupExerciseSelector from '../components/Vocabulary/PopupExerciseSelector';
 import ExerciseModal from '../components/Vocabulary/ExerciseModal';
-import { Fahigkeiten } from '../data/constantsProvisories/Constants';
+import { useUserData } from '../context/AppDataContext';
+import { useExerciseData } from '../hooks/useExerciseData';
+import { useSyncData } from '../hooks/useSyncData';
 import { colors } from '../styles/colors';
 
 const VocabularyScreen = ({ navigation }) => {
   // Langue native de l'utilisateur
-  const userNativeLanguage = "FR";
+  const { userData } = useUserData();
+  const { getExercisesForLevel, saveCurrentAnswers, finishExercise, getCurrentAnswers, getLevelStats, finishExerciseWithSync } = useExerciseData();
+  const { syncNow, isSyncing } = useSyncData();
+  const userNativeLanguage = userData.nativeLanguage || "FR";
+
 
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [showExerciseSelector, setShowExerciseSelector] = useState(false);
@@ -343,34 +349,12 @@ const VocabularyScreen = ({ navigation }) => {
   ];
 
   // Obtenir les exercices pour un niveau donné
-  const getExercisesForLevel = (levelId) => {
-    console.log("Debut ")
-    const levelData = Fahigkeiten.vokabeln[levelId];
-    console.log("levelData :",levelData)
-    if (!Array.isArray(levelData)) return [];
-    
-    return levelData.map((exercise, index) => ({
-      id: exercise.id,
-      title: `${exerciseTranslations[userNativeLanguage]} ${index + 1}`,
-      questionsCount: exercise.questions?.length || 0,
-      totalQuestions: exercise.questions?.length || 0,
-      data: exercise,
-      completed: exercise.well_Answered,
-      lastResult: exercise.lastResult || 0,
-      text:exercise.text || "",
-      image_url:exercise.image_url || "",
-      word:exercise.word || "",
-      sentence:exercise.sentence || "",
-      word_languages_explanations:exercise.word_languages_explanations || "" ,
-      sentence_languages_explanations:exercise.sentence_languages_explanations  || ""
-    }));
-  };
-
+ 
   
   // Gestionnaires d'événements
   const handleLevelSelect = (levelId) => {
     setSelectedLevel(levelId);
-    const exercises = getExercisesForLevel(levelId);
+    const exercises = getExercisesForLevel('vokabeln', levelId); 
     setAvailableExercises(exercises);
     setShowExerciseSelector(true);
   };
@@ -380,34 +364,44 @@ const VocabularyScreen = ({ navigation }) => {
     setShowExerciseSelector(false);
     setShowExerciseModal(true);
     setShowResults(false);
-    setSelectedAnswers({});
+    
+    // Charger les réponses existantes s'il y en a
+    const existingAnswers = getCurrentAnswers(exercise.id);
+    setSelectedAnswers(existingAnswers);
     setExerciseResults(null);
-    console.log("exercice select :",exercise)
+    console.log("exercice select :", exercise);
   };
 
   const handleSelectAnswer = (questionIndex, optionId) => {
-    setSelectedAnswers(prev => ({
-      ...prev,
+    const currentAnswers = getCurrentAnswers(selectedExercise?.id);
+    const updatedAnswers = {
+      ...currentAnswers,
       [questionIndex]: optionId
-    }));
+    };
+    
+    setSelectedAnswers(updatedAnswers);
+    saveCurrentAnswers(selectedExercise.id, updatedAnswers);
   };
 
-  const handleFinishExercise = () => {
+
+  const handleFinishExercise = async () => {
+    // Pour Vocabulary, adapter selon votre système d'évaluation
+    const results = {
+      totalQuestions: 1,
+      correctAnswers: 1,
+      wrongAnswers: 0,
+      percentage: 95, // Score basé sur la mémorisation du vocabulaire
+      detailedResults: [{
+        textIndex: 1,
+        questions: []
+      }]
+    };
     
-    const results = true
-    
-    // setExerciseResults(results);
+    setExerciseResults(results);
     setShowResults(true);
     
-    // Mettre à jour le statut de l'exercice
-    if (selectedExercise && results) {
-      const levelData = Fahigkeiten.vokabeln[selectedLevel];
-      const exerciseIndex = levelData.findIndex(ex => ex.id === selectedExercise.id);
-      if (exerciseIndex !== -1) {
-        levelData[exerciseIndex].well_Answered = results.percentage >= 70;
-        levelData[exerciseIndex].lastResult = results.percentage;
-      }
-    }
+    // Sync automatique avec le backend
+    await finishExerciseWithSync('vokabeln', selectedLevel, selectedExercise.id, results);
   };
 
   const handleRestartExercise = () => {

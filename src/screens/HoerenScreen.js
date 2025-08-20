@@ -4,12 +4,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LevelSelectionView from '../components/hoeren/LevelSelectionView';
 import PopupExerciseSelector from '../components/hoeren/PopupExerciseSelector';
 import ExerciseModal from '../components/hoeren/ExerciseModal';
-import { Fahigkeiten } from '../data/constantsProvisories/Constants';
+import { useUserData } from '../context/AppDataContext';
+import { useExerciseData } from '../hooks/useExerciseData';
+import { useSyncData } from '../hooks/useSyncData';
 import { colors } from '../styles/colors';
 
 const HoerenScreen = ({ navigation }) => {
   // Langue native de l'utilisateur
-  const userNativeLanguage = "FR";
+  const { userData } = useUserData();
+  const { getExercisesForLevel, saveCurrentAnswers, finishExercise, getCurrentAnswers, getLevelStats, finishExerciseWithSync,
+    
+  } = useExerciseData();
+  const { syncNow, isSyncing } = useSyncData();
+  const userNativeLanguage = userData.nativeLanguage || "FR";
+
 
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [showExerciseSelector, setShowExerciseSelector] = useState(false);
@@ -340,31 +348,17 @@ const HoerenScreen = ({ navigation }) => {
     }
   ];
 
-  // Obtenir les exercices pour un niveau donné
-  const getExercisesForLevel = (levelId) => {
-    const levelData = Fahigkeiten.hoeren[levelId];
-    if (!Array.isArray(levelData)) return [];
-    
-    return levelData.map((exercise, index) => ({
-      id: exercise.id,
-      title: `${exerciseTranslations[userNativeLanguage]} ${index + 1}`,
-      questionsCount: exercise.questions?.length || 0,
-      totalQuestions: exercise.questions?.length || 0,
-      data: exercise,
-      completed: exercise.well_Answered,
-      lastResult: exercise.lastResult || 0,
-      audioUrl: exercise.audioUrl
-    }));
-  };
+
+  
 
   // Calculer les résultats de l'exercice
   const calculateExerciseResults = () => {
     if (!selectedExercise || !selectedExercise.data || !selectedExercise.data.questions) return null;
-  
+
     let totalQuestions = selectedExercise.data.questions.length;
     let correctAnswers = 0;
     const detailedResults = [];
-  
+
     selectedExercise.data.questions.forEach((question, questionIndex) => {
       const selectedOptionId = selectedAnswers[questionIndex];
       
@@ -381,64 +375,63 @@ const HoerenScreen = ({ navigation }) => {
           correctAnswer: question.options?.find(opt => opt.isCorrect)?.text || '',
           isCorrect,
           explanation: question.explanation,
-          nativeExplanation: question.languages_Explanations?.[userNativeLanguage] || null // AJOUT
+          nativeExplanation: question.languages_Explanations?.[userNativeLanguage] || null
         });
       }
     });
-  
+
     const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
-  
+
     return {
       totalQuestions,
       correctAnswers,
       wrongAnswers: totalQuestions - correctAnswers,
       percentage,
       detailedResults: [{
-        audioIndex: 1,
+        audioIndex: 1, // Garde ceci pour les exercices d'écoute
         questions: detailedResults
       }]
     };
   };
-  
 
   // Gestionnaires d'événements
   const handleLevelSelect = (levelId) => {
     setSelectedLevel(levelId);
-    const exercises = getExercisesForLevel(levelId);
+    
+    const exercises = getExercisesForLevel('hoeren', levelId);
     setAvailableExercises(exercises);
     setShowExerciseSelector(true);
   };
-
   const handleExerciseSelect = (exercise) => {
     setSelectedExercise(exercise);
     setShowExerciseSelector(false);
     setShowExerciseModal(true);
     setShowResults(false);
-    setSelectedAnswers({});
+    
+    // Charger les réponses existantes s'il y en a
+    const existingAnswers = getCurrentAnswers(exercise.id);
+    setSelectedAnswers(existingAnswers);
     setExerciseResults(null);
   };
 
   const handleSelectAnswer = (questionIndex, optionId) => {
-    setSelectedAnswers(prev => ({
-      ...prev,
+    const currentAnswers = getCurrentAnswers(selectedExercise?.id);
+    const updatedAnswers = {
+      ...currentAnswers,
       [questionIndex]: optionId
-    }));
+    };
+    
+    setSelectedAnswers(updatedAnswers);
+    saveCurrentAnswers(selectedExercise.id, updatedAnswers);
   };
 
-  const handleFinishExercise = () => {
+  const handleFinishExercise = async () => {
     const results = calculateExerciseResults();
     setExerciseResults(results);
     setShowResults(true);
     
-    // Mettre à jour le statut de l'exercice
-    if (selectedExercise && results) {
-      const levelData = Fahigkeiten.hoeren[selectedLevel];
-      const exerciseIndex = levelData.findIndex(ex => ex.id === selectedExercise.id);
-      if (exerciseIndex !== -1) {
-        levelData[exerciseIndex].well_Answered = results.percentage >= 70;
-        levelData[exerciseIndex].lastResult = results.percentage;
-      }
-    }
+    // Sync automatique avec le backend
+    await finishExerciseWithSync('hoeren', selectedLevel, selectedExercise.id, results);
   };
 
   const handleRestartExercise = () => {

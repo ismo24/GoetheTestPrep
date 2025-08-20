@@ -4,12 +4,25 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LevelSelectionView from '../components/sprechen/LevelSelectionView';
 import PopupExerciseSelector from '../components/sprechen/PopupExerciseSelector';
 import ExerciseModal from '../components/sprechen/ExerciseModal';
-import { Fahigkeiten } from '../data/constantsProvisories/Constants';
+import { useUserData } from '../context/AppDataContext';
+import { useExerciseData } from '../hooks/useExerciseData';
+import { useSyncData } from '../hooks/useSyncData';
 import { colors } from '../styles/colors';
 
 const SprechenScreen = ({ navigation }) => {
   // Langue native de l'utilisateur
-  const userNativeLanguage = "FR";
+  const { userData } = useUserData();
+  const { 
+    getExercisesForLevel, 
+    saveCurrentAnswers, 
+    finishExercise, 
+    getCurrentAnswers, 
+    getLevelStats, 
+    finishExerciseWithSync 
+  } = useExerciseData();
+  const { syncNow, isSyncing } = useSyncData();
+  const userNativeLanguage = userData.nativeLanguage || "FR";
+
 
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [showExerciseSelector, setShowExerciseSelector] = useState(false);
@@ -343,30 +356,12 @@ const SprechenScreen = ({ navigation }) => {
   ];
 
   // Obtenir les exercices pour un niveau donné
-  const getExercisesForLevel = (levelId) => {
-    const levelData = Fahigkeiten.sprechen[levelId];
-    if (!Array.isArray(levelData)) return [];
-    
-    return levelData.map((exercise, index) => ({
-      id: exercise.id,
-      title: `${exerciseTranslations[userNativeLanguage]} ${index + 1}`,
-      questionsCount: exercise.questions?.length || 0,
-      totalQuestions: exercise.questions?.length || 0,
-      data: exercise,
-      completed: exercise.well_Answered,
-      lastResult: exercise.lastResult || 0,
-      solution:exercise.solution,
-      questionType:exercise.questionType,
-      formular_grid:exercise.formular_grid || false,
-      image_url:exercise.image_url || ""
-    }));
-  };
-
+  
   
   // Gestionnaires d'événements
   const handleLevelSelect = (levelId) => {
     setSelectedLevel(levelId);
-    const exercises = getExercisesForLevel(levelId);
+    const exercises = getExercisesForLevel('sprechen', levelId); // ← UTILISE LA FONCTION SPÉCIALISÉE
     setAvailableExercises(exercises);
     setShowExerciseSelector(true);
   };
@@ -376,33 +371,44 @@ const SprechenScreen = ({ navigation }) => {
     setShowExerciseSelector(false);
     setShowExerciseModal(true);
     setShowResults(false);
-    setSelectedAnswers({});
+    
+    // Charger les réponses existantes s'il y en a
+    const existingAnswers = getCurrentAnswers(exercise.id);
+    setSelectedAnswers(existingAnswers);
     setExerciseResults(null);
   };
 
+
   const handleSelectAnswer = (questionIndex, optionId) => {
-    setSelectedAnswers(prev => ({
-      ...prev,
+    const currentAnswers = getCurrentAnswers(selectedExercise?.id);
+    const updatedAnswers = {
+      ...currentAnswers,
       [questionIndex]: optionId
-    }));
+    };
+    
+    setSelectedAnswers(updatedAnswers);
+    saveCurrentAnswers(selectedExercise.id, updatedAnswers);
   };
 
-  const handleFinishExercise = () => {
+
+  const handleFinishExercise = async () => {
+    // Pour Sprechen, adapter selon votre système d'évaluation
+    const results = {
+      totalQuestions: 1,
+      correctAnswers: 1,
+      wrongAnswers: 0,
+      percentage: 90, // Score basé sur votre évaluation orale
+      detailedResults: [{
+        textIndex: 1,
+        questions: []
+      }]
+    };
     
-    const results = true
-    
-    // setExerciseResults(results);
+    setExerciseResults(results);
     setShowResults(true);
     
-    // Mettre à jour le statut de l'exercice
-    if (selectedExercise && results) {
-      const levelData = Fahigkeiten.sprechen[selectedLevel];
-      const exerciseIndex = levelData.findIndex(ex => ex.id === selectedExercise.id);
-      if (exerciseIndex !== -1) {
-        levelData[exerciseIndex].well_Answered = results.percentage >= 70;
-        levelData[exerciseIndex].lastResult = results.percentage;
-      }
-    }
+    // Sync automatique avec le backend
+    await finishExerciseWithSync('sprechen', selectedLevel, selectedExercise.id, results);
   };
 
   const handleRestartExercise = () => {

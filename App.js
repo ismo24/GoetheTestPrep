@@ -3,6 +3,8 @@ import { StatusBar, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AppDataProvider } from './src/context/AppDataContext.js';
+import AppInitializer from './src/components/common/AppInitializer.js';
 import { useFonts } from "expo-font";
 import TabNavigator from './src/navigation/TabNavigator';
 import LesenScreen from './src/screens/LesenScreen';
@@ -34,7 +36,10 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
+
+    <AppDataProvider>
+      <AppInitializer>
+      <SafeAreaProvider>
       <StatusBar
         barStyle={Platform.OS === 'ios' ? 'dark-content' : 'default'}
         backgroundColor={Platform.OS === 'android' ? '#FFFFFF' : undefined}
@@ -52,5 +57,9 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
+      </AppInitializer>
+    </AppDataProvider>
+
+   
   );
 }

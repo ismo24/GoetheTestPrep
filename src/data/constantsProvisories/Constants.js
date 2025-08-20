@@ -1,67 +1,379 @@
-export const userInfos={
-  clientid:"",
-  nativeLanguage:"FR",
-  subscription:"31.12.2025",
-  paiementInfos:"",
-  data:{
-    lesen:{
-      A1:{},
-      A2:{},
-      B1:{},
-      B2:{},
-      C1:{},
-      C2:{},
+export const userInfos = {
+  clientid: "",
+  nativeLanguage: "FR",
+  subscription: "31.12.2025",
+  paiementInfos: "",
+  data: {
+    lesen: {
+      A1: {
+        index: 2,
+        total: 4,
+        data: {
+          lsA11: {
+            lastNote: 85,
+          },
+          lsA12: {
+            lastNote: 72,
+          },
+          lsA13: {
+            lastNote: 91,
+          },
+          lsA14: {
+            lastNote: 68,
+          },
+        }
+      },
+      A2: {
+        index: 0,
+        total: 1,
+        data: {
+          lsA21: {
+            lastNote: 76,
+          },
+        }
+      },
+      B1: {
+        index: 0,
+        total: 1,
+        data: {
+          lsB11: {
+            lastNote: 83,
+          },
+        }
+      },
+      B2: {
+        index: 0,
+        total: 1,
+        data: {
+          lsB21: {
+            lastNote: 79,
+          },
+        }
+      },
+      C1: {
+        index: 0,
+        total: 1,
+        data: {
+          lsC11: {
+            lastNote: 94,
+          },
+        }
+      },
+      C2: {
+        index: 0,
+        total: 1,
+        data: {
+          lsC21: {
+            lastNote: 88,
+          },
+        }
+      },
     },
-    hoeren:{
-      A1:{},
-      A2:{},
-      B1:{},
-      B2:{},
-      C1:{},
-      C2:{},
+    hoeren: {
+      A1: {
+        index: 0,
+        total: 3,
+        data: {
+          hoA11: {
+            lastNote: 65,
+          },
+          hoA12: {
+            lastNote: 78,
+          },
+          hoA13: {
+            lastNote: 82,
+          },
+        }
+      },
+      A2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      B1: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      B2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      C1: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      C2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
     },
-    schreiben:{
-      A1:{},
-      A2:{},
-      B1:{},
-      B2:{},
-      C1:{},
-      C2:{},
+    schreiben: {
+      A1: {
+        index: 0,
+        total: 4,
+        data: {
+          srA11: {
+            lastNote: 73,
+          },
+          srA12: {
+            lastNote: 89,
+          },
+          srA13: {
+            lastNote: 67,
+          },
+          srA14: {
+            lastNote: 81,
+          },
+        }
+      },
+      A2: {
+        index: 0,
+        total: 2,
+        data: {
+          srA21: {
+            lastNote: 75,
+          },
+          srA22: {
+            lastNote: 84,
+          },
+        }
+      },
+      B1: {
+        index: 0,
+        total: 5,
+        data: {
+          srB11: {
+            lastNote: 77,
+          },
+          srB12: {
+            lastNote: 92,
+          },
+          srB13: {
+            lastNote: 86,
+          },
+          SrB14: {
+            lastNote: 74,
+          },
+          SrB15: {
+            lastNote: 90,
+          },
+        }
+      },
+      B2: {
+        index: 0,
+        total: 4,
+        data: {
+          srB21: {
+            lastNote: 87,
+          },
+          srB22: {
+            lastNote: 71,
+          },
+          srB23: {
+            lastNote: 93,
+          },
+          srB24: {
+            lastNote: 80,
+          },
+        }
+      },
+      C1: {
+        index: 0,
+        total: 3,
+        data: {
+          srC11: {
+            lastNote: 95,
+          },
+          srC12: {
+            lastNote: 88,
+          },
+          srC13: {
+            lastNote: 91,
+          },
+        }
+      },
+      C2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
     },
-    sprechen:{
-      A1:{},
-      A2:{},
-      B1:{},
-      B2:{},
-      C1:{},
-      C2:{},
+    sprechen: {
+      A1: {
+        index: 0,
+        total: 3,
+        data: {
+          spA11: {
+            lastNote: 69,
+          },
+          spA12: {
+            lastNote: 76,
+          },
+          spA13: {
+            lastNote: 83,
+          },
+        }
+      },
+      A2: {
+        index: 0,
+        total: 3,
+        data: {
+          spA21: {
+            lastNote: 78,
+          },
+          spA22: {
+            lastNote: 85,
+          },
+          spA23: {
+            lastNote: 72,
+          },
+        }
+      },
+      B1: {
+        index: 0,
+        total: 3,
+        data: {
+          spB11: {
+            lastNote: 81,
+          },
+          spB12: {
+            lastNote: 87,
+          },
+          spB13: {
+            lastNote: 74,
+          },
+        }
+      },
+      B2: {
+        index: 0,
+        total: 3,
+        data: {
+          spB21: {
+            lastNote: 89,
+          },
+          spB22: {
+            lastNote: 92,
+          },
+          spB23: {
+            lastNote: 86,
+          },
+        }
+      },
+      C1: {
+        index: 0,
+        total: 3,
+        data: {
+          spC11: {
+            lastNote: 94,
+          },
+          spC12: {
+            lastNote: 96,
+          },
+          spC13: {
+            lastNote: 91,
+          },
+        }
+      },
+      C2: {
+        index: 0,
+        total: 3,
+        data: {
+          spC21: {
+            lastNote: 97,
+          },
+          spC22: {
+            lastNote: 93,
+          },
+          spC23: {
+            lastNote: 95,
+          },
+        }
+      },
     },
-    vokabeln:{
-      A1:{},
-      A2:{},
-      B1:{},
-      B2:{},
-      C1:{},
-      C2:{},
+    vokabeln: {
+      A1: {
+        index: 0,
+        total: 2,
+        data: {
+          VokA11: {
+            lastNote: 64,
+          },
+          VokA12: {
+            lastNote: 79,
+          },
+        }
+      },
+      A2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      B1: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      B2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      C1: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      C2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
     },
-    grammar:{
-      A1:{},
-      A2:{},
-      B1:{},
-      B2:{},
-      C1:{},
-      C2:{},
+    grammar: {
+      A1: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      A2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      B1: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      B2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      C1: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
+      C2: {
+        index: 0,
+        total: 0,
+        data: {}
+      },
     }
   }
-}
-
+};
 
 
 export const Fahigkeiten = {
   lesen: {
     A1: [
       {
-        id: "q1",
+        id: "lsA11",
         well_Answered: false,
         Text: "Als ich jünger war, habe ich einen sehr großen Fehler gemacht. Ich dachte, dass ich alles wusste und hörte nicht auf die Ratschläge meiner Eltern. Sie warnten mich vor meinen falschen Freunden, aber ich ignorierte ihre Worte. Später musste ich lernen, dass meine Eltern recht hatten.",
         questions: [
@@ -97,7 +409,7 @@ export const Fahigkeiten = {
         ],
       },
       {
-        id: "q2",
+        id: "lsA12",
         well_Answered: false,
         Text: "Maria arbeitet in einem kleinen Café in der Stadtmitte. Jeden Morgen um 7 Uhr öffnet sie das Café und bereitet den ersten Kaffee vor. Die meisten Kunden kommen zwischen 8 und 9 Uhr, bevor sie zur Arbeit gehen. Maria kennt fast alle ihre Stammkunden und weiß, was sie trinken möchten.",
         questions: [
@@ -162,7 +474,7 @@ export const Fahigkeiten = {
         ],
       },
       {
-        id: "q3",
+        id: "lsA13",
         well_Answered: false,
         Text: "Der Park in unserer Stadt ist sehr schön. Er hat einen großen See, viele Bäume und bunte Blumen. Im Sommer kommen viele Familien zum Picknick. Kinder spielen auf dem Spielplatz, während ihre Eltern im Schatten sitzen und sich entspannen.",
         questions: [
@@ -198,7 +510,7 @@ export const Fahigkeiten = {
         ],
       },
       {
-        id: "q4",
+        id: "lsA14",
         well_Answered: false,
         Text: "Thomas ist Lehrer an einer Grundschule. Er unterrichtet Deutsch und Mathematik. Seine Schüler sind zwischen 6 und 10 Jahre alt. Thomas mag seinen Beruf sehr, weil er gerne mit Kindern arbeitet. Nach der Schule hilft er manchmal Schülern bei den Hausaufgaben.",
         questions: [
@@ -236,7 +548,7 @@ export const Fahigkeiten = {
     ],
     A2: [
       {
-        id: "q1",
+        id: "lsA21",
         well_Answered: false,
         Text: "Lisa plant ihre erste Reise nach Deutschland. Sie möchte drei Wochen bleiben und verschiedene Städte besuchen. Zuerst will sie nach Berlin, dann nach München und zum Schluss nach Hamburg. Sie hat schon ein Hotel in Berlin gebucht, aber für die anderen Städte sucht sie noch Unterkünfte. Lisa lernt seit zwei Jahren Deutsch und hofft, dass sie sich gut verständigen kann.",
         questions: [
@@ -302,7 +614,7 @@ export const Fahigkeiten = {
     ],
     B1: [
       {
-        id: "q1",
+        id: "lsB11",
         well_Answered: false,
         Text: "Die Digitalisierung verändert unsere Arbeitswelt grundlegend. Viele traditionelle Berufe werden durch Automatisierung ersetzt, gleichzeitig entstehen aber auch neue Arbeitsplätze im Technologiebereich. Unternehmen müssen ihre Mitarbeiter weiterbilden, um mit dieser Entwicklung Schritt zu halten. Experten sind sich einig, dass lebenslanges Lernen in Zukunft noch wichtiger wird.",
         questions: [
@@ -348,7 +660,7 @@ export const Fahigkeiten = {
     ],
     B2: [
       {
-        id: "q1",
+        id: "lsB21",
         well_Answered: false,
         Text: "Der Klimawandel stellt eine der größten Herausforderungen unserer Zeit dar. Wissenschaftler warnen vor irreversiblen Schäden, falls nicht schnell gehandelt wird. Die internationale Gemeinschaft hat sich verpflichtet, die Erderwärmung auf unter 2 Grad Celsius zu begrenzen. Dafür sind drastische Maßnahmen zur Reduktion von Treibhausgasen erforderlich. Gleichzeitig müssen alternative Energiequellen massiv ausgebaut werden.",
         questions: [
@@ -387,7 +699,7 @@ export const Fahigkeiten = {
     ],
     C1: [
       {
-        id: "q1",
+        id: "lsC11",
         well_Answered: false,
         Text: "Die Philosophie der Aufklärung prägte das 18. Jahrhundert nachhaltig. Denker wie Kant, Voltaire und Rousseau hinterfragten traditionelle Autoritäten und propagierten die Macht der Vernunft. Ihr Einfluss reichte weit über akademische Kreise hinaus und trug zur Entstehung moderner demokratischer Systeme bei. Die Aufklärung betonte die Wichtigkeit individueller Rechte und stellte das Konzept der Gewaltenteilung vor.",
         questions: [
@@ -441,7 +753,7 @@ export const Fahigkeiten = {
     ],
     C2: [
       {
-        id: "q1",
+        id: "lsC21",
         well_Answered: false,
         Text: "Die postmoderne Literaturtheorie stellt fundamentale Annahmen über Autorschaft, Textualität und Bedeutung in Frage. Theoretiker wie Derrida und Foucault argumentieren, dass Texte nicht eine einzige, vom Autor intendierte Bedeutung besitzen, sondern durch den Interpretationsprozess des Lesers konstituiert werden. Diese Perspektive unterminiert traditionelle hermeneutische Ansätze und eröffnet neue Möglichkeiten für die Textanalyse.",
         questions: [
@@ -498,7 +810,7 @@ export const Fahigkeiten = {
   hoeren: {
     A1: [
       {
-        id: "q1",
+        id: "hoA11",
         well_Answered: false,
         audioUrl:
           "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
@@ -535,7 +847,7 @@ export const Fahigkeiten = {
         ],
       },
       {
-        id: "q2",
+        id: "hoA12",
         well_Answered: false,
         audioUrl:
           "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
@@ -572,7 +884,7 @@ export const Fahigkeiten = {
         ],
       },
       {
-        id: "q3",
+        id: "hoA13",
         well_Answered: false,
         audioUrl:
           "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
@@ -618,7 +930,7 @@ export const Fahigkeiten = {
   schreiben: {
     A1: [
       {
-        id: "q1",
+        id: "srA11",
         well_Answered: false,
         Text: "Sie können heute Abend nicht zum Kino gehen. Schreiben Sie eine SMS an Ihren Freund Tom.",
         Tipps: [
@@ -638,7 +950,7 @@ export const Fahigkeiten = {
        
       },
       {
-        id: "q2",
+        id: "srA12",
         well_Answered: false,
         Text: ["Anmeldeformular - Deutschkurs","Füllen Sie das Formular aus."],
         Tipps: [
@@ -669,7 +981,7 @@ export const Fahigkeiten = {
 
       },
       {
-        id: "q3",
+        id: "srA13",
         well_Answered: false,
         Text: ["Stellen Sie sich vor!","Schreiben Sie einen kurzen Text über sich selbst (30-40 Wörter)","Schreiben Sie über:","Ihren Namen",
           "Ihr Alter","Woher Sie kommen","Ihre Familie","Was Sie gern machen"],
@@ -685,7 +997,7 @@ export const Fahigkeiten = {
         },
       },
       {
-        id: "q4",
+        id: "srA14",
         well_Answered: false,
         Text: ["Sie sind im Urlaub in München. Schreiben Sie eine Postkarte an Ihre Freundin Lisa. Schreiben Sie über:","das Wetter","was Sie machen","wie es Ihnen gefällt"],
         Tipps: [
@@ -705,7 +1017,7 @@ export const Fahigkeiten = {
     ],
     A2: [
       {
-        id: "srA11",
+        id: "srA21",
         well_Answered: false,
         Text: ["Sie kommen zu spät zur Deutschstunde. Schreiben Sie eine Entschuldigung an Ihre Lehrerin."],
         Tipps: [
@@ -1049,7 +1361,7 @@ export const Fahigkeiten = {
   sprechen: {
     A1: [
       {
-        id: "sp_a1_1",
+        id: "spA11",
         well_Answered: false,
         Text: ["Sich vorstellen", "Stellen Sie sich vor. Sprechen Sie über:", "• Ihren Namen", "• Ihr Alter", "• Ihre Herkunft", "• Ihre Familie", "• Ihre Hobbys"],
         Tipps: [
@@ -1073,7 +1385,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_a1_2",
+        id: "spA12",
         well_Answered: false,
         Text: ["Gespräch: Einkaufen", "Sie sind in einem Geschäft. Der Verkäufer hilft Ihnen.", "Sprechen Sie über:", "• Was Sie suchen", "• Größe/Farbe", "• Preis", "• Bezahlung"],
         Tipps: [
@@ -1102,7 +1414,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_a1_3",
+        id: "spA13",
         well_Answered: false,
         Text: ["Monolog: Mein Alltag", "Beschreiben Sie Ihren typischen Tag. Sprechen Sie über:", "• Aufstehen", "• Arbeit/Schule", "• Mittagessen", "• Freizeit", "• Schlafen gehen"],
         Tipps: [
@@ -1130,7 +1442,7 @@ export const Fahigkeiten = {
     
     A2: [
       {
-        id: "sp_a2_1",
+        id: "spA21",
         well_Answered: false,
         Text: ["Monolog: Reiseerfahrung", "Erzählen Sie von einer Reise. Sprechen Sie über:", "• Wohin Sie gereist sind", "• Mit wem", "• Was Sie gemacht haben", "• Wie es Ihnen gefallen hat"],
         Tipps: [
@@ -1155,7 +1467,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_a2_2",
+        id: "spA22",
         well_Answered: false,
         Text: ["Gespräch: Beim Arzt", "Sie fühlen sich nicht wohl und gehen zum Arzt.", "Sprechen Sie über:", "• Ihre Beschwerden", "• Seit wann", "• Was Sie schon gemacht haben", "• Fragen zur Behandlung"],
         Tipps: [
@@ -1184,7 +1496,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_a2_3",
+        id: "spA23",
         well_Answered: false,
         Text: ["Monolog: Pläne für das Wochenende", "Erzählen Sie von Ihren Wochenendplänen. Sprechen Sie über:", "• Was Sie machen werden", "• Mit wem", "• Warum Sie das machen möchten", "• Alternative Pläne bei schlechtem Wetter"],
         Tipps: [
@@ -1212,7 +1524,7 @@ export const Fahigkeiten = {
     
     B1: [
       {
-        id: "sp_b1_1",
+        id: "spB11",
         well_Answered: false,
         Text: ["Monolog: Arbeit und Beruf", "Sprechen Sie über Ihre berufliche Situation. Sprechen Sie über:", "• Ihren Beruf/Ihre Ausbildung", "• Ihre täglichen Aufgaben", "• Was Ihnen gefällt/nicht gefällt", "• Ihre beruflichen Ziele"],
         Tipps: [
@@ -1238,7 +1550,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_b1_2",
+        id: "spB12",
         well_Answered: false,
         Text: ["Gespräch: Wohnungssuche", "Sie suchen eine neue Wohnung und sprechen mit einem Makler.", "Sprechen Sie über:", "• Ihre Wünsche (Größe, Lage, Preis)", "• Ihre aktuelle Situation", "• Besichtigungstermin", "• Fragen zur Wohnung"],
         Tipps: [
@@ -1267,7 +1579,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_b1_3",
+        id: "spB13",
         well_Answered: false,
         Text: ["Monolog: Umweltschutz im Alltag", "Sprechen Sie über Umweltschutz. Sprechen Sie über:", "• Was Sie persönlich für die Umwelt tun", "• Welche Probleme es gibt", "• Was die Gesellschaft ändern sollte", "• Ihre Meinung zu erneuerbaren Energien"],
         Tipps: [
@@ -1297,7 +1609,7 @@ export const Fahigkeiten = {
     
     B2: [
       {
-        id: "sp_b2_1",
+        id: "spB21",
         well_Answered: false,
         Text: ["Monolog: Digitalisierung in der Bildung", "Sprechen Sie über die Digitalisierung im Bildungswesen. Sprechen Sie über:", "• Vor- und Nachteile von Online-Lernen", "• Ihre persönlichen Erfahrungen", "• Auswirkungen auf traditionelle Schulen", "• Zukunftsperspektiven"],
         Tipps: [
@@ -1324,7 +1636,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_b2_2",
+        id: "spB22",
         well_Answered: false,
         Text: ["Gespräch: Bewerbungsgespräch", "Sie bewerben sich um eine Stelle als Projektmanager/in.", "Sprechen Sie über:", "• Ihre Qualifikationen", "• Motivation für die Stelle", "• Stärken und Schwächen", "• Fragen an das Unternehmen"],
         Tipps: [
@@ -1353,7 +1665,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_b2_3",
+        id: "spB23",
         well_Answered: false,
         Text: ["Monolog: Work-Life-Balance", "Sprechen Sie über die Vereinbarkeit von Beruf und Privatleben. Sprechen Sie über:", "• Herausforderungen in der modernen Arbeitswelt", "• Ihre persönliche Strategie", "• Rolle der Arbeitgeber", "• Gesellschaftliche Entwicklungen"],
         Tipps: [
@@ -1383,7 +1695,7 @@ export const Fahigkeiten = {
     
     C1: [
       {
-        id: "sp_c1_1",
+        id: "spC11",
         well_Answered: false,
         Text: ["Monolog: Künstliche Intelligenz in der Gesellschaft", "Analysieren Sie die Auswirkungen der KI auf verschiedene Lebensbereiche. Sprechen Sie über:", "• Chancen und Risiken", "• Ethische Fragestellungen", "• Auswirkungen auf den Arbeitsmarkt", "• Notwendige Regulierungsmaßnahmen"],
         Tipps: [
@@ -1410,7 +1722,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_c1_2",
+        id: "spC12",
         well_Answered: false,
         Text: ["Gespräch: Wissenschaftliche Diskussion", "Sie diskutieren mit einem Kollegen über nachhaltige Stadtentwicklung.", "Sprechen Sie über:", "• Konzepte für Smart Cities", "• Bürgerbeteiligung bei Planungsprozessen", "• Finanzierungsmodelle", "• Internationale Best Practices"],
         Tipps: [
@@ -1437,7 +1749,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_c1_3",
+        id: "spC13",
         well_Answered: false,
         Text: ["Monolog: Kulturelle Identität in der Globalisierung", "Analysieren Sie das Spannungsfeld zwischen Globalisierung und kultureller Identität. Sprechen Sie über:", "• Homogenisierung vs. kulturelle Vielfalt", "• Rolle der Medien und sozialen Netzwerke", "• Generationskonflikte in Migrationsfamilien", "• Zukunft multikultureller Gesellschaften"],
         Tipps: [
@@ -1467,7 +1779,7 @@ export const Fahigkeiten = {
     
     C2: [
       {
-        id: "sp_c2_1",
+        id: "spC21",
         well_Answered: false,
         Text: ["Monolog: Epistemologie des digitalen Zeitalters", "Reflektieren Sie über Wissen und Wahrheit im digitalen Zeitalter. Sprechen Sie über:", "• Transformation von Wissensproduktion und -verbreitung", "• Herausforderungen durch Desinformation", "• Rolle von Algorithmen bei der Meinungsbildung", "• Konzepte für digitale Aufklärung"],
         Tipps: [
@@ -1494,7 +1806,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_c2_2",
+        id: "spC22",
         well_Answered: false,
         Text: ["Gespräch: Akademische Debatte über Bioethik", "Sie debattieren mit Experten über CRISPR-Technologie und Genbearbeitung.", "Sprechen Sie über:", "• Ethische Implikationen von Genome Editing", "• Regulatorische Frameworks", "• Gesellschaftliche Akzeptanz", "• Internationale Governance-Strukturen"],
         Tipps: [
@@ -1523,7 +1835,7 @@ export const Fahigkeiten = {
         
       },
       {
-        id: "sp_c2_3",
+        id: "spC23",
         well_Answered: false,
         Text: ["Monolog: Metamorphosen des Politischen im 21. Jahrhundert", "Analysieren Sie die Transformation politischer Systeme in der Postmoderne. Sprechen Sie über:", "• Krise der repräsentativen Demokratie", "• Neue Formen politischer Partizipation", "• Rolle von Big Data und Algorithmen in der Politik", "• Vision für demokratische Innovation"],
         Tipps: [
@@ -1648,8 +1960,446 @@ export const Fahigkeiten = {
     B2:[],
     C1:[],
     C2:[],
-  }
+  },
+  grammar:{A1: [
+    {
+      id: "lsA11",
+      well_Answered: false,
+      Text: "Als ich jünger war, habe ich einen sehr großen Fehler gemacht. Ich dachte, dass ich alles wusste und hörte nicht auf die Ratschläge meiner Eltern. Sie warnten mich vor meinen falschen Freunden, aber ich ignorierte ihre Worte. Später musste ich lernen, dass meine Eltern recht hatten.",
+      questions: [
+        {
+          title: "Was dachte die Person, als sie jünger war?",
+          options: [
+            { id: "a", text: "Dass sie nichts wusste", isCorrect: false },
+            { id: "b", text: "Dass sie alles wusste", isCorrect: true },
+            { id: "c", text: "Dass sie Hilfe brauchte", isCorrect: false },
+            { id: "d", text: "Dass sie studieren sollte", isCorrect: false },
+          ],
+          explanation:
+            "Der Text sagt deutlich 'Ich dachte, dass ich alles wusste'.",
+          languages_Explanations: {
+            FR: "Le texte dit clairement 'Je pensais que je savais tout'.",
+            EN: "The text clearly says 'I thought I knew everything'.",
+            ES: "El texto dice claramente 'Pensé que lo sabía todo'.",
+            PT: "O texto diz claramente 'Eu pensava que sabia tudo'.",
+            PL: "Tekst wyraźnie mówi 'Myślałem, że wszystko wiem'.",
+            RU: "В тексте ясно сказано 'Я думал, что знаю всё'.",
+            TR: "Metin açıkça 'Her şeyi bildiğimi sanıyordum' diyor.",
+            IT: "Il testo dice chiaramente 'Pensavo di sapere tutto'.",
+            UK: "У тексті чітко сказано 'Я думав, що знаю все'.",
+            VI: "Văn bản nói rõ ràng 'Tôi nghĩ rằng tôi biết tất cả'.",
+            TL: "Malinaw na sinasabi ng teksto 'Akala ko alam ko ang lahat'.",
+            ZH: '文本清楚地说"我以为我什么都知道"。',
+            ID: "Teks dengan jelas mengatakan 'Saya pikir saya tahu segalanya'.",
+            TH: "ข้อความระบุอย่างชัดเจนว่า 'ฉันคิดว่าฉันรู้ทุกอย่าง'",
+            MS: "Teks dengan jelas menyatakan 'Saya fikir saya tahu segala-galanya'.",
+            AR: "النص يقول بوضوح 'كنت أعتقد أنني أعرف كل شيء'.",
+          },
+        },
+      ],
+    },
+    {
+      id: "lsA12",
+      well_Answered: false,
+      Text: "Maria arbeitet in einem kleinen Café in der Stadtmitte. Jeden Morgen um 7 Uhr öffnet sie das Café und bereitet den ersten Kaffee vor. Die meisten Kunden kommen zwischen 8 und 9 Uhr, bevor sie zur Arbeit gehen. Maria kennt fast alle ihre Stammkunden und weiß, was sie trinken möchten.",
+      questions: [
+        {
+          title: "Um welche Uhrzeit öffnet Maria das Café?",
+          options: [
+            { id: "a", text: "Um 6 Uhr", isCorrect: false },
+            { id: "b", text: "Um 7 Uhr", isCorrect: true },
+            { id: "c", text: "Um 8 Uhr", isCorrect: false },
+            { id: "d", text: "Um 9 Uhr", isCorrect: false },
+          ],
+          explanation:
+            "Der Text sagt 'Jeden Morgen um 7 Uhr öffnet sie das Café'.",
+          languages_Explanations: {
+            FR: "Le texte dit 'Chaque matin à 7 heures, elle ouvre le café'.",
+            EN: "The text says 'Every morning at 7 o'clock she opens the café'.",
+            ES: "El texto dice 'Cada mañana a las 7 abre el café'.",
+            PT: "O texto diz 'Toda manhã às 7 horas ela abre o café'.",
+            PL: "Tekst mówi 'Codziennie rano o 7 otwiera kawiarnię'.",
+            RU: "В тексте сказано 'Каждое утро в 7 часов она открывает кафе'.",
+            TR: "Metin 'Her sabah saat 7'de kafeyi açıyor' diyor.",
+            IT: "Il testo dice 'Ogni mattina alle 7 apre il caffè'.",
+            UK: "У тексті сказано 'Щоранку о 7 годині вона відкриває кафе'.",
+            VI: "Văn bản nói 'Mỗi sáng lúc 7 giờ cô ấy mở quán cà phê'.",
+            TL: "Sinasabi ng teksto 'Tuwing umaga ng alas-7 binubuksan niya ang café'.",
+            ZH: "文本说'每天早上7点她开咖啡馆'。",
+            ID: "Teks mengatakan 'Setiap pagi jam 7 dia membuka kafe'.",
+            TH: "ข้อความบอกว่า 'ทุกเช้าตอน 7 โมงเธอเปิดร้านกาแฟ'",
+            MS: "Teks berkata 'Setiap pagi pada jam 7 dia membuka kafe'.",
+            AR: "يقول النص 'كل صباح في الساعة 7 تفتح المقهى'.",
+          },
+        },
+        {
+          title: "Wann kommen die meisten Kunden?",
+          options: [
+            { id: "a", text: "Zwischen 7 und 8 Uhr", isCorrect: false },
+            { id: "b", text: "Zwischen 8 und 9 Uhr", isCorrect: true },
+            { id: "c", text: "Zwischen 9 und 10 Uhr", isCorrect: false },
+            { id: "d", text: "Nach 10 Uhr", isCorrect: false },
+          ],
+          explanation:
+            "Der Text erklärt 'Die meisten Kunden kommen zwischen 8 und 9 Uhr'.",
+          languages_Explanations: {
+            FR: "Le texte explique 'La plupart des clients viennent entre 8 et 9 heures'.",
+            EN: "The text explains 'Most customers come between 8 and 9 o'clock'.",
+            ES: "El texto explica 'La mayoría de los clientes vienen entre las 8 y las 9'.",
+            PT: "O texto explica 'A maioria dos clientes vem entre 8 e 9 horas'.",
+            PL: "Tekst wyjaśnia 'Większość klientów przychodzi między 8 a 9 rano'.",
+            RU: "В тексте объясняется 'Большинство клиентов приходит между 8 и 9 часами'.",
+            TR: "Metin 'Müşterilerin çoğu saat 8-9 arası geliyor' diye açıklıyor.",
+            IT: "Il testo spiega 'La maggior parte dei clienti viene tra le 8 e le 9'.",
+            UK: "У тексті пояснюється 'Більшість клієнтів приходить між 8 і 9 годиною'.",
+            VI: "Văn bản giải thích 'Hầu hết khách hàng đến từ 8 đến 9 giờ'.",
+            TL: "Ipinaliwanag ng teksto 'Karamihan ng mga customer ay dumarating sa pagitan ng 8 at 9'.",
+            ZH: "文本解释说'大多数顾客在8点到9点之间来'。",
+            ID: "Teks menjelaskan 'Sebagian besar pelanggan datang antara jam 8 dan 9'.",
+            TH: "ข้อความอธิบายว่า 'ลูกค้าส่วนใหญ่มาระหว่าง 8 โมงถึง 9 โมง'",
+            MS: "Teks menerangkan 'Kebanyakan pelanggan datang antara jam 8 dan 9'.",
+            AR: "يوضح النص 'معظم العملاء يأتون بين الساعة 8 و 9'.",
+          },
+        },
+      ],
+    },
+    {
+      id: "lsA13",
+      well_Answered: false,
+      Text: "Der Park in unserer Stadt ist sehr schön. Er hat einen großen See, viele Bäume und bunte Blumen. Im Sommer kommen viele Familien zum Picknick. Kinder spielen auf dem Spielplatz, während ihre Eltern im Schatten sitzen und sich entspannen.",
+      questions: [
+        {
+          title: "Was gibt es im Park?",
+          options: [
+            { id: "a", text: "Nur Bäume", isCorrect: false },
+            { id: "b", text: "Einen See, Bäume und Blumen", isCorrect: true },
+            { id: "c", text: "Nur einen Spielplatz", isCorrect: false },
+            { id: "d", text: "Nur einen See", isCorrect: false },
+          ],
+          explanation:
+            "Der Text erwähnt 'einen großen See, viele Bäume und bunte Blumen'.",
+          languages_Explanations: {
+            FR: "Le texte mentionne 'un grand lac, beaucoup d'arbres et des fleurs colorées'.",
+            EN: "The text mentions 'a large lake, many trees and colorful flowers'.",
+            ES: "El texto menciona 'un gran lago, muchos árboles y flores coloridas'.",
+            PT: "O texto menciona 'um grande lago, muitas árvores e flores coloridas'.",
+            PL: "Tekst wspomina 'duże jezioro, wiele drzew i kolorowe kwiaty'.",
+            RU: "В тексте упоминается 'большое озеро, много деревьев и цветные цветы'.",
+            TR: "Metin 'büyük bir göl, çok sayıda ağaç ve renkli çiçekler' den bahsediyor.",
+            IT: "Il testo menziona 'un grande lago, molti alberi e fiori colorati'.",
+            UK: "У тексті згадується 'велике озеро, багато дерев та барвисті квіти'.",
+            VI: "Văn bản đề cập đến 'một hồ lớn, nhiều cây và những bông hoa đầy màu sắc'.",
+            TL: "Binabanggit ng teksto ang 'malaking lawa, maraming puno at makulay na bulaklak'.",
+            ZH: "文本提到'一个大湖、许多树木和彩色花朵'。",
+            ID: "Teks menyebutkan 'sebuah danau besar, banyak pohon dan bunga-bunga berwarna'.",
+            TH: "ข้อความกล่าวถึง 'ทะเลสาบใหญ่ ต้นไม้มากมาย และดอกไม้หลากสี'",
+            MS: "Teks menyebut 'sebuah tasik besar, banyak pokok dan bunga-bunga berwarna'.",
+            AR: "يذكر النص 'بحيرة كبيرة وأشجار كثيرة وزهور ملونة'.",
+          },
+        },
+      ],
+    },
+    {
+      id: "lsA14",
+      well_Answered: false,
+      Text: "Thomas ist Lehrer an einer Grundschule. Er unterrichtet Deutsch und Mathematik. Seine Schüler sind zwischen 6 und 10 Jahre alt. Thomas mag seinen Beruf sehr, weil er gerne mit Kindern arbeitet. Nach der Schule hilft er manchmal Schülern bei den Hausaufgaben.",
+      questions: [
+        {
+          title: "Was unterrichtet Thomas?",
+          options: [
+            { id: "a", text: "Nur Deutsch", isCorrect: false },
+            { id: "b", text: "Deutsch und Mathematik", isCorrect: true },
+            { id: "c", text: "Nur Mathematik", isCorrect: false },
+            { id: "d", text: "Sport und Musik", isCorrect: false },
+          ],
+          explanation:
+            "Der Text sagt klar 'Er unterrichtet Deutsch und Mathematik'.",
+          languages_Explanations: {
+            FR: "Le texte dit clairement 'Il enseigne l'allemand et les mathématiques'.",
+            EN: "The text clearly says 'He teaches German and mathematics'.",
+            ES: "El texto dice claramente 'Enseña alemán y matemáticas'.",
+            PT: "O texto diz claramente 'Ele ensina alemão e matemática'.",
+            PL: "Tekst wyraźnie mówi 'Uczy niemieckiego i matematyki'.",
+            RU: "В тексте ясно сказано 'Он преподает немецкий язык и математику'.",
+            TR: "Metin açıkça 'Almanca ve matematik öğretiyor' diyor.",
+            IT: "Il testo dice chiaramente 'Insegna tedesco e matematica'.",
+            UK: "У тексті чітко сказано 'Він викладає німецьку мову та математику'.",
+            VI: "Văn bản nói rõ ràng 'Anh ấy dạy tiếng Đức và toán học'.",
+            TL: "Malinaw na sinasabi ng teksto 'Nagtuturo siya ng German at matematika'.",
+            ZH: "文本清楚地说'他教德语和数学'。",
+            ID: "Teks dengan jelas mengatakan 'Dia mengajar bahasa Jerman dan matematika'.",
+            TH: "ข้อความระบุอย่างชัดเจนว่า 'เขาสอนภาษาเยอรมันและคณิตศาสตร์'",
+            MS: "Teks dengan jelas menyatakan 'Dia mengajar bahasa Jerman dan matematik'.",
+            AR: "ينص النص بوضوح 'يدرّس الألمانية والرياضيات'.",
+          },
+        },
+      ],
+    },
+  ],
+  A2: [
+    {
+      id: "lsA21",
+      well_Answered: false,
+      Text: "Lisa plant ihre erste Reise nach Deutschland. Sie möchte drei Wochen bleiben und verschiedene Städte besuchen. Zuerst will sie nach Berlin, dann nach München und zum Schluss nach Hamburg. Sie hat schon ein Hotel in Berlin gebucht, aber für die anderen Städte sucht sie noch Unterkünfte. Lisa lernt seit zwei Jahren Deutsch und hofft, dass sie sich gut verständigen kann.",
+      questions: [
+        {
+          title: "Wie lange möchte Lisa in Deutschland bleiben?",
+          options: [
+            { id: "a", text: "Zwei Wochen", isCorrect: false },
+            { id: "b", text: "Drei Wochen", isCorrect: true },
+            { id: "c", text: "Einen Monat", isCorrect: false },
+            { id: "d", text: "Zwei Monate", isCorrect: false },
+          ],
+          explanation: "Der Text sagt 'Sie möchte drei Wochen bleiben'.",
+          languages_Explanations: {
+            FR: "Le texte dit 'Elle veut rester trois semaines'.",
+            EN: "The text says 'She wants to stay three weeks'.",
+            ES: "El texto dice 'Quiere quedarse tres semanas'.",
+            PT: "O texto diz 'Ela quer ficar três semanas'.",
+            PL: "Tekst mówi 'Chce zostać przez trzy tygodnie'.",
+            RU: "В тексте сказано 'Она хочет остаться на три недели'.",
+            TR: "Metin 'Üç hafta kalmak istiyor' diyor.",
+            IT: "Il testo dice 'Vuole rimanere tre settimane'.",
+            UK: "У тексті сказано 'Вона хоче залишитися на три тижні'.",
+            VI: "Văn bản nói 'Cô ấy muốn ở lại ba tuần'.",
+            TL: "Sinasabi ng teksto 'Gustong manatili ng tatlong linggo'.",
+            ZH: "文本说'她想待三个星期'。",
+            ID: "Teks mengatakan 'Dia ingin tinggal selama tiga minggu'.",
+            TH: "ข้อความบอกว่า 'เธออยากอยู่สามสัปดาห์'",
+            MS: "Teks berkata 'Dia mahu tinggal selama tiga minggu'.",
+            AR: "يقول النص 'تريد البقاء لمدة ثلاثة أسابيع'.",
+          },
+        },
+        {
+          title: "Wie lange lernt Lisa schon Deutsch?",
+          options: [
+            { id: "a", text: "Ein Jahr", isCorrect: false },
+            { id: "b", text: "Zwei Jahre", isCorrect: true },
+            { id: "c", text: "Drei Jahre", isCorrect: false },
+            { id: "d", text: "Vier Jahre", isCorrect: false },
+          ],
+          explanation:
+            "Lisa lernt seit zwei Jahren Deutsch, wie im Text erwähnt.",
+          languages_Explanations: {
+            FR: "Lisa apprend l'allemand depuis deux ans, comme mentionné dans le texte.",
+            EN: "Lisa has been learning German for two years, as mentioned in the text.",
+            ES: "Lisa aprende alemán desde hace dos años, como se menciona en el texto.",
+            PT: "Lisa aprende alemão há dois anos, como mencionado no texto.",
+            PL: "Lisa uczy się niemieckiego od dwóch lat, jak wspomniano w tekście.",
+            RU: "Лиза изучает немецкий язык уже два года, как упоминается в тексте.",
+            TR: "Lisa iki yıldır Almanca öğreniyor, metinde belirtildiği gibi.",
+            IT: "Lisa studia tedesco da due anni, come menzionato nel testo.",
+            UK: "Ліза вивчає німецьку мову вже два роки, як зазначено в тексті.",
+            VI: "Lisa đã học tiếng Đức được hai năm, như được đề cập trong văn bản.",
+            TL: "Nag-aaral si Lisa ng German ng dalawang taon na, tulad ng nabanggit sa teksto.",
+            ZH: "正如文本中提到的，丽莎已经学德语两年了。",
+            ID: "Lisa telah belajar bahasa Jerman selama dua tahun, seperti disebutkan dalam teks.",
+            TH: "ลิซ่าเรียนภาษาเยอรมันมาสองปีแล้ว ตามที่กล่าวไว้ในข้อความ",
+            MS: "Lisa telah belajar bahasa Jerman selama dua tahun, seperti yang dinyatakan dalam teks.",
+            AR: "تتعلم ليزا الألمانية منذ عامين، كما ذُكر في النص.",
+          },
+        },
+      ],
+    },
+  ],
+  B1: [
+    {
+      id: "lsB11",
+      well_Answered: false,
+      Text: "Die Digitalisierung verändert unsere Arbeitswelt grundlegend. Viele traditionelle Berufe werden durch Automatisierung ersetzt, gleichzeitig entstehen aber auch neue Arbeitsplätze im Technologiebereich. Unternehmen müssen ihre Mitarbeiter weiterbilden, um mit dieser Entwicklung Schritt zu halten. Experten sind sich einig, dass lebenslanges Lernen in Zukunft noch wichtiger wird.",
+      questions: [
+        {
+          title: "Was passiert mit traditionellen Berufen?",
+          options: [
+            {
+              id: "a",
+              text: "Sie werden alle verschwinden",
+              isCorrect: false,
+            },
+            {
+              id: "b",
+              text: "Viele werden durch Automatisierung ersetzt",
+              isCorrect: true,
+            },
+            { id: "c", text: "Sie bleiben unverändert", isCorrect: false },
+            { id: "d", text: "Sie werden wichtiger", isCorrect: false },
+          ],
+          explanation:
+            "Der Text erklärt, dass viele traditionelle Berufe durch Automatisierung ersetzt werden.",
+          languages_Explanations: {
+            FR: "Le texte explique que de nombreux métiers traditionnels sont remplacés par l'automatisation.",
+            EN: "The text explains that many traditional jobs are being replaced by automation.",
+            ES: "El texto explica que muchos trabajos tradicionales son reemplazados por la automatización.",
+            PT: "O texto explica que muitos empregos tradicionais estão sendo substituídos pela automação.",
+            PL: "Tekst wyjaśnia, że wiele tradycyjnych zawodów zostaje zastąpionych przez automatyzację.",
+            RU: "В тексте объясняется, что многие традиционные профессии заменяются автоматизацией.",
+            TR: "Metin, birçok geleneksel mesleğin otomasyon tarafından değiştirildiğini açıklıyor.",
+            IT: "Il testo spiega che molti lavori tradizionali vengono sostituiti dall'automazione.",
+            UK: "У тексті пояснюється, що багато традиційних професій замінюються автоматизацією.",
+            VI: "Văn bản giải thích rằng nhiều nghề truyền thống đang được thay thế bởi tự động hóa.",
+            TL: "Ipinaliwanag ng teksto na maraming tradisyonal na trabaho ay napapalitan ng automation.",
+            ZH: "文本解释说许多传统职业正被自动化所取代。",
+            ID: "Teks menjelaskan bahwa banyak pekerjaan tradisional digantikan oleh otomatisasi.",
+            TH: "ข้อความอธิบายว่าอาชีพดั้งเดิมหลายอย่างถูกแทนที่ด้วยระบบอัตโนมัติ",
+            MS: "Teks menerangkan bahawa banyak pekerjaan tradisional digantikan oleh automasi.",
+            AR: "يوضح النص أن العديد من المهن التقليدية يتم استبدالها بالأتمتة.",
+          },
+        },
+      ],
+    },
+  ],
+  B2: [
+    {
+      id: "lsB21",
+      well_Answered: false,
+      Text: "Der Klimawandel stellt eine der größten Herausforderungen unserer Zeit dar. Wissenschaftler warnen vor irreversiblen Schäden, falls nicht schnell gehandelt wird. Die internationale Gemeinschaft hat sich verpflichtet, die Erderwärmung auf unter 2 Grad Celsius zu begrenzen. Dafür sind drastische Maßnahmen zur Reduktion von Treibhausgasen erforderlich. Gleichzeitig müssen alternative Energiequellen massiv ausgebaut werden.",
+      questions: [
+        {
+          title:
+            "Auf welche Temperatur soll die Erderwärmung begrenzt werden?",
+          options: [
+            { id: "a", text: "Unter 1 Grad Celsius", isCorrect: false },
+            { id: "b", text: "Unter 2 Grad Celsius", isCorrect: true },
+            { id: "c", text: "Unter 3 Grad Celsius", isCorrect: false },
+            { id: "d", text: "Unter 4 Grad Celsius", isCorrect: false },
+          ],
+          explanation:
+            "Der Text erwähnt das Ziel, die Erderwärmung auf unter 2 Grad Celsius zu begrenzen.",
+          languages_Explanations: {
+            FR: "Le texte mentionne l'objectif de limiter le réchauffement climatique à moins de 2 degrés Celsius.",
+            EN: "The text mentions the goal of limiting global warming to under 2 degrees Celsius.",
+            ES: "El texto menciona el objetivo de limitar el calentamiento global a menos de 2 grados Celsius.",
+            PT: "O texto menciona o objetivo de limitar o aquecimento global a menos de 2 graus Celsius.",
+            PL: "Tekst wspomina cel ograniczenia globalnego ocieplenia do poniżej 2 stopni Celsjusza.",
+            RU: "В тексте упоминается цель ограничить глобальное потепление до менее 2 градусов Цельсия.",
+            TR: "Metin, küresel ısınmanın 2 santigrat derecenin altında sınırlandırılması hedefini belirtiyor.",
+            IT: "Il testo menziona l'obiettivo di limitare il riscaldamento globale a meno di 2 gradi Celsius.",
+            UK: "У тексті згадується мета обмежити глобальне потепління до менш ніж 2 градусів Цельсія.",
+            VI: "Văn bản đề cập đến mục tiêu hạn chế sự nóng lên toàn cầu dưới 2 độ C.",
+            TL: "Binabanggit ng teksto ang layuning limitahan ang global warming sa ilalim ng 2 degrees Celsius.",
+            ZH: "文本提到了将全球变暖限制在2摄氏度以下的目标。",
+            ID: "Teks menyebutkan tujuan membatasi pemanasan global di bawah 2 derajat Celsius.",
+            TH: "ข้อความกล่าวถึงเป้าหมายการจำกัดภาวะโลกร้อนให้ต่ำกว่า 2 องศาเซลเซียส",
+            MS: "Teks menyebut matlamat untuk mengehadkan pemanasan global kepada bawah 2 darjah Celsius.",
+            AR: "يذكر النص هدف الحد من الاحتباس الحراري إلى أقل من درجتين مئويتين.",
+          },
+        },
+      ],
+    },
+  ],
+  C1: [
+    {
+      id: "lsC11",
+      well_Answered: false,
+      Text: "Die Philosophie der Aufklärung prägte das 18. Jahrhundert nachhaltig. Denker wie Kant, Voltaire und Rousseau hinterfragten traditionelle Autoritäten und propagierten die Macht der Vernunft. Ihr Einfluss reichte weit über akademische Kreise hinaus und trug zur Entstehung moderner demokratischer Systeme bei. Die Aufklärung betonte die Wichtigkeit individueller Rechte und stellte das Konzept der Gewaltenteilung vor.",
+      questions: [
+        {
+          title: "Was charakterisierte die Philosophie der Aufklärung?",
+          options: [
+            {
+              id: "a",
+              text: "Unterstützung traditioneller Autoritäten",
+              isCorrect: false,
+            },
+            {
+              id: "b",
+              text: "Hinterfragung traditioneller Autoritäten und Betonung der Vernunft",
+              isCorrect: true,
+            },
+            {
+              id: "c",
+              text: "Ablehnung individueller Rechte",
+              isCorrect: false,
+            },
+            {
+              id: "d",
+              text: "Förderung monarchischer Systeme",
+              isCorrect: false,
+            },
+          ],
+          explanation:
+            "Die Aufklärer hinterfragten traditionelle Autoritäten und propagierten die Macht der Vernunft.",
+          languages_Explanations: {
+            FR: "Les philosophes des Lumières remettaient en question les autorités traditionnelles et prônaient le pouvoir de la raison.",
+            EN: "Enlightenment philosophers questioned traditional authorities and advocated the power of reason.",
+            ES: "Los filósofos de la Ilustración cuestionaron las autoridades tradicionales y defendieron el poder de la razón.",
+            PT: "Os filósofos do Iluminismo questionaram as autoridades tradicionais e defenderam o poder da razão.",
+            PL: "Filozofowie oświecenia kwestionowali tradycyjne autorytety i propagowali moc rozumu.",
+            RU: "Философы Просвещения ставили под сомнение традиционные авторитеты и проповедовали силу разума.",
+            TR: "Aydınlanma filozofları geleneksel otoriteleri sorguladı ve aklın gücünü savundu.",
+            IT: "I filosofi dell'Illuminismo mettevano in discussione le autorità tradizionali e sostenevano il potere della ragione.",
+            UK: "Філософи Просвітництва ставили під сумнів традиційні авторитети та проповідували силу розуму.",
+            VI: "Các triết gia Khai sáng đặt câu hỏi về các thẩm quyền truyền thống và ủng hộ sức mạnh của lý trí.",
+            TL: "Ang mga pilosopong Enlightenment ay nag-tanong sa tradisyonal na mga awtoridad at itinataguyod ang kapangyarihan ng pag-iisip.",
+            ZH: "启蒙哲学家质疑传统权威并宣扬理性的力量。",
+            ID: "Para filsuf Pencerahan mempertanyakan otoritas tradisional dan memperjuangkan kekuatan akal.",
+            TH: "นักปรัชญายุคแสงธรรมตั้งคำถามต่ออำนาจดั้งเดิมและสนับสนุนพลังแห่งเหตุผล",
+            MS: "Ahli falsafah Pencerahan mempersoalkan autoriti tradisional dan menyokong kuasa akal.",
+            AR: "فلاسفة التنوير شككوا في السلطات التقليدية ودعوا إلى قوة العقل.",
+          },
+        },
+      ],
+    },
+  ],
+  C2: [
+    {
+      id: "lsC21",
+      well_Answered: false,
+      Text: "Die postmoderne Literaturtheorie stellt fundamentale Annahmen über Autorschaft, Textualität und Bedeutung in Frage. Theoretiker wie Derrida und Foucault argumentieren, dass Texte nicht eine einzige, vom Autor intendierte Bedeutung besitzen, sondern durch den Interpretationsprozess des Lesers konstituiert werden. Diese Perspektive unterminiert traditionelle hermeneutische Ansätze und eröffnet neue Möglichkeiten für die Textanalyse.",
+      questions: [
+        {
+          title:
+            "Was argumentieren postmoderne Theoretiker über Textbedeutung?",
+          options: [
+            {
+              id: "a",
+              text: "Texte haben eine einzige, vom Autor bestimmte Bedeutung",
+              isCorrect: false,
+            },
+            {
+              id: "b",
+              text: "Bedeutung wird durch den Interpretationsprozess des Lesers konstituiert",
+              isCorrect: true,
+            },
+            {
+              id: "c",
+              text: "Nur Experten können Texte richtig interpretieren",
+              isCorrect: false,
+            },
+            {
+              id: "d",
+              text: "Textbedeutung ist unwichtig",
+              isCorrect: false,
+            },
+          ],
+          explanation:
+            "Postmoderne Theoretiker argumentieren, dass Bedeutung durch den Interpretationsprozess des Lesers konstituiert wird.",
+          languages_Explanations: {
+            FR: "Les théoriciens postmodernes soutiennent que le sens est constitué par le processus d'interprétation du lecteur.",
+            EN: "Postmodern theorists argue that meaning is constituted through the reader's interpretation process.",
+            ES: "Los teóricos posmodernos argumentan que el significado se constituye a través del proceso de interpretación del lector.",
+            PT: "Os teóricos pós-modernos argumentam que o significado é constituído através do processo de interpretação do leitor.",
+            PL: "Teoretycy postmoderniści argumentują, że znaczenie jest konstituowane przez proces interpretacji czytelnika.",
+            RU: "Постмодернистские теоретики утверждают, что смысл составляется через процесс интерпретации читателя.",
+            TR: "Postmodern teorisyenler, anlamın okuyucunun yorumlama süreci yoluyla oluşturulduğunu savunuyor.",
+            IT: "I teorici postmoderni sostengono che il significato è costituito attraverso il processo di interpretazione del lettore.",
+            UK: "Постмодерністські теоретики стверджують, що значення складається через процес інтерпретації читача.",
+            VI: "Các nhà lý thuyết hậu hiện đại cho rằng ý nghĩa được cấu thành thông qua quá trình diễn giải của người đọc.",
+            TL: "Sinasabi ng mga postmodern na theorist na ang kahulugan ay nabubuo sa pamamagitan ng proseso ng interpretasyon ng mambabasa.",
+            ZH: "后现代理论家认为意义是通过读者的解释过程构成的。",
+            ID: "Para teoretikus postmodern berargumen bahwa makna dikonstruksi melalui proses interpretasi pembaca.",
+            TH: "นักทฤษฎีหลังสมัยใหม่แย้งว่าความหมายถูกสร้างขึ้นผ่านกระบวนการตีความของผู้อ่าน",
+            MS: "Ahli teori pascamoden berhujah bahawa makna dibentuk melalui proses tafsiran pembaca.",
+            AR: "يحتج المنظرون ما بعد الحداثيون أن المعنى يتشكل من خلال عملية تفسير القارئ.",
+          },
+        },
+      ],
+    },
+  ],
+}
+
 };
+
 
 
 
