@@ -419,9 +419,9 @@ const ResultsView = ({
         <TouchableOpacity onPress={onBack} style={styles.closeButton}>
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.title}>
+        {/* <Text style={styles.title}>
           {translations.results[userNativeLanguage]} 
-        </Text>
+        </Text> */}
         <View style={{ width: 24 }} />
       </View>
 
@@ -430,20 +430,21 @@ const ResultsView = ({
         contentContainerStyle={{ paddingBottom: 120 }}
       >
         {/* Score principal */}
-        <View style={[styles.scoreCard, { backgroundColor: colors.success }]}>
+        <View style={[styles.scoreCard, { backgroundColor: colors.white }]}>
           <View style={styles.scoreHeader}>
             <Ionicons
               name={getScoreIcon(exerciseResults.percentage)}
               size={32}
-              color={colors.white}
+              color={'white'}
             />
             <Text style={styles.scoreTitle}>
               {getScoreMessage(exerciseResults.percentage)}
             </Text>
-          </View>
-          <Text style={styles.scorePercentage}>
+            <Text style={styles.scorePercentage}>
             {exerciseResults.percentage}%
           </Text>
+          </View>
+          
          
 
           {/* Indicateur de performance */}
@@ -486,9 +487,10 @@ const ResultsView = ({
                     style={[
                       styles.resultBadge,
                       {
-                        backgroundColor: questionResult.isCorrect
-                          ? colors.success
-                          : colors.error,
+                        backgroundColor: colors.primary
+                        // questionResult.isCorrect
+                        //   ? colors.success
+                        //   : colors.error,
                       },
                     ]}
                   >
@@ -513,9 +515,10 @@ const ResultsView = ({
                       style={[
                         styles.answerText,
                         {
-                          color: questionResult.isCorrect
-                            ? colors.success
-                            : colors.error,
+                          color: 'black'
+                          // questionResult.isCorrect
+                          //   ? colors.success
+                          //   : colors.error,
                         },
                       ]}
                     >
@@ -529,7 +532,7 @@ const ResultsView = ({
                         {translations.correctAnswer[userNativeLanguage]}
                       </Text>
                       <Text
-                        style={[styles.answerText, { color: colors.success }]}
+                        style={[styles.answerText, { color: 'black' }]}
                       >
                         {questionResult.correctAnswer}
                       </Text>
@@ -572,23 +575,7 @@ const ResultsView = ({
         </View>
 
         {/* Conseils d'amélioration */}
-        {exerciseResults.percentage < 70 && (
-          <View style={styles.improvementCard}>
-            <View style={styles.improvementHeader}>
-              <Ionicons
-                name="school-outline"
-                size={24}
-                color={colors.warning}
-              />
-              <Text style={styles.improvementTitle}>
-                {translations.improvementSuggestions[userNativeLanguage]}
-              </Text>
-            </View>
-            <Text style={styles.improvementText}>
-              {translations.improvementTips[userNativeLanguage]}
-            </Text>
-          </View>
-        )}
+       
       </ScrollView>
 
       {/* Boutons d'action sticky */}
@@ -597,28 +584,28 @@ const ResultsView = ({
     style={[styles.actionButton, styles.restartButton]}
     onPress={onRestart}
   >
-    <Ionicons name="refresh" size={20} color={colors.white} />
-    <Text style={styles.actionButtonText}>
+    {/* <Ionicons name="refresh" size={20} color={colors.white} /> */}
+    <Text style={styles.restartButtonText}>
       {translations.buttons.repeat[userNativeLanguage]}
     </Text>
   </TouchableOpacity>
 
   {onNext ? (
     <TouchableOpacity
-      style={[styles.actionButton, { backgroundColor: colors.success }]}
+      style={[styles.actionButton, { backgroundColor: 'black' }]}
       onPress={onNext}
     >
-      <Ionicons name="arrow-forward" size={20} color={colors.white} />
+      
       <Text style={styles.actionButtonText}>
         {translations.buttons.continue[userNativeLanguage]}
       </Text>
     </TouchableOpacity>
   ) : (
     <TouchableOpacity
-      style={[styles.actionButton, { backgroundColor: colors.success }]}
+      style={[styles.actionButton, { backgroundColor: colors.primary }]}
       onPress={onBack}
     >
-      <Ionicons name="list" size={20} color={colors.white} />
+      {/* <Ionicons name="list" size={20} color={colors.white} /> */}
       <Text style={styles.actionButtonText}>
         {translations.buttons.exercises[userNativeLanguage]}
       </Text>
@@ -636,7 +623,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 16,
-    backgroundColor: colors.white,
+    backgroundColor: colors.background,
   },
   title: {
     fontSize: 20,
@@ -662,17 +649,21 @@ const styles = StyleSheet.create({
   },
   scoreHeader: {
     alignItems: "center",
+    width:150,
+    height:150,
+    borderRadius:75,
     marginBottom: 16,
+    backgroundColor:colors.primary
   },
   scoreTitle: {
-    color: colors.white,
+    color: 'white',
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 8,
   },
   scorePercentage: {
-    color: colors.white,
-    fontSize: 48,
+    color: 'white',
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 8,
   },
@@ -751,6 +742,9 @@ const styles = StyleSheet.create({
   },
   answerRow: {
     marginBottom: 6,
+    backgroundColor: colors.lightGray,
+    borderRadius: 8,
+    padding: 12,
   },
   answerLabel: {
     fontSize: 14,
@@ -759,7 +753,7 @@ const styles = StyleSheet.create({
   },
   answerText: {
     fontSize: 15,
-    fontWeight: "500",
+    fontWeight: "700",
   },
   explanationBox: {
     backgroundColor: colors.lightGray,
@@ -838,7 +832,12 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   restartButton: {
-    backgroundColor: colors.warning,
+    backgroundColor: colors.lightGray,
+  },
+  restartButtonText:{
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   actionButtonText: {
     color: colors.white,

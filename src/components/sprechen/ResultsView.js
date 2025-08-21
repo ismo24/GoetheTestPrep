@@ -419,9 +419,9 @@ const ResultsView = ({
         <TouchableOpacity onPress={onBack} style={styles.closeButton}>
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.title}>
+        {/* <Text style={styles.title}>
           {translations.results[userNativeLanguage]}
-        </Text>
+        </Text> */}
         <View style={{ width: 24 }} />
       </View>
 
@@ -446,8 +446,8 @@ const ResultsView = ({
           style={[styles.actionButton, styles.restartButton]}
           onPress={onRestart}
         >
-          <Ionicons name="refresh" size={20} color={colors.white} />
-          <Text style={styles.actionButtonText}>
+          {/* <Ionicons name="refresh" size={20} color={colors.white} /> */}
+          <Text style={styles.restartButtonText}>
             {translations.buttons.repeat[userNativeLanguage]}
           </Text>
         </TouchableOpacity>
@@ -464,10 +464,10 @@ const ResultsView = ({
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colors.success }]}
+            style={[styles.actionButton, { backgroundColor: 'black' }]}
             onPress={onBack}
           >
-            <Ionicons name="list" size={20} color={colors.white} />
+            {/* <Ionicons name="list" size={20} color={colors.white} /> */}
             <Text style={styles.actionButtonText}>
               {translations.buttons.exercises[userNativeLanguage]}
             </Text>
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 16,
-    backgroundColor: colors.white,
+    backgroundColor: colors.background,
   },
   title: {
     fontSize: 20,
@@ -600,6 +600,9 @@ const styles = StyleSheet.create({
   },
   answerRow: {
     marginBottom: 6,
+    backgroundColor: colors.lightGray,
+    borderRadius: 8,
+    padding: 12,
   },
   answerLabel: {
     fontSize: 14,
@@ -608,7 +611,7 @@ const styles = StyleSheet.create({
   },
   answerText: {
     fontSize: 15,
-    fontWeight: "500",
+    fontWeight: "700",
   },
   explanationBox: {
     backgroundColor: colors.lightGray,
@@ -687,7 +690,12 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   restartButton: {
-    backgroundColor: colors.warning,
+    backgroundColor: colors.lightGray,
+  },
+  restartButtonText:{
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   actionButtonText: {
     color: colors.white,

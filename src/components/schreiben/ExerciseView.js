@@ -233,14 +233,14 @@ const ExerciseView = ({
           style={[
             styles.stickyButton,
             {
-              backgroundColor: colors.success,
+              backgroundColor: colors.primary,
             },
           ]}
           onPress={onFinishExercise}
           // disabled={!allQuestionsAnswered}
         >
-          <Text style={styles.stickyButtonText}>BEISPIEL SEHEN</Text>
-          <Ionicons name="checkmark-circle" size={20} color={colors.white} />
+          <Text style={styles.stickyButtonText}>OK</Text>
+          {/* <Ionicons name="checkmark-circle" size={20} color={colors.white} /> */}
         </TouchableOpacity>
       </View>
     </>
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
   optionText: {
     fontSize: 15,

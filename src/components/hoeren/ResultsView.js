@@ -584,9 +584,9 @@ const ResultsView = ({
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <Text style={styles.title}>
+          {/* <Text style={styles.title}>
             {translations.results[userNativeLanguage]} 
-          </Text>
+          </Text> */}
         </View>
         <TouchableOpacity>
           {/* Espace pour équilibrer le header */}
@@ -595,9 +595,9 @@ const ResultsView = ({
 
       <ScrollView style={styles.resultsContent} contentContainerStyle={{ paddingBottom: 120 }}>
         {/* Score principal */}
-        <View style={[styles.scoreCard, { backgroundColor: colors.secondary }]}>
+        <View style={[styles.scoreCard, { backgroundColor: 'white' }]}>
           <View style={styles.scoreHeader}>
-            <Ionicons name={getScoreIcon(exerciseResults.percentage)} size={32} color={colors.white} />
+            <Ionicons name={getScoreIcon(exerciseResults.percentage)} size={32} color={'black'} />
             <Text style={styles.scoreTitle}>{getScoreMessage(exerciseResults.percentage)}</Text>
           </View>
           <Text style={styles.scorePercentage}>{exerciseResults.percentage}%</Text>
@@ -638,7 +638,7 @@ const ResultsView = ({
                 </Text>
                 <View style={[
                   styles.resultBadge,
-                  { backgroundColor: 'black'
+                  { backgroundColor: colors.primary
                     // questionResult.isCorrect ? colors.success : colors.error
                    }
                 ]}>
@@ -659,7 +659,9 @@ const ResultsView = ({
                   </Text>
                   <Text style={[
                     styles.answerText,
-                    { color: questionResult.isCorrect ? colors.success : colors.error }
+                    { color:'black'
+                      // questionResult.isCorrect ? colors.success : colors.error 
+                    }
                   ]}>
                     {questionResult.selectedAnswer}
                   </Text>
@@ -670,7 +672,7 @@ const ResultsView = ({
                     <Text style={styles.answerLabel}>
                       {translations.correctAnswer[userNativeLanguage]}
                     </Text>
-                    <Text style={[styles.answerText, { color: colors.success }]}>
+                    <Text style={[styles.answerText, { color: 'black' }]}>
                       {questionResult.correctAnswer}
                     </Text>
                   </View>
@@ -733,10 +735,10 @@ const ResultsView = ({
           </TouchableOpacity>
         ) : (
           <TouchableOpacity 
-            style={[styles.actionButton, { backgroundColor: colors.success }]} 
+            style={[styles.actionButton, { backgroundColor: 'black' }]} 
             onPress={onBack}
           >
-            <Ionicons name="list" size={20} color={colors.white} />
+            {/* <Ionicons name="list" size={20} color={colors.white} /> */}
             <Text style={styles.actionButtonText}>
               {translations.buttons.exercises[userNativeLanguage]}
             </Text>
@@ -799,13 +801,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   scoreTitle: {
-    color: colors.white,
+    color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 8,
   },
   scorePercentage: {
-    color: colors.white,
+    color: 'black',
     fontSize: 48,
     fontWeight: 'bold',
     marginBottom: 8,
@@ -885,6 +887,9 @@ const styles = StyleSheet.create({
   },
   answerRow: {
     marginBottom: 6,
+    backgroundColor: colors.lightGray,
+    borderRadius: 8,
+    padding: 12,
   },
   answerLabel: {
     fontSize: 14,
@@ -893,7 +898,7 @@ const styles = StyleSheet.create({
   },
   answerText: {
     fontSize: 15,
-    fontWeight: '500',
+    fontWeight: "700",
   },
   explanationBox: {
     backgroundColor: colors.lightGray,
@@ -992,7 +997,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   restartButton: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.lightGray,
   },
   restartButtonText:{
     color: 'black',

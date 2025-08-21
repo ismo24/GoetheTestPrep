@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef,useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
@@ -16,26 +16,52 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
   const [isLoaded, setIsLoaded] = useState(false);
   
   const countdownInterval = useRef(null);
+  const isMounted = useRef(true);
 
   // Nettoyer les ressources
   useEffect(() => {
+    isMounted.current = true;
     return () => {
+      isMounted.current = false;
       if (sound) {
-        sound.unloadAsync();
+        sound.unloadAsync().catch(console.error);
       }
       if (countdownInterval.current) {
         clearInterval(countdownInterval.current);
+        countdownInterval.current = null;
       }
     };
   }, [sound]);
 
   // Charger l'audio quand le composant est monté
   useEffect(() => {
-    loadAudio();
+    if (audioUrl) {
+      loadAudio();
+    }
   }, [audioUrl]);
 
+  // Optimisation du callback pour éviter les re-créations
+  const onPlaybackStatusUpdate = useCallback((status) => {
+    if (!isMounted.current) return;
+    
+    if (status.isLoaded) {
+      setCurrentTime(Math.floor(status.positionMillis / 1000));
+      if (status.durationMillis) {
+        setDuration(Math.floor(status.durationMillis / 1000));
+      }
+      
+      if (status.didJustFinish) {
+        setIsPlaying(false);
+        if (onAudioFinished) onAudioFinished();
+      }
+    } else if (status.error) {
+      console.error('Erreur de lecture:', status.error);
+      setIsPlaying(false);
+      setIsLoading(false);
+    }
+  }, [onAudioFinished]);
+
   // Compte à rebours avant lecture automatique
-  
   useEffect(() => {
     // Nettoyer l'interval existant
     if (countdownInterval.current) {
@@ -44,12 +70,20 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
     }
   
     // Démarrer le compte à rebours quand autoPlay=true et audio chargé
-    if (autoPlay && isLoaded) {
+    if (autoPlay && isLoaded && isMounted.current) {
       console.log('🎯 Démarrage du compte à rebours');
       setShowCountdown(true);
       setCountdownTime(countdown);
       
       countdownInterval.current = setInterval(() => {
+        if (!isMounted.current) {
+          if (countdownInterval.current) {
+            clearInterval(countdownInterval.current);
+            countdownInterval.current = null;
+          }
+          return;
+        }
+        
         setCountdownTime(prev => {
           console.log('⏰ Compte à rebours:', prev);
           if (prev <= 1) {
@@ -74,9 +108,9 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
     };
   }, [autoPlay, isLoaded, countdown]);
 
-
-
   const loadAudio = async () => {
+    if (!isMounted.current) return;
+    
     try {
       setIsLoading(true);
       
@@ -97,52 +131,43 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
         onPlaybackStatusUpdate
       );
 
-      setSound(newSound);
-      setIsLoaded(true);
-      setIsLoading(false);
+      if (isMounted.current) {
+        setSound(newSound);
+        setIsLoaded(true);
+        setIsLoading(false);
+      } else {
+        // Si le composant a été démonté, nettoyer l'audio
+        newSound.unloadAsync().catch(console.error);
+      }
       
     } catch (error) {
       console.error('Erreur lors du chargement audio:', error);
-      setIsLoading(false);
-      Alert.alert('Erreur Audio', 'Impossible de charger le fichier audio');
+      if (isMounted.current) {
+        setIsLoading(false);
+        Alert.alert('Erreur Audio', 'Impossible de charger le fichier audio');
+      }
     }
   };
 
-  const onPlaybackStatusUpdate = (status) => {
-    if (status.isLoaded) {
-      setCurrentTime(Math.floor(status.positionMillis / 1000));
-      if (status.durationMillis) {
-        setDuration(Math.floor(status.durationMillis / 1000));
-      }
-      
-      if (status.didJustFinish) {
-        setIsPlaying(false);
-        if (onAudioFinished) onAudioFinished();
-      }
-    } else if (status.error) {
-      console.error('Erreur de lecture:', status.error);
-      setIsPlaying(false);
-      setIsLoading(false);
-    }
-  };
-
-  const playAudio = async () => {
-    if (sound && isLoaded) {
+  const playAudio = useCallback(async () => {
+    if (sound && isLoaded && isMounted.current) {
       try {
         const status = await sound.getStatusAsync();
-        if (status.isLoaded) {
+        if (status.isLoaded && isMounted.current) {
           await sound.playAsync();
           setIsPlaying(true);
         }
       } catch (error) {
         console.error('Erreur lors de la lecture:', error);
-        Alert.alert('Erreur', 'Impossible de lire le fichier audio');
+        if (isMounted.current) {
+          Alert.alert('Erreur', 'Impossible de lire le fichier audio');
+        }
       }
     }
-  };
+  }, [sound, isLoaded]);
 
-  const pauseAudio = async () => {
-    if (sound) {
+  const pauseAudio = useCallback(async () => {
+    if (sound && isMounted.current) {
       try {
         await sound.pauseAsync();
         setIsPlaying(false);
@@ -150,18 +175,18 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
         console.error('Erreur lors de la pause:', error);
       }
     }
-  };
+  }, [sound]);
 
-  const togglePlayPause = () => {
+  const togglePlayPause = useCallback(() => {
     if (isPlaying) {
       pauseAudio();
     } else {
       playAudio();
     }
-  };
+  }, [isPlaying, playAudio, pauseAudio]);
 
-  const restartAudio = async () => {
-    if (sound) {
+  const restartAudio = useCallback(async () => {
+    if (sound && isMounted.current) {
       try {
         await sound.setPositionAsync(0);
         setCurrentTime(0);
@@ -172,13 +197,13 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
         console.error('Erreur lors du redémarrage:', error);
       }
     }
-  };
+  }, [sound, isPlaying]);
 
-  const formatTime = (seconds) => {
+  const formatTime = useCallback((seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
+  }, []);
 
   if (showCountdown) {
     return (
@@ -190,8 +215,6 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
       </View>
     );
   }
-
-
 
   return (
     <View style={styles.audioContainer}>
@@ -264,12 +287,12 @@ const ExerciseView = ({
   isStartAudioPlaying = false,
   startAudioFinished = false
 }) => {
-  const currentAudio = selectedUbung.data[currentAudioIndex];
   const [audioStarted, setAudioStarted] = useState(false);
 
-
-  
-  
+  // Memoiser les données pour éviter les re-calculs
+  const currentAudio = useMemo(() => {
+    return selectedUbung?.data?.[currentAudioIndex];
+  }, [selectedUbung, currentAudioIndex]);
 
   // Debug logs
   console.log('🔍 ExerciseView Debug:');
@@ -284,26 +307,37 @@ const ExerciseView = ({
     setAudioStarted(false);
   }, [currentAudioIndex]);
 
-  const handleAudioFinished = () => {
+  const handleAudioFinished = useCallback(() => {
     setAudioStarted(true);
-  };
+  }, []);
 
-  const showQuestionsManually = () => {
+  const showQuestionsManually = useCallback(() => {
     setAudioStarted(true);
-  };
+  }, []);
 
-  // Vérifier si toutes les questions ont une réponse
-  const allQuestionsAnswered = currentAudio.questions?.every((_, index) => 
-    selectedAnswers[index] !== undefined
+  // Memoiser le calcul pour éviter les re-calculs inutiles
+  const allQuestionsAnswered = useMemo(() => {
+    if (!currentAudio?.questions) return false;
+    return currentAudio.questions.every((_, index) => 
+      selectedAnswers[index] !== undefined
+    );
+  }, [currentAudio?.questions, selectedAnswers]);
 
-  );
-
-  useEffect(()=> {
-    if(allQuestionsAnswered){
-      onFinishExercise()
+  // Optimiser l'effet avec une dépendance stable
+  useEffect(() => {
+    if (allQuestionsAnswered && onFinishExercise) {
+      onFinishExercise();
     }
-  },[allQuestionsAnswered])
+  }, [allQuestionsAnswered, onFinishExercise]);
 
+  // Vérifier si currentAudio existe avant le rendu
+  if (!currentAudio) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Chargement de l'exercice...</Text>
+      </View>
+    );
+  }
   
   return (
     <>
@@ -311,7 +345,6 @@ const ExerciseView = ({
         <TouchableOpacity onPress={onBack} style={styles.closeButton}>
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
-        {/* <View style={styles.headerCenter}> */}
         <View style={styles.exerciseCounter}>
           <ProgressBar 
             currentIndex={currentExerciseNumber || 1}
@@ -321,7 +354,6 @@ const ExerciseView = ({
             progressColor={colors.primary}
           />
         </View>
-        {/* </View> */}
         <TouchableOpacity>
           {/* Espace pour équilibrer le header */}
         </TouchableOpacity>
@@ -340,126 +372,98 @@ const ExerciseView = ({
             autoPlay={startAudioFinished}
             countdown={10}
           />
-          
-          {/* {
-        //   !audioStarted && 
-          (
-            <View style={styles.instructionBox}>
-              <View style={styles.instructionContent}>
-                <Ionicons name="information-circle" size={24} color={colors.primary} />
-                <Text style={styles.instructionText}>
-                  Lesen Sie erst die {currentAudio.questions.length==1?'Frage':"Fragen"} und dann
-                  Hören Sie das Audio aufmerksam und beantworten Sie.</Text>
-                <TouchableOpacity 
-                  style={styles.skipButton}
-                  onPress={showQuestionsManually}
-                >
-                  <Text style={styles.skipButtonText}>Fragen jetzt anzeigen</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )} */}
         </View>
 
-        {/* Questions - affichées seulement après que l'audio ait commencé */}
-        {
-        // audioStarted &&
-         (
-          <View style={styles.questionsSection}>
-            {currentAudio.questions?.map((question, questionIndex) => {
-              const isAnswered = selectedAnswers[questionIndex] !== undefined;
-              
-              return (
-                <View key={questionIndex} style={styles.questionCard}>
-                  <View style={styles.questionHeader}>
-                    <Text style={styles.questionTitle}>
-                      Frage {currentAudio.questions?.length !== 1 ? questionIndex + 1 : ""}
-                    </Text>
-                    {isAnswered && (
-                      <View style={styles.answeredBadge}>
-                        <Ionicons name="checkmark" size={16} color={colors.white} />
-                      </View>
-                    )}
-                  </View>
-                  
-                  <Text style={styles.questionText}>
-                    {question.title}
+        {/* Questions */}
+        <View style={styles.questionsSection}>
+          {currentAudio.questions?.map((question, questionIndex) => {
+            const isAnswered = selectedAnswers[questionIndex] !== undefined;
+            
+            return (
+              <View key={`${question.id || questionIndex}`} style={styles.questionCard}>
+                <View style={styles.questionHeader}>
+                  <Text style={styles.questionTitle}>
+                    Frage {currentAudio.questions?.length !== 1 ? questionIndex + 1 : ""}
                   </Text>
-                  
-                  <View style={styles.optionsContainer}>
-                    {question.options?.map((option) => {
-                      const isSelected = selectedAnswers[questionIndex] === option.id;
-                      
-                      return (
-                        <TouchableOpacity
-                          key={option.id}
-                          style={[
-                            styles.optionButton,
-                            isSelected && styles.optionSelected
-                          ]}
-                          onPress={() => onSelectAnswer(questionIndex, option.id)}
-                        >
-                          <View style={[
-                            styles.optionCircle,
-                            isSelected && styles.optionCircleSelected
-                          ]}>
-                            {isSelected && (
-                              <View style={styles.optionDot} />
-                            )}
-                          </View>
-                          <Text style={[
-                            styles.optionText,
-                            isSelected && styles.optionTextSelected
-                          ]}>
-                            ({option.id.toUpperCase()}) {option.text}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
+                  {isAnswered && (
+                    <View style={styles.answeredBadge}>
+                      <Ionicons name="checkmark" size={16} color={colors.white} />
+                    </View>
+                  )}
                 </View>
-              );
-            })}
-          </View>
-        )}
+                
+                <Text style={styles.questionText}>
+                  {question.title}
+                </Text>
+                
+                <View style={styles.optionsContainer}>
+                  {question.options?.map((option) => {
+                    const isSelected = selectedAnswers[questionIndex] === option.id;
+                    
+                    return (
+                      <TouchableOpacity
+                        key={`${option.id}-${questionIndex}`}
+                        style={[
+                          styles.optionButton,
+                          isSelected && styles.optionSelected
+                        ]}
+                        onPress={() => onSelectAnswer(questionIndex, option.id)}
+                      >
+                        <View style={[
+                          styles.optionCircle,
+                          isSelected && styles.optionCircleSelected
+                        ]}>
+                          {isSelected && (
+                            <View style={styles.optionDot} />
+                          )}
+                        </View>
+                        <Text style={[
+                          styles.optionText,
+                          isSelected && styles.optionTextSelected
+                        ]}>
+                          ({option.id.toUpperCase()}) {option.text}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+            );
+          })}
+        </View>
 
         {/* Statut de progression */}
-        {audioStarted && (
-          <View style={styles.progressInfo}>
-            <Text style={styles.progressText}>
-              {Object.keys(selectedAnswers).length} von {currentAudio.questions?.length || 0} Fragen beantwortet
-            </Text>
-          </View>
-        )}
+        <View style={styles.progressInfo}>
+          <Text style={styles.progressText}>
+            {Object.keys(selectedAnswers).length} von {currentAudio.questions?.length || 0} Fragen beantwortet
+          </Text>
+        </View>
       </ScrollView>
 
       {/* Bouton sticky "Beenden" */}
-      {
-    //   audioStarted && 
-      (
-        <View style={[styles.stickyButtonContainer, {opacity: allQuestionsAnswered ? 1 : 0}]}>
-          <TouchableOpacity 
-            style={[
-              styles.stickyButton, 
-              { 
-                backgroundColor: allQuestionsAnswered ? colors.primary : colors.gray,
-                opacity: allQuestionsAnswered ? 1 : 0
-              }
-            ]}
-            onPress={onFinishExercise}
-            disabled={!allQuestionsAnswered}
-          >
-            <Text style={styles.stickyButtonText}>
-              {allQuestionsAnswered ? 'BEENDEN' : 'ALLE FRAGEN BEANTWORTEN'}
-            </Text>
-            <Ionicons name="checkmark-circle" size={20} color={colors.white} />
-          </TouchableOpacity>
-        </View>
-      )}
+      <View style={[styles.stickyButtonContainer, {opacity: allQuestionsAnswered ? 1 : 0}]}>
+        <TouchableOpacity 
+          style={[
+            styles.stickyButton, 
+            { 
+              backgroundColor: allQuestionsAnswered ? colors.primary : colors.gray,
+              opacity: allQuestionsAnswered ? 1 : 0
+            }
+          ]}
+          onPress={onFinishExercise}
+          disabled={!allQuestionsAnswered}
+        >
+          <Text style={styles.stickyButtonText}>
+            {allQuestionsAnswered ? 'BEENDEN' : 'ALLE FRAGEN BEANTWORTEN'}
+          </Text>
+          <Ionicons name="checkmark-circle" size={20} color={colors.white} />
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
 
+// Styles restent identiques...
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
@@ -504,7 +508,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   exerciseContent: {
-    // flex: 1,
     backgroundColor: colors.background,
   },
   
@@ -767,10 +770,6 @@ const styles = StyleSheet.create({
     color: colors.text,
     textAlign: 'center',
   },
- 
-  
-
- 
 });
 
 export default ExerciseView;

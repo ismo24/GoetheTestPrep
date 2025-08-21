@@ -6,7 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
-  Image
+  Image,
+  
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../styles/colors";
@@ -21,7 +22,7 @@ const getProgressColor = (percentage) => {
   const AnimatedProgressBar = ({ percentage }) => {
     const animatedWidth = new Animated.Value(0);
     
-    React.useEffect(() => {
+    React.useEffect (() => {
       Animated.timing(animatedWidth, {
         toValue: percentage,
         duration: 800,
