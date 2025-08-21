@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { colors } from '../../styles/colors';
+import ProgressBar from '../common/ProgressBar';
 
 const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 5 }) => {
   const [sound, setSound] = useState(null);
@@ -10,7 +11,7 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [countdownTime, setCountdownTime] = useState(countdown);
-  const [showCountdown, setShowCountdown] = useState(autoPlay);
+  const [showCountdown, setShowCountdown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   
@@ -34,26 +35,46 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
   }, [audioUrl]);
 
   // Compte à rebours avant lecture automatique
+  
   useEffect(() => {
-    if (autoPlay && showCountdown && isLoaded) {
+    // Nettoyer l'interval existant
+    if (countdownInterval.current) {
+      clearInterval(countdownInterval.current);
+      countdownInterval.current = null;
+    }
+  
+    // Démarrer le compte à rebours quand autoPlay=true et audio chargé
+    if (autoPlay && isLoaded) {
+      console.log('🎯 Démarrage du compte à rebours');
+      setShowCountdown(true);
+      setCountdownTime(countdown);
+      
       countdownInterval.current = setInterval(() => {
         setCountdownTime(prev => {
+          console.log('⏰ Compte à rebours:', prev);
           if (prev <= 1) {
             setShowCountdown(false);
             playAudio();
+            if (countdownInterval.current) {
+              clearInterval(countdownInterval.current);
+              countdownInterval.current = null;
+            }
             return 0;
           }
           return prev - 1;
         });
       }, 1000);
     }
-
+  
     return () => {
       if (countdownInterval.current) {
         clearInterval(countdownInterval.current);
+        countdownInterval.current = null;
       }
     };
-  }, [autoPlay, showCountdown, isLoaded]);
+  }, [autoPlay, isLoaded, countdown]);
+
+
 
   const loadAudio = async () => {
     try {
@@ -170,6 +191,8 @@ const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 
     );
   }
 
+
+
   return (
     <View style={styles.audioContainer}>
       <View style={styles.playerContainer}>
@@ -231,14 +254,22 @@ const ExerciseView = ({
   currentAudioIndex,
   selectedAnswers,
   levelInfo,
+  currentExerciseNumber,
+  totalExercises,
   onBack,
   onNextAudio,
   onPreviousAudio,
   onSelectAnswer,
-  onFinishExercise
+  onFinishExercise,
+  isStartAudioPlaying = false,
+  startAudioFinished = false
 }) => {
   const currentAudio = selectedUbung.data[currentAudioIndex];
   const [audioStarted, setAudioStarted] = useState(false);
+
+
+  
+  
 
   // Debug logs
   console.log('🔍 ExerciseView Debug:');
@@ -264,21 +295,33 @@ const ExerciseView = ({
   // Vérifier si toutes les questions ont une réponse
   const allQuestionsAnswered = currentAudio.questions?.every((_, index) => 
     selectedAnswers[index] !== undefined
+
   );
 
+  useEffect(()=> {
+    if(allQuestionsAnswered){
+      onFinishExercise()
+    }
+  },[allQuestionsAnswered])
+
+  
   return (
     <>
       <View style={styles.header}>
         <TouchableOpacity onPress={onBack} style={styles.closeButton}>
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
-        <View style={styles.headerCenter}>
-          <View style={[styles.exerciseCounter]}>
-            <Text style={styles.exerciseCounterText}>
-              Hören {selectedUbung.title.replace('Übung ', '') || '1'}
-            </Text>
-          </View>
+        {/* <View style={styles.headerCenter}> */}
+        <View style={styles.exerciseCounter}>
+          <ProgressBar 
+            currentIndex={currentExerciseNumber || 1}
+            totalCount={totalExercises || 1}
+            height={8}
+            backgroundColor="#E5E5E5"
+            progressColor={colors.primary}
+          />
         </View>
+        {/* </View> */}
         <TouchableOpacity>
           {/* Espace pour équilibrer le header */}
         </TouchableOpacity>
@@ -291,29 +334,31 @@ const ExerciseView = ({
         {/* Lecteur Audio */}
         <View style={styles.audioSection}>
           <AudioPlayer
+            key={currentAudio.audioUrl}
             audioUrl={currentAudio.audioUrl}
             onAudioFinished={handleAudioFinished}
-            autoPlay={true}
-            countdown={3}
+            autoPlay={startAudioFinished}
+            countdown={10}
           />
           
-          {
+          {/* {
         //   !audioStarted && 
           (
             <View style={styles.instructionBox}>
               <View style={styles.instructionContent}>
                 <Ionicons name="information-circle" size={24} color={colors.primary} />
                 <Text style={styles.instructionText}>
-                  Hören Sie das Audio aufmerksam und beantworten Sie die Fragen.</Text>
-                {/* <TouchableOpacity 
+                  Lesen Sie erst die {currentAudio.questions.length==1?'Frage':"Fragen"} und dann
+                  Hören Sie das Audio aufmerksam und beantworten Sie.</Text>
+                <TouchableOpacity 
                   style={styles.skipButton}
                   onPress={showQuestionsManually}
                 >
                   <Text style={styles.skipButtonText}>Fragen jetzt anzeigen</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
               </View>
             </View>
-          )}
+          )} */}
         </View>
 
         {/* Questions - affichées seulement après que l'audio ait commencé */}
@@ -397,7 +442,7 @@ const ExerciseView = ({
             style={[
               styles.stickyButton, 
               { 
-                backgroundColor: allQuestionsAnswered ? colors.success : colors.gray,
+                backgroundColor: allQuestionsAnswered ? colors.primary : colors.gray,
                 opacity: allQuestionsAnswered ? 1 : 0
               }
             ]}
@@ -422,7 +467,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 16,
-    backgroundColor: colors.white,
+    backgroundColor: colors.background,
   },
   headerCenter: {
     flexDirection: 'row',
@@ -447,8 +492,11 @@ const styles = StyleSheet.create({
   },
   exerciseCounter: {
     paddingHorizontal: 16,
+    marginLeft:12,
     paddingVertical: 8,
     borderRadius: 20,
+    minWidth: 250, 
+    maxWidth: 300, 
   },
   exerciseCounterText: {
     color: colors.text,
@@ -614,7 +662,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: colors.success,
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -636,9 +684,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightGray,
   },
   optionSelected: {
-    backgroundColor: colors.secondary + '15',
+    backgroundColor: 'black',
     borderWidth: 1,
-    borderColor: colors.secondary,
+    borderColor: 'black',
   },
   optionCircle: {
     width: 20,
@@ -651,13 +699,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   optionCircleSelected: {
-    borderColor: colors.secondary,
+    borderColor: 'white',
   },
   optionDot: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: colors.secondary,
+    backgroundColor: 'white',
   },
   optionText: {
     fontSize: 15,
@@ -665,7 +713,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   optionTextSelected: {
-    color: colors.secondary,
+    color: 'white',
     fontWeight: '500',
   },
   progressInfo: {
@@ -708,6 +756,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.background,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: colors.text,
+    textAlign: 'center',
+  },
+ 
+  
+
+ 
 });
 
 export default ExerciseView;

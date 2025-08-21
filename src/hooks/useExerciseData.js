@@ -100,38 +100,7 @@ export const useExerciseData = () => {
   }, [userDispatch]);
 
   // Terminer un exercice et sauvegarder le résultat
-  const finishExercise = useCallback((skillType, level, exerciseId, results) => {
-    const note = results.percentage;
-    
-    // Sauvegarder la note
-    userDispatch({
-      type: 'UPDATE_EXERCISE_RESULT',
-      payload: { skillType, level, exerciseId, note }
-    });
-
-    // Mettre à jour l'index si c'est un nouvel exercice
-    const currentIndex = userData.data[skillType]?.[level]?.index || 0;
-    const exercises = lernData[skillType]?.[level] || [];
-    const exerciseIndex = exercises.findIndex(ex => ex.id === exerciseId);
-    
-    if (exerciseIndex >= currentIndex) {
-      const newIndex = Math.min(exerciseIndex + 1, exercises.length - 1);
-      userDispatch({
-        type: 'UPDATE_LEVEL_INDEX',
-        payload: { skillType, level, newIndex }
-      });
-    }
-
-    // Nettoyer la session courante
-    const newSession = { ...userData.currentSession };
-    delete newSession[exerciseId];
-    userDispatch({
-      type: 'SAVE_CURRENT_ANSWERS',
-      payload: { exerciseId, answers: {} }
-    });
-
-  }, [userData, userDispatch, lernData]);
-
+  
   // Obtenir les réponses courantes d'un exercice
   const getCurrentAnswers = useCallback((exerciseId) => {
     return userData.currentSession[exerciseId]?.answers || {};
@@ -151,13 +120,18 @@ export const useExerciseData = () => {
     const exercises = lernData[skillType]?.[level] || [];
     const exerciseIndex = exercises.findIndex(ex => ex.id === exerciseId);
     
-    if (exerciseIndex >= currentIndex) {
+
+    console.log("exerciseIndex",exerciseIndex)
+    console.log("currentIndex",currentIndex)
+    console.log("exercises.length - 1",exercises.length - 1)
+
+    // if (exerciseIndex >= currentIndex) {
       const newIndex = Math.min(exerciseIndex + 1, exercises.length - 1);
       userDispatch({
         type: 'UPDATE_LEVEL_INDEX',
         payload: { skillType, level, newIndex }
       });
-    }
+    // }
 
     // Synchroniser avec le backend en arrière-plan
     // try {
@@ -182,7 +156,6 @@ export const useExerciseData = () => {
     getCurrentExerciseForLevel,
     getLevelStats,
     saveCurrentAnswers,
-    finishExercise,
     getCurrentAnswers,
     finishExerciseWithSync
   };

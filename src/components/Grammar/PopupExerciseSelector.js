@@ -32,7 +32,8 @@ const PopupExerciseSelector = ({
   availableExercises, 
   onSelectExercise, 
   onCancel,
-  userNativeLanguage = "FR"
+  userNativeLanguage = "FR",
+  initialExerciseIndex = 0,
 }) => {
   const [selectedExerciseIndex, setSelectedExerciseIndex] = useState(0);
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -158,6 +159,16 @@ const PopupExerciseSelector = ({
 
   useEffect(() => {
     if (visible) {
+      // MODIFICATION : Initialiser avec l'index fourni
+      let startIndex = initialExerciseIndex;
+      
+      // Vérifier que l'index est valide
+      if (startIndex < 0 || startIndex >= availableExercises.length) {
+        startIndex = 0;
+      }
+      
+      setSelectedExerciseIndex(startIndex);
+      
       // Animation d'entrée
       Animated.parallel([
         Animated.timing(fadeAnim, {
@@ -176,9 +187,8 @@ const PopupExerciseSelector = ({
       // Reset pour la prochaine ouverture
       fadeAnim.setValue(0);
       scaleAnim.setValue(0.8);
-      setSelectedExerciseIndex(0);
     }
-  }, [visible]);
+  }, [visible, initialExerciseIndex, availableExercises.length]); 
 
   // Si aucun exercice disponible
   if (visible && availableExercises.length === 0) {

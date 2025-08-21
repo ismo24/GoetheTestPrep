@@ -807,7 +807,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: "black",
+    backgroundColor: 'white',
   },
   optionText: {
     fontSize: 15,

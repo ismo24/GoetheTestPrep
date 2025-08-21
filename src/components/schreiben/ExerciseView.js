@@ -3,12 +3,15 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from '
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
 import ImageWrapper from './ImageWrapper';
+import ProgressBar from '../common/ProgressBar';
 
 const ExerciseView = ({
   selectedUbung,
   currentTextIndex,
   selectedAnswers,
   levelInfo,
+  currentExerciseNumber,
+  totalExercises,
   onBack,
   onNextText,
   onPreviousText,
@@ -53,6 +56,8 @@ const ExerciseView = ({
     selectedAnswers[index] !== undefined
   );
 
+
+
   return (
     <>
       <View style={styles.header}>
@@ -60,17 +65,19 @@ const ExerciseView = ({
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <View style={[styles.exerciseCounter]}>
-            <Text style={styles.exerciseCounterText}>
-              {/* {selectedUbung.title} */}
-              {/* Lesen  */}
-              {selectedUbung.title.replace("Übung ", "") || "1"}
-            </Text>
+        <View style={styles.exerciseCounter}>
+            <ProgressBar 
+              currentIndex={currentExerciseNumber || 1}
+              totalCount={totalExercises || 1}
+              height={8}
+              backgroundColor="#E5E5E5"
+              progressColor={colors.primary}
+            />
           </View>
         </View>
-        <TouchableOpacity style={{ opacity: 0 }}>
+        {/* <TouchableOpacity style={{ opacity: 0 }}>
           <Text style={styles.exerciseCounterText}>yes</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <ScrollView
@@ -247,7 +254,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 16,
-    backgroundColor: colors.white,
+    backgroundColor: colors.background,
   },
   headerCenter: {
     flexDirection: 'row',
@@ -272,8 +279,11 @@ const styles = StyleSheet.create({
   },
   exerciseCounter: {
     paddingHorizontal: 16,
+    marginLeft:12,
     paddingVertical: 8,
     borderRadius: 20,
+    minWidth: 250, 
+    maxWidth: 300, 
   },
   exerciseCounterText: {
     color: colors.text,
@@ -359,7 +369,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: colors.success,
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -381,9 +391,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightGray,
   },
   optionSelected: {
-    backgroundColor: colors.secondary + '15',
+    backgroundColor: 'black',
     borderWidth: 1,
-    borderColor: colors.secondary,
+    borderColor: 'black',
   },
   optionCircle: {
     width: 20,
@@ -396,13 +406,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   optionCircleSelected: {
-    borderColor: colors.secondary,
+    borderColor: 'white',
   },
   optionDot: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: 'black',
+    backgroundColor: 'white',
   },
   optionText: {
     fontSize: 15,
@@ -410,7 +420,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   optionTextSelected: {
-    color: colors.secondary,
+    color: 'white',
     fontWeight: '500',
   },
   progressInfo: {
@@ -482,6 +492,7 @@ const styles = StyleSheet.create({
     fontFamily: 'monospace', // Pour un alignement uniforme des traits
     color: colors.text,
   },
+
 });
 
 export default ExerciseView;

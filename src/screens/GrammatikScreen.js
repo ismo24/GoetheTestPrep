@@ -6,14 +6,18 @@ import { useExerciseData } from '../hooks/useExerciseData';
 import { useSyncData } from '../hooks/useSyncData';
 import LevelSelectionView from '../components/Grammar/LevelSelectionView';
 import PopupExerciseSelector from '../components/Grammar/PopupExerciseSelector';
-import ExerciseModal from '../components/lesen/ExerciseModal';
+import ExerciseModal from '../components/Grammar/ExerciseModal';
 import { colors } from '../styles/colors';
+// AJOUT : Import des composants d'authentification
+import { AuthProvider,useAuth } from '../hooks/useAuth'; 
+import AuthScreen from './AuthScreen';
 
 const GrammatikScreen = ({ navigation }) => {
 
+  const { isAuthenticated, loading } = useAuth();
   const { userData } = useUserData();
   const { syncNow, isSyncing } = useSyncData();
-  const { getExercisesForLevel, saveCurrentAnswers, finishExercise, getCurrentAnswers, getLevelStats,finishExerciseWithSync } = useExerciseData();
+  const { getExercisesForLevel, saveCurrentAnswers, getCurrentAnswers, getLevelStats,finishExerciseWithSync } = useExerciseData();
   const userNativeLanguage = userData.nativeLanguage || "FR";
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [showExerciseSelector, setShowExerciseSelector] = useState(false);
@@ -23,7 +27,7 @@ const GrammatikScreen = ({ navigation }) => {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [exerciseResults, setExerciseResults] = useState(null);
-
+  const [initialExerciseIndex, setInitialExerciseIndex] = useState(0);
   // Traductions pour les titres de niveaux
   const levelTitles = {
     anfanger: {
@@ -344,6 +348,15 @@ const GrammatikScreen = ({ navigation }) => {
     }
   ];
 
+  // Fonction pour récupérer le dernier index d'exercice
+const getLastExerciseIndex = (levelId) => {
+  const levelData = userData.data?.grammar?.[levelId];
+  if (levelData && typeof levelData.index === 'number') {
+    return levelData.index;
+  }
+  return 0; // Par défaut, commencer au premier exercice
+};
+
  
   // Calculer les résultats de l'exercice
   const calculateExerciseResults = () => {
@@ -391,8 +404,10 @@ const GrammatikScreen = ({ navigation }) => {
   // Gestionnaires d'événements
   const handleLevelSelect = (levelId) => {
     setSelectedLevel(levelId);
-    const exercises = getExercisesForLevel('lesen', levelId);
+    const exercises = getExercisesForLevel('grammar', levelId);
     setAvailableExercises(exercises);
+    const lastIndex = getLastExerciseIndex(levelId);
+    setInitialExerciseIndex(lastIndex);
     setShowExerciseSelector(true);
   };
 
@@ -427,7 +442,7 @@ const GrammatikScreen = ({ navigation }) => {
   setShowResults(true);
   
   // Sync automatique avec le backend
-  await finishExerciseWithSync('lesen', selectedLevel, selectedExercise.id, results);
+  await finishExerciseWithSync('grammar', selectedLevel, selectedExercise.id, results);
 };
 
   const handleRestartExercise = () => {
@@ -461,6 +476,10 @@ const GrammatikScreen = ({ navigation }) => {
     setAvailableExercises([]);
   };
 
+  if(!isAuthenticated && initialExerciseIndex>2){
+    return(<AuthScreen />)
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <LevelSelectionView
@@ -468,6 +487,7 @@ const GrammatikScreen = ({ navigation }) => {
         onBack={() => navigation.goBack()}
         onSelectLevel={handleLevelSelect}
         getUbungenForLevel={getExercisesForLevel}
+        getLastExerciseIndex={getLastExerciseIndex}
         userNativeLanguage={userNativeLanguage}
       />
 
@@ -477,6 +497,7 @@ const GrammatikScreen = ({ navigation }) => {
         availableExercises={availableExercises}
         onSelectExercise={handleExerciseSelect}
         onCancel={handleCloseSelectorPopup}
+        initialExerciseIndex={initialExerciseIndex}
       />
 
       <ExerciseModal

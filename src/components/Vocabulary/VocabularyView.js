@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
+import ProgressBar from '../common/ProgressBar';
 
 const VocabularyView = ({
   vocabularyItem,
   currentLanguage = 'FR', // Langue actuelle sélectionnée par l'utilisateur
   onNext,
+  currentExerciseNumber,
+  totalExercises,
   onBack,
   onFinishVocabulary,
   onShowFullScreenImage,
@@ -94,9 +97,17 @@ const VocabularyView = ({
         <TouchableOpacity onPress={onBack} style={styles.closeButton}>
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
-        {/* <View style={styles.headerCenter}>
-          <Text style={styles.headerTitle}>Vocabulaire</Text>
-        </View> */}
+        <View style={styles.headerCenter}>
+        <View style={styles.exerciseCounter}>
+          <ProgressBar 
+            currentIndex={currentExerciseNumber || 1}
+            totalCount={totalExercises || 1}
+            height={8}
+            backgroundColor="#E5E5E5"
+            progressColor={colors.primary}
+          />
+        </View>
+        </View>
         <TouchableOpacity style={{ opacity: 0 }}>
           <Text style={styles.headerTitle}>.</Text>
         </TouchableOpacity>
@@ -418,6 +429,17 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+
+  exerciseCounter: {
+    paddingHorizontal: 16,
+    marginLeft:12,
+    paddingVertical: 8,
+    borderRadius: 20,
+    minWidth: 250, // 120 * 4 = 480
+    maxWidth: 300, // Limite la largeur maximale
+    // borderColor:"red",
+    // borderWidth:1
   },
 });
 

@@ -26,6 +26,10 @@ const ExerciseModal = ({
   // Trouver l'index de l'exercice actuel pour navigation
   const currentExerciseIndex = availableExercises.findIndex(ex => ex.id === selectedExercise.id);
   const hasNextExercise = currentExerciseIndex < availableExercises.length - 1;
+
+    // AJOUT : Index pour affichage (commence à 1 au lieu de 0)
+  const currentExerciseNumber = currentExerciseIndex + 1;
+  const totalExercises = availableExercises.length;
   
   // État pour gérer l'affichage de l'image en plein écran
   const [showFullScreenImg, setShowFullScreenImg] = useState(null);
@@ -64,6 +68,8 @@ const ExerciseModal = ({
               currentTextIndex={0}
               selectedAnswers={selectedAnswers}
               levelInfo={levelInfo}
+              currentExerciseNumber={currentExerciseNumber}
+              totalExercises={totalExercises}
               onBack={onClose}
               onNextText={() => {}}
               onPreviousText={() => {}}

@@ -595,7 +595,7 @@ const ResultsView = ({
 
       <ScrollView style={styles.resultsContent} contentContainerStyle={{ paddingBottom: 120 }}>
         {/* Score principal */}
-        <View style={[styles.scoreCard, { backgroundColor: colors.success }]}>
+        <View style={[styles.scoreCard, { backgroundColor: colors.secondary }]}>
           <View style={styles.scoreHeader}>
             <Ionicons name={getScoreIcon(exerciseResults.percentage)} size={32} color={colors.white} />
             <Text style={styles.scoreTitle}>{getScoreMessage(exerciseResults.percentage)}</Text>
@@ -638,7 +638,9 @@ const ResultsView = ({
                 </Text>
                 <View style={[
                   styles.resultBadge,
-                  { backgroundColor: questionResult.isCorrect ? colors.success : colors.error }
+                  { backgroundColor: 'black'
+                    // questionResult.isCorrect ? colors.success : colors.error
+                   }
                 ]}>
                   <Ionicons 
                     name={questionResult.isCorrect ? "checkmark" : "close"} 
@@ -704,21 +706,7 @@ const ResultsView = ({
           ))}
         </View>
 
-        {/* Conseils d'amélioration */}
-        <View style={styles.tipsSection}>
-          <Text style={styles.tipsTitle}>
-            {translations.improvementTips.tipsTitle[userNativeLanguage]}
-          </Text>
-          
-          {getImprovementTips(exerciseResults.percentage).map((tip, index) => (
-            <View key={index} style={styles.tipItem}>
-              <Ionicons name={tip.icon} size={16} color={colors.warning} />
-              <Text style={styles.tipText}>
-                {tip.text[userNativeLanguage]}
-              </Text>
-            </View>
-          ))}
-        </View>
+        
       </ScrollView>
 
       {/* Boutons d'action sticky */}
@@ -727,18 +715,18 @@ const ResultsView = ({
           style={[styles.actionButton, styles.restartButton]} 
           onPress={onRestart}
         >
-          <Ionicons name="refresh" size={20} color={colors.white} />
-          <Text style={styles.actionButtonText}>
+          {/* <Ionicons name="refresh" size={20} color={colors.white} /> */}
+          <Text style={styles.restartButtonText}>
             {translations.buttons.repeat[userNativeLanguage]}
           </Text>
         </TouchableOpacity>
         
         {onNext ? (
           <TouchableOpacity 
-            style={[styles.actionButton, { backgroundColor: colors.success }]} 
+            style={[styles.actionButton, { backgroundColor: 'black' }]} 
             onPress={onNext}
           >
-            <Ionicons name="arrow-forward" size={20} color={colors.white} />
+            {/* <Ionicons name="arrow-forward" size={20} color={colors.white} /> */}
             <Text style={styles.actionButtonText}>
               {translations.buttons.continue[userNativeLanguage]}
             </Text>
@@ -766,7 +754,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 16,
-    backgroundColor: colors.white,
+    backgroundColor: colors.background,
   },
   headerCenter: {
     flex: 1,
@@ -1004,7 +992,12 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   restartButton: {
-    backgroundColor: colors.warning,
+    backgroundColor: colors.primary,
+  },
+  restartButtonText:{
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   actionButtonText: {
     color: colors.white,

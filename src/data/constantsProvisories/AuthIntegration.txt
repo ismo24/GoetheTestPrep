@@ -1,0 +1,128 @@
+// Configuration Firebase pour Expo - Instructions
+
+/*
+ÉTAPES DE CONFIGURATION FIREBASE POUR EXPO :
+
+1. CONSOLE FIREBASE :
+   - Allez sur https://console.firebase.google.com
+   - Créez un nouveau projet ou sélectionnez votre projet existant
+   - Activez Authentication > Sign-in method :
+     * Email/Password ✓
+     * Google ✓ 
+     * Apple ✓ (si iOS)
+
+2. CONFIGURATION WEB APP (dans Firebase Console) :
+   - Project Settings > General > Vos apps
+   - Cliquez sur "Add app" > Web (</>) 
+   - Nom de l'app : "Goethe Test Pro"
+   - Copiez la configuration firebaseConfig
+
+3. REMPLACEZ dans AuthService.js :
+   const firebaseConfig = {
+     apiKey: "votre-api-key",
+     authDomain: "votre-projet.firebaseapp.com", 
+     projectId: "votre-projet-id",
+     storageBucket: "votre-projet.appspot.com",
+     messagingSenderId: "123456789",
+     appId: "votre-app-id"
+   };
+
+4. GOOGLE SIGN-IN (dans Firebase Console) :
+   - Authentication > Sign-in method > Google
+   - Activez Google
+   - Copiez le "Web client ID" 
+   - Dans AuthService.js et AuthScreen.js, remplacez :
+     webClientId: 'your-web-client-id' par votre vrai Web Client ID
+
+5. POUR EXPO DEVELOPMENT :
+   - Aucun fichier google-services.json ou GoogleService-Info.plist requis
+   - Expo gère automatiquement avec le webClientId
+
+6. POUR APPLE SIGN-IN (iOS seulement) :
+   - Dans Firebase Console > Authentication > Sign-in method > Apple
+   - Activez Apple Sign-In
+   - Ajoutez votre Team ID et Bundle ID
+
+7. APP.JSON/APP.CONFIG.JS :
+   - Ajoutez votre scheme : "scheme": "goethetestpro"
+   - Plugins requis : expo-apple-authentication, @react-native-async-storage/async-storage
+
+8. TEST :
+   - npx expo start
+   - Testez sur appareil physique (recommandé pour auth)
+   - Les authentifications sociales fonctionnent mieux sur appareil réel
+
+NOTES IMPORTANTES :
+- Avec Expo, pas besoin des dossiers android/ios
+- Utilisez expo-auth-session pour Google (pas @react-native-google-signin)
+- Apple Sign-In fonctionne uniquement sur iOS
+- Pour production, utilisez EAS Build d'Expo
+*/
+
+// Exemple de configuration finale dans AuthService.js :
+const firebaseConfig = {
+  apiKey: "AIzaSyBxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  authDomain: "goethe-test-pro.firebaseapp.com",
+  projectId: "goethe-test-pro",
+  storageBucket: "goethe-test-pro.appspot.com", 
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abcdef123456"
+};
+
+// Configuration Google dans AuthScreen.js :
+const [request, response, promptAsync] = Google.useAuthRequest({
+  expoClientId: 'votre-expo-client-id', // Optionnel pour développement
+  webClientId: 'votre-web-client-id-firebase', // OBLIGATOIRE
+});
+
+
+
+Consignes recues sur Firebase pour les autres configurations :
+
+That's an excellent choice for your initial focus! Building for Expo React Native on Android and iOS makes perfect sense, and getting authentication right from the start is key.
+Here are the essential Firebase-specific configurations for Email, Google, and Apple Authentication on your mobile apps:
+Step 2: Set up Firebase products using the Console. In your Firebase project Goethe Expert 's console, navigate to Authentication and then the "Sign-in method" tab:
+Email/Password : Simply enable this provider.
+Google : Enable this provider and select your project's support email.
+Apple : Enable this provider. You'll need to provide your Apple Team ID, a Key ID, and upload a private key, all obtained from your Apple Developer account. Crucially, you must also configure a Return URL on Apple's developer site: https://goethe-expert.firebaseapp.com/__/auth/handler , and verify your Firebase domain.
+Step 3: Register your app in your Firebase project. In your Firebase project settings, add your Android app by providing its Android package name and, importantly, the SHA-1 fingerprint of your signing key. For your iOS app, register it using its iOS bundle ID.
+Step 4: Connect your app's codebase to Firebase. Download the google-services.json for Android and GoogleService-Info.plist for iOS from your Firebase project settings. Integrate these into your Expo React Native project as per Expo's instructions for Firebase. Then, install the Firebase Authentication SDK for React Native. For iOS, also ensure the "Sign In with Apple" capability is enabled in your Xcode project settings.
+Which specific platform (Android or iOS) or authentication method would you like to dive deeper into next?
+
+
+
+Vu sur Firebase :
+
+Adresse e-mail/Mot de passe
+Cette fonctionnalité permet aux utilisateurs de s'inscrire avec leur adresse e-mail et leur mot de passe. Nos SDK proposent également la validation de l'adresse e-mail, la récupération du mot de passe et les primitives de modification de l'adresse e-mail. En savoir plus
+Lien envoyé par e-mail (connexion sans mot de passe)
+note:
+Des étapes de configuration supplémentaires sont nécessaires pour activer l'authentification sans mot de passe avec un lien envoyé par e-mail. Suivez les étapes pour votre plate-forme.
+
+
+Consignes données après la création de mon app-web :
+
+
+npm install firebase
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBukaFXoxaMlJd96Pl2vTnCphMpE8F9u9I",
+  authDomain: "goethe-expert.firebaseapp.com",
+  projectId: "goethe-expert",
+  storageBucket: "goethe-expert.firebasestorage.app",
+  messagingSenderId: "1041767585747",
+  appId: "1:1041767585747:web:5a14130d65cab91c4dc126",
+  measurementId: "G-1KZ42VLRTQ"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

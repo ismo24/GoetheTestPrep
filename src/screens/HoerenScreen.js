@@ -8,11 +8,16 @@ import { useUserData } from '../context/AppDataContext';
 import { useExerciseData } from '../hooks/useExerciseData';
 import { useSyncData } from '../hooks/useSyncData';
 import { colors } from '../styles/colors';
+// AJOUT : Import des composants d'authentification
+import { AuthProvider,useAuth } from '../hooks/useAuth'; 
+import AuthScreen from './AuthScreen';
 
 const HoerenScreen = ({ navigation }) => {
-  // Langue native de l'utilisateur
+  
+
+  const { isAuthenticated, loading } = useAuth();
   const { userData } = useUserData();
-  const { getExercisesForLevel, saveCurrentAnswers, finishExercise, getCurrentAnswers, getLevelStats, finishExerciseWithSync,
+  const { getExercisesForLevel, saveCurrentAnswers, getCurrentAnswers, getLevelStats, finishExerciseWithSync,
     
   } = useExerciseData();
   const { syncNow, isSyncing } = useSyncData();
@@ -27,6 +32,7 @@ const HoerenScreen = ({ navigation }) => {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [exerciseResults, setExerciseResults] = useState(null);
+  const [initialExerciseIndex, setInitialExerciseIndex] = useState(0);
 
   // Traductions pour les titres de niveaux
   const levelTitles = {
@@ -349,7 +355,14 @@ const HoerenScreen = ({ navigation }) => {
   ];
 
 
-  
+  // Fonction pour récupérer le dernier index d'exercice
+const getLastExerciseIndex = (levelId) => {
+  const levelData = userData.data?.hoeren?.[levelId];
+  if (levelData && typeof levelData.index === 'number') {
+    return levelData.index;
+  }
+  return 0; // Par défaut, commencer au premier exercice
+};
 
   // Calculer les résultats de l'exercice
   const calculateExerciseResults = () => {
@@ -400,6 +413,8 @@ const HoerenScreen = ({ navigation }) => {
     
     const exercises = getExercisesForLevel('hoeren', levelId);
     setAvailableExercises(exercises);
+    const lastIndex = getLastExerciseIndex(levelId);
+    setInitialExerciseIndex(lastIndex);
     setShowExerciseSelector(true);
   };
   const handleExerciseSelect = (exercise) => {
@@ -465,6 +480,10 @@ const HoerenScreen = ({ navigation }) => {
     setAvailableExercises([]);
   };
 
+  if(!isAuthenticated && initialExerciseIndex>2){
+    return(<AuthScreen />)
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <LevelSelectionView
@@ -472,6 +491,7 @@ const HoerenScreen = ({ navigation }) => {
         onBack={() => navigation.goBack()}
         onSelectLevel={handleLevelSelect}
         getUbungenForLevel={getExercisesForLevel}
+        getLastExerciseIndex={getLastExerciseIndex}
         userNativeLanguage={userNativeLanguage}
       />
 
@@ -481,6 +501,7 @@ const HoerenScreen = ({ navigation }) => {
         availableExercises={availableExercises}
         onSelectExercise={handleExerciseSelect}
         onCancel={handleCloseSelectorPopup}
+        initialExerciseIndex={initialExerciseIndex}
       />
 
       <ExerciseModal

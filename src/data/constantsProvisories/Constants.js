@@ -71,7 +71,7 @@ export const userInfos = {
     },
     hoeren: {
       A1: {
-        index: 0,
+        index: 1,
         total: 3,
         data: {
           hoA11: {
@@ -113,7 +113,7 @@ export const userInfos = {
     },
     schreiben: {
       A1: {
-        index: 0,
+        index: 2,
         total: 4,
         data: {
           srA11: {
@@ -336,33 +336,93 @@ export const userInfos = {
     grammar: {
       A1: {
         index: 0,
-        total: 0,
-        data: {}
+        total: 3,
+        data: {
+          grA11:{
+            lastNote: 50,
+          },
+          grA12:{
+            lastNote: 50,
+          },
+          grA13:{
+            lastNote: 50,
+          }
+        }
       },
       A2: {
         index: 0,
-        total: 0,
-        data: {}
+        total: 3,
+        data: {
+          grA21:{
+            lastNote: 50,
+          },
+          grA22:{
+            lastNote: 50,
+          },
+          grA23:{
+            lastNote: 50,
+          }
+        }
       },
       B1: {
         index: 0,
-        total: 0,
-        data: {}
+        total: 3,
+        data: {
+          grB11:{
+            lastNote: 50,
+          },
+          grB12:{
+            lastNote: 50,
+          },
+          grB13:{
+            lastNote: 50,
+          }
+        }
       },
       B2: {
         index: 0,
-        total: 0,
-        data: {}
+        total: 3,
+        data: {
+          grB21:{
+            lastNote: 50,
+          },
+          grB22:{
+            lastNote: 50,
+          },
+          grB23:{
+            lastNote: 50,
+          }
+        }
       },
       C1: {
         index: 0,
-        total: 0,
-        data: {}
+        total: 3,
+        data: {
+          grC11:{
+            lastNote: 50,
+          },
+          grC12:{
+            lastNote: 50,
+          },
+          grC13:{
+            lastNote: 50,
+          }
+        }
       },
       C2: {
         index: 0,
-        total: 0,
-        data: {}
+        total: 3,
+        data: {
+          grC21:{
+            lastNote: 50,
+          },
+          grC22:{
+            lastNote: 50,
+          },
+          grC23:{
+            lastNote: 50,
+          }
+        }
       },
     }
   }
@@ -1961,443 +2021,697 @@ export const Fahigkeiten = {
     C1:[],
     C2:[],
   },
-  grammar:{A1: [
-    {
-      id: "lsA11",
-      well_Answered: false,
-      Text: "Als ich jünger war, habe ich einen sehr großen Fehler gemacht. Ich dachte, dass ich alles wusste und hörte nicht auf die Ratschläge meiner Eltern. Sie warnten mich vor meinen falschen Freunden, aber ich ignorierte ihre Worte. Später musste ich lernen, dass meine Eltern recht hatten.",
-      questions: [
-        {
-          title: "Was dachte die Person, als sie jünger war?",
-          options: [
-            { id: "a", text: "Dass sie nichts wusste", isCorrect: false },
-            { id: "b", text: "Dass sie alles wusste", isCorrect: true },
-            { id: "c", text: "Dass sie Hilfe brauchte", isCorrect: false },
-            { id: "d", text: "Dass sie studieren sollte", isCorrect: false },
-          ],
-          explanation:
-            "Der Text sagt deutlich 'Ich dachte, dass ich alles wusste'.",
-          languages_Explanations: {
-            FR: "Le texte dit clairement 'Je pensais que je savais tout'.",
-            EN: "The text clearly says 'I thought I knew everything'.",
-            ES: "El texto dice claramente 'Pensé que lo sabía todo'.",
-            PT: "O texto diz claramente 'Eu pensava que sabia tudo'.",
-            PL: "Tekst wyraźnie mówi 'Myślałem, że wszystko wiem'.",
-            RU: "В тексте ясно сказано 'Я думал, что знаю всё'.",
-            TR: "Metin açıkça 'Her şeyi bildiğimi sanıyordum' diyor.",
-            IT: "Il testo dice chiaramente 'Pensavo di sapere tutto'.",
-            UK: "У тексті чітко сказано 'Я думав, що знаю все'.",
-            VI: "Văn bản nói rõ ràng 'Tôi nghĩ rằng tôi biết tất cả'.",
-            TL: "Malinaw na sinasabi ng teksto 'Akala ko alam ko ang lahat'.",
-            ZH: '文本清楚地说"我以为我什么都知道"。',
-            ID: "Teks dengan jelas mengatakan 'Saya pikir saya tahu segalanya'.",
-            TH: "ข้อความระบุอย่างชัดเจนว่า 'ฉันคิดว่าฉันรู้ทุกอย่าง'",
-            MS: "Teks dengan jelas menyatakan 'Saya fikir saya tahu segala-galanya'.",
-            AR: "النص يقول بوضوح 'كنت أعتقد أنني أعرف كل شيء'.",
-          },
-        },
-      ],
-    },
-    {
-      id: "lsA12",
-      well_Answered: false,
-      Text: "Maria arbeitet in einem kleinen Café in der Stadtmitte. Jeden Morgen um 7 Uhr öffnet sie das Café und bereitet den ersten Kaffee vor. Die meisten Kunden kommen zwischen 8 und 9 Uhr, bevor sie zur Arbeit gehen. Maria kennt fast alle ihre Stammkunden und weiß, was sie trinken möchten.",
-      questions: [
-        {
-          title: "Um welche Uhrzeit öffnet Maria das Café?",
-          options: [
-            { id: "a", text: "Um 6 Uhr", isCorrect: false },
-            { id: "b", text: "Um 7 Uhr", isCorrect: true },
-            { id: "c", text: "Um 8 Uhr", isCorrect: false },
-            { id: "d", text: "Um 9 Uhr", isCorrect: false },
-          ],
-          explanation:
-            "Der Text sagt 'Jeden Morgen um 7 Uhr öffnet sie das Café'.",
-          languages_Explanations: {
-            FR: "Le texte dit 'Chaque matin à 7 heures, elle ouvre le café'.",
-            EN: "The text says 'Every morning at 7 o'clock she opens the café'.",
-            ES: "El texto dice 'Cada mañana a las 7 abre el café'.",
-            PT: "O texto diz 'Toda manhã às 7 horas ela abre o café'.",
-            PL: "Tekst mówi 'Codziennie rano o 7 otwiera kawiarnię'.",
-            RU: "В тексте сказано 'Каждое утро в 7 часов она открывает кафе'.",
-            TR: "Metin 'Her sabah saat 7'de kafeyi açıyor' diyor.",
-            IT: "Il testo dice 'Ogni mattina alle 7 apre il caffè'.",
-            UK: "У тексті сказано 'Щоранку о 7 годині вона відкриває кафе'.",
-            VI: "Văn bản nói 'Mỗi sáng lúc 7 giờ cô ấy mở quán cà phê'.",
-            TL: "Sinasabi ng teksto 'Tuwing umaga ng alas-7 binubuksan niya ang café'.",
-            ZH: "文本说'每天早上7点她开咖啡馆'。",
-            ID: "Teks mengatakan 'Setiap pagi jam 7 dia membuka kafe'.",
-            TH: "ข้อความบอกว่า 'ทุกเช้าตอน 7 โมงเธอเปิดร้านกาแฟ'",
-            MS: "Teks berkata 'Setiap pagi pada jam 7 dia membuka kafe'.",
-            AR: "يقول النص 'كل صباح في الساعة 7 تفتح المقهى'.",
-          },
-        },
-        {
-          title: "Wann kommen die meisten Kunden?",
-          options: [
-            { id: "a", text: "Zwischen 7 und 8 Uhr", isCorrect: false },
-            { id: "b", text: "Zwischen 8 und 9 Uhr", isCorrect: true },
-            { id: "c", text: "Zwischen 9 und 10 Uhr", isCorrect: false },
-            { id: "d", text: "Nach 10 Uhr", isCorrect: false },
-          ],
-          explanation:
-            "Der Text erklärt 'Die meisten Kunden kommen zwischen 8 und 9 Uhr'.",
-          languages_Explanations: {
-            FR: "Le texte explique 'La plupart des clients viennent entre 8 et 9 heures'.",
-            EN: "The text explains 'Most customers come between 8 and 9 o'clock'.",
-            ES: "El texto explica 'La mayoría de los clientes vienen entre las 8 y las 9'.",
-            PT: "O texto explica 'A maioria dos clientes vem entre 8 e 9 horas'.",
-            PL: "Tekst wyjaśnia 'Większość klientów przychodzi między 8 a 9 rano'.",
-            RU: "В тексте объясняется 'Большинство клиентов приходит между 8 и 9 часами'.",
-            TR: "Metin 'Müşterilerin çoğu saat 8-9 arası geliyor' diye açıklıyor.",
-            IT: "Il testo spiega 'La maggior parte dei clienti viene tra le 8 e le 9'.",
-            UK: "У тексті пояснюється 'Більшість клієнтів приходить між 8 і 9 годиною'.",
-            VI: "Văn bản giải thích 'Hầu hết khách hàng đến từ 8 đến 9 giờ'.",
-            TL: "Ipinaliwanag ng teksto 'Karamihan ng mga customer ay dumarating sa pagitan ng 8 at 9'.",
-            ZH: "文本解释说'大多数顾客在8点到9点之间来'。",
-            ID: "Teks menjelaskan 'Sebagian besar pelanggan datang antara jam 8 dan 9'.",
-            TH: "ข้อความอธิบายว่า 'ลูกค้าส่วนใหญ่มาระหว่าง 8 โมงถึง 9 โมง'",
-            MS: "Teks menerangkan 'Kebanyakan pelanggan datang antara jam 8 dan 9'.",
-            AR: "يوضح النص 'معظم العملاء يأتون بين الساعة 8 و 9'.",
-          },
-        },
-      ],
-    },
-    {
-      id: "lsA13",
-      well_Answered: false,
-      Text: "Der Park in unserer Stadt ist sehr schön. Er hat einen großen See, viele Bäume und bunte Blumen. Im Sommer kommen viele Familien zum Picknick. Kinder spielen auf dem Spielplatz, während ihre Eltern im Schatten sitzen und sich entspannen.",
-      questions: [
-        {
-          title: "Was gibt es im Park?",
-          options: [
-            { id: "a", text: "Nur Bäume", isCorrect: false },
-            { id: "b", text: "Einen See, Bäume und Blumen", isCorrect: true },
-            { id: "c", text: "Nur einen Spielplatz", isCorrect: false },
-            { id: "d", text: "Nur einen See", isCorrect: false },
-          ],
-          explanation:
-            "Der Text erwähnt 'einen großen See, viele Bäume und bunte Blumen'.",
-          languages_Explanations: {
-            FR: "Le texte mentionne 'un grand lac, beaucoup d'arbres et des fleurs colorées'.",
-            EN: "The text mentions 'a large lake, many trees and colorful flowers'.",
-            ES: "El texto menciona 'un gran lago, muchos árboles y flores coloridas'.",
-            PT: "O texto menciona 'um grande lago, muitas árvores e flores coloridas'.",
-            PL: "Tekst wspomina 'duże jezioro, wiele drzew i kolorowe kwiaty'.",
-            RU: "В тексте упоминается 'большое озеро, много деревьев и цветные цветы'.",
-            TR: "Metin 'büyük bir göl, çok sayıda ağaç ve renkli çiçekler' den bahsediyor.",
-            IT: "Il testo menziona 'un grande lago, molti alberi e fiori colorati'.",
-            UK: "У тексті згадується 'велике озеро, багато дерев та барвисті квіти'.",
-            VI: "Văn bản đề cập đến 'một hồ lớn, nhiều cây và những bông hoa đầy màu sắc'.",
-            TL: "Binabanggit ng teksto ang 'malaking lawa, maraming puno at makulay na bulaklak'.",
-            ZH: "文本提到'一个大湖、许多树木和彩色花朵'。",
-            ID: "Teks menyebutkan 'sebuah danau besar, banyak pohon dan bunga-bunga berwarna'.",
-            TH: "ข้อความกล่าวถึง 'ทะเลสาบใหญ่ ต้นไม้มากมาย และดอกไม้หลากสี'",
-            MS: "Teks menyebut 'sebuah tasik besar, banyak pokok dan bunga-bunga berwarna'.",
-            AR: "يذكر النص 'بحيرة كبيرة وأشجار كثيرة وزهور ملونة'.",
-          },
-        },
-      ],
-    },
-    {
-      id: "lsA14",
-      well_Answered: false,
-      Text: "Thomas ist Lehrer an einer Grundschule. Er unterrichtet Deutsch und Mathematik. Seine Schüler sind zwischen 6 und 10 Jahre alt. Thomas mag seinen Beruf sehr, weil er gerne mit Kindern arbeitet. Nach der Schule hilft er manchmal Schülern bei den Hausaufgaben.",
-      questions: [
-        {
-          title: "Was unterrichtet Thomas?",
-          options: [
-            { id: "a", text: "Nur Deutsch", isCorrect: false },
-            { id: "b", text: "Deutsch und Mathematik", isCorrect: true },
-            { id: "c", text: "Nur Mathematik", isCorrect: false },
-            { id: "d", text: "Sport und Musik", isCorrect: false },
-          ],
-          explanation:
-            "Der Text sagt klar 'Er unterrichtet Deutsch und Mathematik'.",
-          languages_Explanations: {
-            FR: "Le texte dit clairement 'Il enseigne l'allemand et les mathématiques'.",
-            EN: "The text clearly says 'He teaches German and mathematics'.",
-            ES: "El texto dice claramente 'Enseña alemán y matemáticas'.",
-            PT: "O texto diz claramente 'Ele ensina alemão e matemática'.",
-            PL: "Tekst wyraźnie mówi 'Uczy niemieckiego i matematyki'.",
-            RU: "В тексте ясно сказано 'Он преподает немецкий язык и математику'.",
-            TR: "Metin açıkça 'Almanca ve matematik öğretiyor' diyor.",
-            IT: "Il testo dice chiaramente 'Insegna tedesco e matematica'.",
-            UK: "У тексті чітко сказано 'Він викладає німецьку мову та математику'.",
-            VI: "Văn bản nói rõ ràng 'Anh ấy dạy tiếng Đức và toán học'.",
-            TL: "Malinaw na sinasabi ng teksto 'Nagtuturo siya ng German at matematika'.",
-            ZH: "文本清楚地说'他教德语和数学'。",
-            ID: "Teks dengan jelas mengatakan 'Dia mengajar bahasa Jerman dan matematika'.",
-            TH: "ข้อความระบุอย่างชัดเจนว่า 'เขาสอนภาษาเยอรมันและคณิตศาสตร์'",
-            MS: "Teks dengan jelas menyatakan 'Dia mengajar bahasa Jerman dan matematik'.",
-            AR: "ينص النص بوضوح 'يدرّس الألمانية والرياضيات'.",
-          },
-        },
-      ],
-    },
-  ],
-  A2: [
-    {
-      id: "lsA21",
-      well_Answered: false,
-      Text: "Lisa plant ihre erste Reise nach Deutschland. Sie möchte drei Wochen bleiben und verschiedene Städte besuchen. Zuerst will sie nach Berlin, dann nach München und zum Schluss nach Hamburg. Sie hat schon ein Hotel in Berlin gebucht, aber für die anderen Städte sucht sie noch Unterkünfte. Lisa lernt seit zwei Jahren Deutsch und hofft, dass sie sich gut verständigen kann.",
-      questions: [
-        {
-          title: "Wie lange möchte Lisa in Deutschland bleiben?",
-          options: [
-            { id: "a", text: "Zwei Wochen", isCorrect: false },
-            { id: "b", text: "Drei Wochen", isCorrect: true },
-            { id: "c", text: "Einen Monat", isCorrect: false },
-            { id: "d", text: "Zwei Monate", isCorrect: false },
-          ],
-          explanation: "Der Text sagt 'Sie möchte drei Wochen bleiben'.",
-          languages_Explanations: {
-            FR: "Le texte dit 'Elle veut rester trois semaines'.",
-            EN: "The text says 'She wants to stay three weeks'.",
-            ES: "El texto dice 'Quiere quedarse tres semanas'.",
-            PT: "O texto diz 'Ela quer ficar três semanas'.",
-            PL: "Tekst mówi 'Chce zostać przez trzy tygodnie'.",
-            RU: "В тексте сказано 'Она хочет остаться на три недели'.",
-            TR: "Metin 'Üç hafta kalmak istiyor' diyor.",
-            IT: "Il testo dice 'Vuole rimanere tre settimane'.",
-            UK: "У тексті сказано 'Вона хоче залишитися на три тижні'.",
-            VI: "Văn bản nói 'Cô ấy muốn ở lại ba tuần'.",
-            TL: "Sinasabi ng teksto 'Gustong manatili ng tatlong linggo'.",
-            ZH: "文本说'她想待三个星期'。",
-            ID: "Teks mengatakan 'Dia ingin tinggal selama tiga minggu'.",
-            TH: "ข้อความบอกว่า 'เธออยากอยู่สามสัปดาห์'",
-            MS: "Teks berkata 'Dia mahu tinggal selama tiga minggu'.",
-            AR: "يقول النص 'تريد البقاء لمدة ثلاثة أسابيع'.",
-          },
-        },
-        {
-          title: "Wie lange lernt Lisa schon Deutsch?",
-          options: [
-            { id: "a", text: "Ein Jahr", isCorrect: false },
-            { id: "b", text: "Zwei Jahre", isCorrect: true },
-            { id: "c", text: "Drei Jahre", isCorrect: false },
-            { id: "d", text: "Vier Jahre", isCorrect: false },
-          ],
-          explanation:
-            "Lisa lernt seit zwei Jahren Deutsch, wie im Text erwähnt.",
-          languages_Explanations: {
-            FR: "Lisa apprend l'allemand depuis deux ans, comme mentionné dans le texte.",
-            EN: "Lisa has been learning German for two years, as mentioned in the text.",
-            ES: "Lisa aprende alemán desde hace dos años, como se menciona en el texto.",
-            PT: "Lisa aprende alemão há dois anos, como mencionado no texto.",
-            PL: "Lisa uczy się niemieckiego od dwóch lat, jak wspomniano w tekście.",
-            RU: "Лиза изучает немецкий язык уже два года, как упоминается в тексте.",
-            TR: "Lisa iki yıldır Almanca öğreniyor, metinde belirtildiği gibi.",
-            IT: "Lisa studia tedesco da due anni, come menzionato nel testo.",
-            UK: "Ліза вивчає німецьку мову вже два роки, як зазначено в тексті.",
-            VI: "Lisa đã học tiếng Đức được hai năm, như được đề cập trong văn bản.",
-            TL: "Nag-aaral si Lisa ng German ng dalawang taon na, tulad ng nabanggit sa teksto.",
-            ZH: "正如文本中提到的，丽莎已经学德语两年了。",
-            ID: "Lisa telah belajar bahasa Jerman selama dua tahun, seperti disebutkan dalam teks.",
-            TH: "ลิซ่าเรียนภาษาเยอรมันมาสองปีแล้ว ตามที่กล่าวไว้ในข้อความ",
-            MS: "Lisa telah belajar bahasa Jerman selama dua tahun, seperti yang dinyatakan dalam teks.",
-            AR: "تتعلم ليزا الألمانية منذ عامين، كما ذُكر في النص.",
-          },
-        },
-      ],
-    },
-  ],
-  B1: [
-    {
-      id: "lsB11",
-      well_Answered: false,
-      Text: "Die Digitalisierung verändert unsere Arbeitswelt grundlegend. Viele traditionelle Berufe werden durch Automatisierung ersetzt, gleichzeitig entstehen aber auch neue Arbeitsplätze im Technologiebereich. Unternehmen müssen ihre Mitarbeiter weiterbilden, um mit dieser Entwicklung Schritt zu halten. Experten sind sich einig, dass lebenslanges Lernen in Zukunft noch wichtiger wird.",
-      questions: [
-        {
-          title: "Was passiert mit traditionellen Berufen?",
-          options: [
-            {
-              id: "a",
-              text: "Sie werden alle verschwinden",
-              isCorrect: false,
+  grammar : {
+    A1: [
+      {
+        id: "grA11",
+        well_Answered: false,
+        Text: "Die Possessivpronomen (Besitzanzeigende Fürwörter) zeigen an, wem etwas gehört. Sie richten sich nach der Person (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) und werden wie Adjektive dekliniert. Im Nominativ Maskulinum: mein Vater, im Akkusativ: meinen Vater.",
+        questions: [
+          {
+            title: "Er spielt mit ____ Vater.",
+            options: [
+              { id: "a", text: "sein", isCorrect: false },
+              { id: "b", text: "seinem", isCorrect: true },
+              { id: "c", text: "seiner", isCorrect: false },
+              { id: "d", text: "seinen", isCorrect: false },
+            ],
+            explanation:
+              "Nach der Präposition 'mit' steht der Dativ. 'Vater' ist maskulin, daher: seinem Vater.",
+            languages_Explanations: {
+              FR: "Après la préposition 'mit', on utilise le datif. 'Vater' est masculin, donc: seinem Vater.",
+              EN: "After the preposition 'mit', we use the dative case. 'Vater' is masculine, so: seinem Vater.",
+              ES: "Después de la preposición 'mit' se usa el dativo. 'Vater' es masculino, por tanto: seinem Vater.",
+              PT: "Após a preposição 'mit' usa-se o dativo. 'Vater' é masculino, portanto: seinem Vater.",
+              PL: "Po przyimku 'mit' używamy celownika. 'Vater' jest rodzaju męskiego, więc: seinem Vater.",
+              RU: "После предлога 'mit' используется дательный падеж. 'Vater' мужского рода, поэтому: seinem Vater.",
+              TR: "'mit' edatından sonra datif kullanılır. 'Vater' eril, bu yüzden: seinem Vater.",
+              IT: "Dopo la preposizione 'mit' si usa il dativo. 'Vater' è maschile, quindi: seinem Vater.",
+              UK: "Після прийменника 'mit' використовується давальний відмінок. 'Vater' чоловічого роду, тому: seinem Vater.",
+              VI: "Sau giới từ 'mit' dùng dạng cho. 'Vater' là giống đực, nên: seinem Vater.",
+              TL: "Pagkatapos ng preposisyon na 'mit', ginagamit ang dative. Ang 'Vater' ay masculine, kaya: seinem Vater.",
+              ZH: "介词'mit'后面用第三格。'Vater'是阳性，所以：seinem Vater。",
+              ID: "Setelah preposisi 'mit' menggunakan dativ. 'Vater' maskulin, jadi: seinem Vater.",
+              TH: "หลังจากคำบุพบท 'mit' ใช้ dative case 'Vater' เป็นเพศชาย ดังนั้น: seinem Vater",
+              MS: "Selepas kata sendi 'mit' menggunakan kes dativ. 'Vater' adalah maskulin, jadi: seinem Vater.",
+              AR: "بعد حرف الجر 'mit' نستخدم حالة المفعول به غير المباشر. 'Vater' مذكر، لذلك: seinem Vater.",
             },
-            {
-              id: "b",
-              text: "Viele werden durch Automatisierung ersetzt",
-              isCorrect: true,
-            },
-            { id: "c", text: "Sie bleiben unverändert", isCorrect: false },
-            { id: "d", text: "Sie werden wichtiger", isCorrect: false },
-          ],
-          explanation:
-            "Der Text erklärt, dass viele traditionelle Berufe durch Automatisierung ersetzt werden.",
-          languages_Explanations: {
-            FR: "Le texte explique que de nombreux métiers traditionnels sont remplacés par l'automatisation.",
-            EN: "The text explains that many traditional jobs are being replaced by automation.",
-            ES: "El texto explica que muchos trabajos tradicionales son reemplazados por la automatización.",
-            PT: "O texto explica que muitos empregos tradicionais estão sendo substituídos pela automação.",
-            PL: "Tekst wyjaśnia, że wiele tradycyjnych zawodów zostaje zastąpionych przez automatyzację.",
-            RU: "В тексте объясняется, что многие традиционные профессии заменяются автоматизацией.",
-            TR: "Metin, birçok geleneksel mesleğin otomasyon tarafından değiştirildiğini açıklıyor.",
-            IT: "Il testo spiega che molti lavori tradizionali vengono sostituiti dall'automazione.",
-            UK: "У тексті пояснюється, що багато традиційних професій замінюються автоматизацією.",
-            VI: "Văn bản giải thích rằng nhiều nghề truyền thống đang được thay thế bởi tự động hóa.",
-            TL: "Ipinaliwanag ng teksto na maraming tradisyonal na trabaho ay napapalitan ng automation.",
-            ZH: "文本解释说许多传统职业正被自动化所取代。",
-            ID: "Teks menjelaskan bahwa banyak pekerjaan tradisional digantikan oleh otomatisasi.",
-            TH: "ข้อความอธิบายว่าอาชีพดั้งเดิมหลายอย่างถูกแทนที่ด้วยระบบอัตโนมัติ",
-            MS: "Teks menerangkan bahawa banyak pekerjaan tradisional digantikan oleh automasi.",
-            AR: "يوضح النص أن العديد من المهن التقليدية يتم استبدالها بالأتمتة.",
           },
-        },
-      ],
-    },
-  ],
-  B2: [
-    {
-      id: "lsB21",
-      well_Answered: false,
-      Text: "Der Klimawandel stellt eine der größten Herausforderungen unserer Zeit dar. Wissenschaftler warnen vor irreversiblen Schäden, falls nicht schnell gehandelt wird. Die internationale Gemeinschaft hat sich verpflichtet, die Erderwärmung auf unter 2 Grad Celsius zu begrenzen. Dafür sind drastische Maßnahmen zur Reduktion von Treibhausgasen erforderlich. Gleichzeitig müssen alternative Energiequellen massiv ausgebaut werden.",
-      questions: [
-        {
-          title:
-            "Auf welche Temperatur soll die Erderwärmung begrenzt werden?",
-          options: [
-            { id: "a", text: "Unter 1 Grad Celsius", isCorrect: false },
-            { id: "b", text: "Unter 2 Grad Celsius", isCorrect: true },
-            { id: "c", text: "Unter 3 Grad Celsius", isCorrect: false },
-            { id: "d", text: "Unter 4 Grad Celsius", isCorrect: false },
-          ],
-          explanation:
-            "Der Text erwähnt das Ziel, die Erderwärmung auf unter 2 Grad Celsius zu begrenzen.",
-          languages_Explanations: {
-            FR: "Le texte mentionne l'objectif de limiter le réchauffement climatique à moins de 2 degrés Celsius.",
-            EN: "The text mentions the goal of limiting global warming to under 2 degrees Celsius.",
-            ES: "El texto menciona el objetivo de limitar el calentamiento global a menos de 2 grados Celsius.",
-            PT: "O texto menciona o objetivo de limitar o aquecimento global a menos de 2 graus Celsius.",
-            PL: "Tekst wspomina cel ograniczenia globalnego ocieplenia do poniżej 2 stopni Celsjusza.",
-            RU: "В тексте упоминается цель ограничить глобальное потепление до менее 2 градусов Цельсия.",
-            TR: "Metin, küresel ısınmanın 2 santigrat derecenin altında sınırlandırılması hedefini belirtiyor.",
-            IT: "Il testo menziona l'obiettivo di limitare il riscaldamento globale a meno di 2 gradi Celsius.",
-            UK: "У тексті згадується мета обмежити глобальне потепління до менш ніж 2 градусів Цельсія.",
-            VI: "Văn bản đề cập đến mục tiêu hạn chế sự nóng lên toàn cầu dưới 2 độ C.",
-            TL: "Binabanggit ng teksto ang layuning limitahan ang global warming sa ilalim ng 2 degrees Celsius.",
-            ZH: "文本提到了将全球变暖限制在2摄氏度以下的目标。",
-            ID: "Teks menyebutkan tujuan membatasi pemanasan global di bawah 2 derajat Celsius.",
-            TH: "ข้อความกล่าวถึงเป้าหมายการจำกัดภาวะโลกร้อนให้ต่ำกว่า 2 องศาเซลเซียส",
-            MS: "Teks menyebut matlamat untuk mengehadkan pemanasan global kepada bawah 2 darjah Celsius.",
-            AR: "يذكر النص هدف الحد من الاحتباس الحراري إلى أقل من درجتين مئويتين.",
+          {
+            title: "Ich sehe ____ Auto.",
+            options: [
+              { id: "a", text: "mein", isCorrect: false },
+              { id: "b", text: "meiner", isCorrect: false },
+              { id: "c", text: "meinem", isCorrect: false },
+              { id: "d", text: "mein", isCorrect: true },
+            ],
+            explanation:
+              "Das Verb 'sehen' verlangt den Akkusativ. 'Auto' ist neutral, daher bleibt 'mein' unverändert.",
+            languages_Explanations: {
+              FR: "Le verbe 'sehen' demande l'accusatif. 'Auto' est neutre, donc 'mein' reste inchangé.",
+              EN: "The verb 'sehen' requires the accusative case. 'Auto' is neuter, so 'mein' remains unchanged.",
+              ES: "El verbo 'sehen' requiere acusativo. 'Auto' es neutro, por tanto 'mein' permanece sin cambios.",
+              PT: "O verbo 'sehen' requer o acusativo. 'Auto' é neutro, portanto 'mein' permanece inalterado.",
+              PL: "Czasownik 'sehen' wymaga biernika. 'Auto' jest nijakie, więc 'mein' pozostaje niezmienione.",
+              RU: "Глагол 'sehen' требует винительного падежа. 'Auto' среднего рода, поэтому 'mein' остается неизменным.",
+              TR: "'sehen' fiili akuzatif ister. 'Auto' nötr, bu yüzden 'mein' değişmez.",
+              IT: "Il verbo 'sehen' richiede l'accusativo. 'Auto' è neutro, quindi 'mein' rimane invariato.",
+              UK: "Дієслово 'sehen' вимагає знахідного відмінка. 'Auto' середнього роду, тому 'mein' залишається незмінним.",
+              VI: "Động từ 'sehen' cần dạng đối. 'Auto' là trung tính, nên 'mein' không đổi.",
+              TL: "Ang pandiwang 'sehen' ay nangangailangan ng accusative. Ang 'Auto' ay neutral, kaya ang 'mein' ay hindi nagbabago.",
+              ZH: "动词'sehen'需要第四格。'Auto'是中性，所以'mein'保持不变。",
+              ID: "Kata kerja 'sehen' memerlukan akusativ. 'Auto' netral, jadi 'mein' tidak berubah.",
+              TH: "กริยา 'sehen' ต้องการ accusative case 'Auto' เป็นเพศกลาง ดังนั้น 'mein' ไม่เปลี่ยน",
+              MS: "Kata kerja 'sehen' memerlukan kes akusativ. 'Auto' adalah neutral, jadi 'mein' tidak berubah.",
+              AR: "الفعل 'sehen' يتطلب حالة المفعول به المباشر. 'Auto' محايد، لذلك 'mein' يبقى كما هو.",
+            },
           },
-        },
-      ],
-    },
-  ],
-  C1: [
-    {
-      id: "lsC11",
-      well_Answered: false,
-      Text: "Die Philosophie der Aufklärung prägte das 18. Jahrhundert nachhaltig. Denker wie Kant, Voltaire und Rousseau hinterfragten traditionelle Autoritäten und propagierten die Macht der Vernunft. Ihr Einfluss reichte weit über akademische Kreise hinaus und trug zur Entstehung moderner demokratischer Systeme bei. Die Aufklärung betonte die Wichtigkeit individueller Rechte und stellte das Konzept der Gewaltenteilung vor.",
-      questions: [
-        {
-          title: "Was charakterisierte die Philosophie der Aufklärung?",
-          options: [
-            {
-              id: "a",
-              text: "Unterstützung traditioneller Autoritäten",
-              isCorrect: false,
+        ],
+      },
+      {
+        id: "grA12",
+        well_Answered: false,
+        Text: "Die Artikel (der, die, das) zeigen das Geschlecht der Nomen an. Im Deutschen gibt es drei Geschlechter: maskulin (der), feminin (die) und neutral (das). Die Artikel verändern sich je nach Fall: Nominativ (der/die/das), Akkusativ (den/die/das), Dativ (dem/der/dem), Genitiv (des/der/des).",
+        questions: [
+          {
+            title: "Ich kaufe ____ Buch.",
+            options: [
+              { id: "a", text: "der", isCorrect: false },
+              { id: "b", text: "die", isCorrect: false },
+              { id: "c", text: "das", isCorrect: true },
+              { id: "d", text: "den", isCorrect: false },
+            ],
+            explanation:
+              "Das Verb 'kaufen' verlangt den Akkusativ. 'Buch' ist neutral, daher: das Buch.",
+            languages_Explanations: {
+              FR: "Le verbe 'kaufen' demande l'accusatif. 'Buch' est neutre, donc: das Buch.",
+              EN: "The verb 'kaufen' requires the accusative case. 'Buch' is neuter, so: das Buch.",
+              ES: "El verbo 'kaufen' requiere acusativo. 'Buch' es neutro, por tanto: das Buch.",
+              PT: "O verbo 'kaufen' requer o acusativo. 'Buch' é neutro, portanto: das Buch.",
+              PL: "Czasownik 'kaufen' wymaga biernika. 'Buch' jest nijakie, więc: das Buch.",
+              RU: "Глагол 'kaufen' требует винительного падежа. 'Buch' среднего рода, поэтому: das Buch.",
+              TR: "'kaufen' fiili akuzatif ister. 'Buch' nötr, bu yüzden: das Buch.",
+              IT: "Il verbo 'kaufen' richiede l'accusativo. 'Buch' è neutro, quindi: das Buch.",
+              UK: "Дієслово 'kaufen' вимагає знахідного відмінка. 'Buch' середнього роду, тому: das Buch.",
+              VI: "Động từ 'kaufen' cần dạng đối. 'Buch' là trung tính, nên: das Buch.",
+              TL: "Ang pandiwang 'kaufen' ay nangangailangan ng accusative. Ang 'Buch' ay neutral, kaya: das Buch.",
+              ZH: "动词'kaufen'需要第四格。'Buch'是中性，所以：das Buch。",
+              ID: "Kata kerja 'kaufen' memerlukan akusativ. 'Buch' netral, jadi: das Buch.",
+              TH: "กริยา 'kaufen' ต้องการ accusative case 'Buch' เป็นเพศกลาง ดังนั้น: das Buch",
+              MS: "Kata kerja 'kaufen' memerlukan kes akusativ. 'Buch' adalah neutral, jadi: das Buch.",
+              AR: "الفعل 'kaufen' يتطلب حالة المفعول به المباشر. 'Buch' محايد، لذلك: das Buch.",
             },
-            {
-              id: "b",
-              text: "Hinterfragung traditioneller Autoritäten und Betonung der Vernunft",
-              isCorrect: true,
-            },
-            {
-              id: "c",
-              text: "Ablehnung individueller Rechte",
-              isCorrect: false,
-            },
-            {
-              id: "d",
-              text: "Förderung monarchischer Systeme",
-              isCorrect: false,
-            },
-          ],
-          explanation:
-            "Die Aufklärer hinterfragten traditionelle Autoritäten und propagierten die Macht der Vernunft.",
-          languages_Explanations: {
-            FR: "Les philosophes des Lumières remettaient en question les autorités traditionnelles et prônaient le pouvoir de la raison.",
-            EN: "Enlightenment philosophers questioned traditional authorities and advocated the power of reason.",
-            ES: "Los filósofos de la Ilustración cuestionaron las autoridades tradicionales y defendieron el poder de la razón.",
-            PT: "Os filósofos do Iluminismo questionaram as autoridades tradicionais e defenderam o poder da razão.",
-            PL: "Filozofowie oświecenia kwestionowali tradycyjne autorytety i propagowali moc rozumu.",
-            RU: "Философы Просвещения ставили под сомнение традиционные авторитеты и проповедовали силу разума.",
-            TR: "Aydınlanma filozofları geleneksel otoriteleri sorguladı ve aklın gücünü savundu.",
-            IT: "I filosofi dell'Illuminismo mettevano in discussione le autorità tradizionali e sostenevano il potere della ragione.",
-            UK: "Філософи Просвітництва ставили під сумнів традиційні авторитети та проповідували силу розуму.",
-            VI: "Các triết gia Khai sáng đặt câu hỏi về các thẩm quyền truyền thống và ủng hộ sức mạnh của lý trí.",
-            TL: "Ang mga pilosopong Enlightenment ay nag-tanong sa tradisyonal na mga awtoridad at itinataguyod ang kapangyarihan ng pag-iisip.",
-            ZH: "启蒙哲学家质疑传统权威并宣扬理性的力量。",
-            ID: "Para filsuf Pencerahan mempertanyakan otoritas tradisional dan memperjuangkan kekuatan akal.",
-            TH: "นักปรัชญายุคแสงธรรมตั้งคำถามต่ออำนาจดั้งเดิมและสนับสนุนพลังแห่งเหตุผล",
-            MS: "Ahli falsafah Pencerahan mempersoalkan autoriti tradisional dan menyokong kuasa akal.",
-            AR: "فلاسفة التنوير شككوا في السلطات التقليدية ودعوا إلى قوة العقل.",
           },
-        },
-      ],
-    },
-  ],
-  C2: [
-    {
-      id: "lsC21",
-      well_Answered: false,
-      Text: "Die postmoderne Literaturtheorie stellt fundamentale Annahmen über Autorschaft, Textualität und Bedeutung in Frage. Theoretiker wie Derrida und Foucault argumentieren, dass Texte nicht eine einzige, vom Autor intendierte Bedeutung besitzen, sondern durch den Interpretationsprozess des Lesers konstituiert werden. Diese Perspektive unterminiert traditionelle hermeneutische Ansätze und eröffnet neue Möglichkeiten für die Textanalyse.",
-      questions: [
-        {
-          title:
-            "Was argumentieren postmoderne Theoretiker über Textbedeutung?",
-          options: [
-            {
-              id: "a",
-              text: "Texte haben eine einzige, vom Autor bestimmte Bedeutung",
-              isCorrect: false,
+        ],
+      },
+      {
+        id: "grA13",
+        well_Answered: false,
+        Text: "Die Präpositionen bestimmen den Fall des folgenden Nomens. Einige Präpositionen verlangen immer den Dativ (mit, nach, aus, zu, von, bei, seit), andere immer den Akkusativ (durch, für, gegen, ohne, um). Wechselpräpositionen (an, auf, hinter, in, neben, über, unter, vor, zwischen) verwenden Dativ für 'wo?' und Akkusativ für 'wohin?'.",
+        questions: [
+          {
+            title: "Das Bild hängt an ____ Wand.",
+            options: [
+              { id: "a", text: "die", isCorrect: false },
+              { id: "b", text: "der", isCorrect: true },
+              { id: "c", text: "den", isCorrect: false },
+              { id: "d", text: "dem", isCorrect: false },
+            ],
+            explanation:
+              "Die Frage ist 'wo?' (Position), daher Dativ. 'Wand' ist feminin, daher: an der Wand.",
+            languages_Explanations: {
+              FR: "La question est 'où?' (position), donc datif. 'Wand' est féminin, donc: an der Wand.",
+              EN: "The question is 'where?' (position), so dative. 'Wand' is feminine, so: an der Wand.",
+              ES: "La pregunta es '¿dónde?' (posición), por tanto dativo. 'Wand' es femenino, así: an der Wand.",
+              PT: "A pergunta é 'onde?' (posição), portanto dativo. 'Wand' é feminino, então: an der Wand.",
+              PL: "Pytanie brzmi 'gdzie?' (pozycja), więc celownik. 'Wand' jest żeńskie, więc: an der Wand.",
+              RU: "Вопрос 'где?' (позиция), поэтому дательный падеж. 'Wand' женского рода, поэтому: an der Wand.",
+              TR: "Soru 'nerede?' (konum), bu yüzden datif. 'Wand' dişil, bu yüzden: an der Wand.",
+              IT: "La domanda è 'dove?' (posizione), quindi dativo. 'Wand' è femminile, quindi: an der Wand.",
+              UK: "Питання 'де?' (позиція), тому давальний відмінок. 'Wand' жіночого роду, тому: an der Wand.",
+              VI: "Câu hỏi là 'ở đâu?' (vị trí), nên dạng cho. 'Wand' là giống cái, nên: an der Wand.",
+              TL: "Ang tanong ay 'saan?' (posisyon), kaya dative. Ang 'Wand' ay feminine, kaya: an der Wand.",
+              ZH: "问题是'在哪里？'(位置)，所以用第三格。'Wand'是阴性，所以：an der Wand。",
+              ID: "Pertanyaannya adalah 'di mana?' (posisi), jadi dativ. 'Wand' feminin, jadi: an der Wand.",
+              TH: "คำถามคือ 'ที่ไหน?' (ตำแหน่ง) ดังนั้นใช้ dative 'Wand' เป็นเพศหญิง ดังนั้น: an der Wand",
+              MS: "Soalannya adalah 'di mana?' (kedudukan), jadi dativ. 'Wand' adalah feminin, jadi: an der Wand.",
+              AR: "السؤال هو 'أين؟' (الموقع)، لذلك حالة المفعول به غير المباشر. 'Wand' مؤنث، لذلك: an der Wand.",
             },
-            {
-              id: "b",
-              text: "Bedeutung wird durch den Interpretationsprozess des Lesers konstituiert",
-              isCorrect: true,
-            },
-            {
-              id: "c",
-              text: "Nur Experten können Texte richtig interpretieren",
-              isCorrect: false,
-            },
-            {
-              id: "d",
-              text: "Textbedeutung ist unwichtig",
-              isCorrect: false,
-            },
-          ],
-          explanation:
-            "Postmoderne Theoretiker argumentieren, dass Bedeutung durch den Interpretationsprozess des Lesers konstituiert wird.",
-          languages_Explanations: {
-            FR: "Les théoriciens postmodernes soutiennent que le sens est constitué par le processus d'interprétation du lecteur.",
-            EN: "Postmodern theorists argue that meaning is constituted through the reader's interpretation process.",
-            ES: "Los teóricos posmodernos argumentan que el significado se constituye a través del proceso de interpretación del lector.",
-            PT: "Os teóricos pós-modernos argumentam que o significado é constituído através do processo de interpretação do leitor.",
-            PL: "Teoretycy postmoderniści argumentują, że znaczenie jest konstituowane przez proces interpretacji czytelnika.",
-            RU: "Постмодернистские теоретики утверждают, что смысл составляется через процесс интерпретации читателя.",
-            TR: "Postmodern teorisyenler, anlamın okuyucunun yorumlama süreci yoluyla oluşturulduğunu savunuyor.",
-            IT: "I teorici postmoderni sostengono che il significato è costituito attraverso il processo di interpretazione del lettore.",
-            UK: "Постмодерністські теоретики стверджують, що значення складається через процес інтерпретації читача.",
-            VI: "Các nhà lý thuyết hậu hiện đại cho rằng ý nghĩa được cấu thành thông qua quá trình diễn giải của người đọc.",
-            TL: "Sinasabi ng mga postmodern na theorist na ang kahulugan ay nabubuo sa pamamagitan ng proseso ng interpretasyon ng mambabasa.",
-            ZH: "后现代理论家认为意义是通过读者的解释过程构成的。",
-            ID: "Para teoretikus postmodern berargumen bahwa makna dikonstruksi melalui proses interpretasi pembaca.",
-            TH: "นักทฤษฎีหลังสมัยใหม่แย้งว่าความหมายถูกสร้างขึ้นผ่านกระบวนการตีความของผู้อ่าน",
-            MS: "Ahli teori pascamoden berhujah bahawa makna dibentuk melalui proses tafsiran pembaca.",
-            AR: "يحتج المنظرون ما بعد الحداثيون أن المعنى يتشكل من خلال عملية تفسير القارئ.",
           },
-        },
-      ],
-    },
-  ],
-}
-
+        ],
+      },
+    ],
+    A2: [
+      {
+        id: "grA21",
+        well_Answered: false,
+        Text: "Die Adjektivdeklination richtet sich nach dem Artikel vor dem Adjektiv. Nach dem bestimmten Artikel (der/die/das) haben Adjektive meist die Endung -e oder -en (schwache Deklination). Nach dem unbestimmten Artikel (ein/eine/ein) übernimmt das Adjektiv teilweise die Artikelendung (gemischte Deklination). Ohne Artikel hat das Adjektiv die Artikelendung (starke Deklination).",
+        questions: [
+          {
+            title: "Ich sehe einen ____ Mann.",
+            options: [
+              { id: "a", text: "große", isCorrect: false },
+              { id: "b", text: "großen", isCorrect: true },
+              { id: "c", text: "großer", isCorrect: false },
+              { id: "d", text: "großes", isCorrect: false },
+            ],
+            explanation:
+              "Nach 'einen' (Akkusativ maskulin) bekommt das Adjektiv die Endung -en.",
+            languages_Explanations: {
+              FR: "Après 'einen' (accusatif masculin), l'adjectif prend la terminaison -en.",
+              EN: "After 'einen' (accusative masculine), the adjective takes the ending -en.",
+              ES: "Después de 'einen' (acusativo masculino), el adjetivo toma la terminación -en.",
+              PT: "Após 'einen' (acusativo masculino), o adjetivo recebe a terminação -en.",
+              PL: "Po 'einen' (biernik rodzaju męskiego), przymiotnik przyjmuje końcówkę -en.",
+              RU: "После 'einen' (винительный падеж мужского рода), прилагательное получает окончание -en.",
+              TR: "'einen' (akuzatif eril) sonrasında sıfat -en son eki alır.",
+              IT: "Dopo 'einen' (accusativo maschile), l'aggettivo prende la desinenza -en.",
+              UK: "Після 'einen' (знахідний відмінок чоловічого роду), прикметник отримує закінчення -en.",
+              VI: "Sau 'einen' (dạng đối giống đực), tính từ có đuôi -en.",
+              TL: "Pagkatapos ng 'einen' (accusative masculine), ang pang-uri ay tumutulong ng ending na -en.",
+              ZH: "在'einen'(第四格阳性)后面，形容词加词尾-en。",
+              ID: "Setelah 'einen' (akusativ maskulin), adjektiva mendapat akhiran -en.",
+              TH: "หลังจาก 'einen' (accusative masculine) คุณศัพท์ได้รับการสิ้นสุด -en",
+              MS: "Selepas 'einen' (akusativ maskulin), adjektif mendapat akhiran -en.",
+              AR: "بعد 'einen' (مفعول به مباشر مذكر)، يأخذ الصفة النهاية -en.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grA22",
+        well_Answered: false,
+        Text: "Die Modalverben (können, müssen, dürfen, sollen, wollen, mögen) drücken die Art und Weise aus, wie eine Handlung ausgeführt wird. Sie stehen meist mit einem Infinitiv am Satzende. Die Modalverben werden konjugiert, der Infinitiv bleibt unverändert. Beispiel: Ich kann schwimmen. Du musst arbeiten.",
+        questions: [
+          {
+            title: "Er ____ heute nicht arbeiten.",
+            options: [
+              { id: "a", text: "kann", isCorrect: true },
+              { id: "b", text: "können", isCorrect: false },
+              { id: "c", text: "kannst", isCorrect: false },
+              { id: "d", text: "könnt", isCorrect: false },
+            ],
+            explanation:
+              "Das Modalverb wird konjugiert. Für 'er' (3. Person Singular) lautet die Form: kann.",
+            languages_Explanations: {
+              FR: "Le verbe modal est conjugué. Pour 'er' (3e personne du singulier), la forme est: kann.",
+              EN: "The modal verb is conjugated. For 'er' (3rd person singular), the form is: kann.",
+              ES: "El verbo modal se conjuga. Para 'er' (3ª persona singular), la forma es: kann.",
+              PT: "O verbo modal é conjugado. Para 'er' (3ª pessoa singular), a forma é: kann.",
+              PL: "Czasownik modalny jest koniugowany. Dla 'er' (3. osoba liczby pojedynczej), forma to: kann.",
+              RU: "Модальный глагол спрягается. Для 'er' (3-е лицо единственного числа), форма: kann.",
+              TR: "Modal fiil çekimlenir. 'er' (3. tekil şahıs) için form: kann.",
+              IT: "Il verbo modale è coniugato. Per 'er' (3a persona singolare), la forma è: kann.",
+              UK: "Модальне дієслово відмінюється. Для 'er' (3-я особа однини), форма: kann.",
+              VI: "Động từ tình thái được chia. Với 'er' (ngôi thứ 3 số ít), dạng là: kann.",
+              TL: "Ang modal verb ay naka-conjugate. Para sa 'er' (3rd person singular), ang form ay: kann.",
+              ZH: "情态动词要变位。对于'er'(第三人称单数)，形式是：kann。",
+              ID: "Kata kerja modal dikonjugasi. Untuk 'er' (orang ketiga tunggal), bentuknya: kann.",
+              TH: "Modal verb ต้องผันคำกริยา สำหรับ 'er' (บุรุษที่ 3 เอกพจน์) รูปแบบคือ: kann",
+              MS: "Kata kerja modal dikonjugasi. Untuk 'er' (orang ketiga tunggal), bentuknya: kann.",
+              AR: "الفعل الناقص يُصرف. لـ 'er' (الشخص الثالث المفرد)، الصيغة هي: kann.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grA23",
+        well_Answered: false,
+        Text: "Das Perfekt wird mit haben oder sein + Partizip II gebildet. Die meisten Verben bilden das Perfekt mit 'haben'. Verben der Bewegung und Zustandsveränderung verwenden 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Das Partizip II steht am Satzende.",
+        questions: [
+          {
+            title: "Ich ____ nach Hause gegangen.",
+            options: [
+              { id: "a", text: "habe", isCorrect: false },
+              { id: "b", text: "bin", isCorrect: true },
+              { id: "c", text: "ist", isCorrect: false },
+              { id: "d", text: "haben", isCorrect: false },
+            ],
+            explanation:
+              "Das Verb 'gehen' ist ein Bewegungsverb und bildet das Perfekt mit 'sein'. Für 'ich': bin.",
+            languages_Explanations: {
+              FR: "Le verbe 'gehen' est un verbe de mouvement et forme le parfait avec 'sein'. Pour 'ich': bin.",
+              EN: "The verb 'gehen' is a verb of movement and forms the perfect tense with 'sein'. For 'ich': bin.",
+              ES: "El verbo 'gehen' es un verbo de movimiento y forma el perfecto con 'sein'. Para 'ich': bin.",
+              PT: "O verbo 'gehen' é um verbo de movimento e forma o perfeito com 'sein'. Para 'ich': bin.",
+              PL: "Czasownik 'gehen' to czasownik ruchu i tworzy perfekt z 'sein'. Dla 'ich': bin.",
+              RU: "Глагол 'gehen' - это глагол движения и образует перфект с 'sein'. Для 'ich': bin.",
+              TR: "'gehen' fiili hareket fiilidir ve perfekt zamanı 'sein' ile kurar. 'ich' için: bin.",
+              IT: "Il verbo 'gehen' è un verbo di movimento e forma il perfetto con 'sein'. Per 'ich': bin.",
+              UK: "Дієслово 'gehen' - це дієслово руху і утворює перфект з 'sein'. Для 'ich': bin.",
+              VI: "Động từ 'gehen' là động từ chuyển động và tạo thì hoàn thành với 'sein'. Với 'ich': bin.",
+              TL: "Ang pandiwang 'gehen' ay isang pandiwa ng paggalaw at bumubuo ng perfect tense gamit ang 'sein'. Para sa 'ich': bin.",
+              ZH: "动词'gehen'是运动动词，用'sein'构成现在完成时。对于'ich'：bin。",
+              ID: "Kata kerja 'gehen' adalah kata kerja gerakan dan membentuk perfekt dengan 'sein'. Untuk 'ich': bin.",
+              TH: "กริยา 'gehen' เป็นกริยาที่แสดงการเคลื่อนไหวและสร้าง perfect tense ด้วย 'sein' สำหรับ 'ich': bin",
+              MS: "Kata kerja 'gehen' adalah kata kerja pergerakan dan membentuk perfekt dengan 'sein'. Untuk 'ich': bin.",
+              AR: "الفعل 'gehen' هو فعل حركة ويكون الماضي التام مع 'sein'. لـ 'ich': bin.",
+            },
+          },
+        ],
+      },
+    ],
+    B1: [
+      {
+        id: "grB11",
+        well_Answered: false,
+        Text: "Die Relativpronomen (der, die, das, welcher, welche, welches) leiten Relativsätze ein und beziehen sich auf ein Nomen im Hauptsatz. Sie richten sich in Genus und Numerus nach dem Bezugswort, im Fall nach ihrer Funktion im Relativsatz. Beispiel: Der Mann, den ich sehe, ist mein Lehrer. (Akkusativ, weil Objekt im Relativsatz)",
+        questions: [
+          {
+            title: "Das ist die Frau, ____ ich gestern getroffen habe.",
+            options: [
+              { id: "a", text: "der", isCorrect: false },
+              { id: "b", text: "die", isCorrect: true },
+              { id: "c", text: "den", isCorrect: false },
+              { id: "d", text: "dem", isCorrect: false },
+            ],
+            explanation:
+              "Das Bezugswort 'Frau' ist feminin. Im Relativsatz ist sie Akkusativobjekt, daher: die.",
+            languages_Explanations: {
+              FR: "Le mot de référence 'Frau' est féminin. Dans la relative, c'est l'objet accusatif, donc: die.",
+              EN: "The reference word 'Frau' is feminine. In the relative clause, it's the accusative object, so: die.",
+              ES: "La palabra de referencia 'Frau' es femenina. En la relativa, es objeto acusativo, por tanto: die.",
+              PT: "A palavra de referência 'Frau' é feminina. Na relativa, é o objeto acusativo, portanto: die.",
+              PL: "Słowo odniesienia 'Frau' jest żeńskie. W zdaniu względnym jest dopełnieniem biernikowym, więc: die.",
+              RU: "Опорное слово 'Frau' женского рода. В придаточном предложении это прямое дополнение, поэтому: die.",
+              TR: "Referans kelime 'Frau' dişil. Sıfat cümlesinde akuzatif nesne, bu yüzden: die.",
+              IT: "La parola di riferimento 'Frau' è femminile. Nella relativa è l'oggetto accusativo, quindi: die.",
+              UK: "Опорне слово 'Frau' жіночого роду. У підрядному реченні це прямий додаток, тому: die.",
+              VI: "Từ tham chiếu 'Frau' là giống cái. Trong mệnh đề quan hệ, nó là tân ngữ trực tiếp, nên: die.",
+              TL: "Ang reference word na 'Frau' ay feminine. Sa relative clause, ito ay accusative object, kaya: die.",
+              ZH: "参照词'Frau'是阴性。在关系从句中，它是第四格宾语，所以：die。",
+              ID: "Kata acuan 'Frau' feminin. Dalam klausa relatif, itu adalah objek akusativ, jadi: die.",
+              TH: "คำอ้างอิง 'Frau' เป็นเพศหญิง ในประโยคความสัมพันธ์เป็น accusative object ดังนั้น: die",
+              MS: "Perkataan rujukan 'Frau' adalah feminin. Dalam klausa relatif, ia adalah objek akusativ, jadi: die.",
+              AR: "الكلمة المرجعية 'Frau' مؤنثة. في الجملة الصلة، هي المفعول المباشر، لذلك: die.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grB12",
+        well_Answered: false,
+        Text: "Der Konjunktiv II drückt Irrealität, Höflichkeit oder Wünsche aus. Er wird mit würde + Infinitiv oder mit speziellen Konjunktiv-II-Formen gebildet. Starke Verben bekommen oft einen Umlaut: ich war → ich wäre, ich hatte → ich hätte. Bei schwachen Verben verwendet man meist würde + Infinitiv.",
+        questions: [
+          {
+            title: "Wenn ich Zeit ____, würde ich kommen.",
+            options: [
+              { id: "a", text: "habe", isCorrect: false },
+              { id: "b", text: "hätte", isCorrect: true },
+              { id: "c", text: "hatte", isCorrect: false },
+              { id: "d", text: "haben", isCorrect: false },
+            ],
+            explanation:
+              "Im irrealen Konditionalsatz verwendet man Konjunktiv II. 'haben' wird zu 'hätte'.",
+            languages_Explanations: {
+              FR: "Dans la conditionnelle irréelle, on utilise le subjonctif II. 'haben' devient 'hätte'.",
+              EN: "In unreal conditional sentences, we use Konjunktiv II. 'haben' becomes 'hätte'.",
+              ES: "En la condicional irreal se usa el subjuntivo II. 'haben' se convierte en 'hätte'.",
+              PT: "Na condicional irreal usa-se o subjuntivo II. 'haben' torna-se 'hätte'.",
+              PL: "W trybie warunkowym nierealnym używamy Konjunktiv II. 'haben' staje się 'hätte'.",
+              RU: "В ирреальном условном предложении используется конъюнктив II. 'haben' становится 'hätte'.",
+              TR: "İrreal koşul cümlesinde Konjunktiv II kullanılır. 'haben' 'hätte' olur.",
+              IT: "Nella condizionale irreale si usa il congiuntivo II. 'haben' diventa 'hätte'.",
+              UK: "В нереальному умовному реченні використовується конъюнктив II. 'haben' стає 'hätte'.",
+              VI: "Trong câu điều kiện không có thật dùng Konjunktiv II. 'haben' thành 'hätte'.",
+              TL: "Sa unreal conditional sentence, ginagamit ang Konjunktiv II. Ang 'haben' ay nagiging 'hätte'.",
+              ZH: "在非现实条件句中使用第二虚拟式。'haben'变成'hätte'。",
+              ID: "Dalam kalimat kondisional tidak nyata menggunakan Konjunktiv II. 'haben' menjadi 'hätte'.",
+              TH: "ในประโยคเงื่อนไขที่ไม่เป็นจริงใช้ Konjunktiv II 'haben' กลายเป็น 'hätte'",
+              MS: "Dalam ayat bersyarat tidak nyata menggunakan Konjunktiv II. 'haben' menjadi 'hätte'.",
+              AR: "في الجملة الشرطية غير الحقيقية نستخدم Konjunktiv II. 'haben' يصبح 'hätte'.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grB13",
+        well_Answered: false,
+        Text: "Die Passivbildung erfolgt mit werden + Partizip II (Vorgangspassiv) oder sein + Partizip II (Zustandspassiv). Das Vorgangspassiv betont den Vorgang: Das Haus wird gebaut. Das Zustandspassiv betont das Ergebnis: Das Haus ist gebaut. Der Handelnde kann mit 'von' + Dativ genannt werden.",
+        questions: [
+          {
+            title: "Das Auto ____ repariert.",
+            options: [
+              { id: "a", text: "wird", isCorrect: true },
+              { id: "b", text: "ist", isCorrect: false },
+              { id: "c", text: "hat", isCorrect: false },
+              { id: "d", text: "war", isCorrect: false },
+            ],
+            explanation:
+              "Ohne Kontext nehmen wir das Vorgangspassiv (wird + Partizip II), das den Vorgang betont.",
+            languages_Explanations: {
+              FR: "Sans contexte, nous prenons le passif d'action (wird + participe II) qui souligne le processus.",
+              EN: "Without context, we use the process passive (wird + past participle) which emphasizes the action.",
+              ES: "Sin contexto, usamos la pasiva de proceso (wird + participio II) que enfatiza la acción.",
+              PT: "Sem contexto, usamos a passiva de processo (wird + particípio II) que enfatiza a ação.",
+              PL: "Bez kontekstu używamy strony biernej czynności (wird + imiesłów II), która podkreśla działanie.",
+              RU: "Без контекста мы используем пассив действия (wird + причастие II), который подчеркивает процесс.",
+              TR: "Bağlam olmadan eylem pasifi (wird + sıfat-fiil II) kullanırız, bu süreci vurgular.",
+              IT: "Senza contesto, usiamo il passivo d'azione (wird + participio II) che enfatizza il processo.",
+              UK: "Без контексту ми використовуємо пасив дії (wird + дієприкметник II), який підкреслює процес.",
+              VI: "Không có ngữ cảnh, ta dùng thể bị động quá trình (wird + quá khứ phân từ II) nhấn mạnh hành động.",
+              TL: "Walang konteksto, ginagamit namin ang process passive (wird + past participle) na nagbibigay-diin sa aksyon.",
+              ZH: "没有上下文时，我们使用过程被动语态(wird + 过去分词II)强调动作。",
+              ID: "Tanpa konteks, kita menggunakan pasif proses (wird + partisip II) yang menekankan tindakan.",
+              TH: "โดยไม่มีบริบท เราใช้ process passive (wird + past participle) ที่เน้นการกระทำ",
+              MS: "Tanpa konteks, kita menggunakan pasif proses (wird + partisip II) yang menekankan tindakan.",
+              AR: "بدون سياق، نستخدم المبني للمجهول العملي (wird + اسم المفعول II) الذي يؤكد على العملية.",
+            },
+          },
+        ],
+      },
+    ],
+    B2: [
+      {
+        id: "grB21",
+        well_Answered: false,
+        Text: "Die Partizipialkonstruktionen ersetzen oft Relativsätze und machen den Stil konziser. Das Partizip I (laufend, sprechend) drückt Gleichzeitigkeit aus, das Partizip II (gelaufen, gesprochen) Vorzeitigkeit oder passive Bedeutung. Sie werden wie Adjektive dekliniert: der singende Vogel, die geschriebenen Briefe.",
+        questions: [
+          {
+            title: "Die ____ Touristen fotografierten alles.",
+            options: [
+              { id: "a", text: "ankommend", isCorrect: false },
+              { id: "b", text: "ankommende", isCorrect: false },
+              { id: "c", text: "angekommenen", isCorrect: true },
+              { id: "d", text: "ankommen", isCorrect: false },
+            ],
+            explanation:
+              "Das Partizip II 'angekommenen' (schwache Adjektivdeklination nach 'die') drückt aus, dass die Touristen bereits angekommen sind.",
+            languages_Explanations: {
+              FR: "Le participe II 'angekommenen' (déclinaison faible après 'die') exprime que les touristes sont déjà arrivés.",
+              EN: "The past participle 'angekommenen' (weak adjective declension after 'die') expresses that the tourists have already arrived.",
+              ES: "El participio II 'angekommenen' (declinación débil después de 'die') expresa que los turistas ya han llegado.",
+              PT: "O particípio II 'angekommenen' (declinação fraca após 'die') expressa que os turistas já chegaram.",
+              PL: "Imiesłów II 'angekommenen' (słaba deklinacja po 'die') wyraża, że turyści już przybyli.",
+              RU: "Причастие II 'angekommenen' (слабое склонение после 'die') выражает, что туристы уже прибыли.",
+              TR: "Sıfat-fiil II 'angekommenen' ('die' sonrası zayıf çekim) turistlerin zaten geldiğini ifade eder.",
+              IT: "Il participio II 'angekommenen' (declinazione debole dopo 'die') esprime che i turisti sono già arrivati.",
+              UK: "Дієприкметник II 'angekommenen' (слабе відмінювання після 'die') виражає, що туристи вже прибули.",
+              VI: "Quá khứ phân từ II 'angekommenen' (biến cách yếu sau 'die') diễn tả rằng du khách đã đến rồi.",
+              TL: "Ang past participle na 'angekommenen' (weak declension pagkatapos ng 'die') ay nagpapahayag na ang mga turista ay nakarating na.",
+              ZH: "过去分词'angekommenen'(在'die'后弱变格)表示游客已经到达了。",
+              ID: "Partisip II 'angekommenen' (deklinasi lemah setelah 'die') menyatakan bahwa turis sudah tiba.",
+              TH: "Past participle 'angekommenen' (weak declension หลัง 'die') แสดงว่านักท่องเที่ยวมาถึงแล้ว",
+              MS: "Partisip II 'angekommenen' (deklinasi lemah selepas 'die') menyatakan bahawa pelancong telah tiba.",
+              AR: "اسم المفعول الثاني 'angekommenen' (الإعراب الضعيف بعد 'die') يعبر عن أن السياح قد وصلوا بالفعل.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grB22",
+        well_Answered: false,
+        Text: "Die erweiterte Attributkonstruktion ist eine komplexe Nominalphrase mit Partizipien oder Adjektiven und deren Ergänzungen. Sie steht zwischen Artikel und Nomen und wird vollständig dekliniert. Beispiel: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Diese Konstruktion ist charakteristisch für formelle Texte.",
+        questions: [
+          {
+            title: "Die vom Minister ____ Entscheidung war umstritten.",
+            options: [
+              { id: "a", text: "getroffen", isCorrect: false },
+              { id: "b", text: "getroffene", isCorrect: true },
+              { id: "c", text: "getroffenen", isCorrect: false },
+              { id: "d", text: "getroffener", isCorrect: false },
+            ],
+            explanation:
+              "Das erweiterte Attribut 'getroffene' (Nominativ feminin) bezieht sich auf 'Entscheidung' und wird schwach dekliniert.",
+            languages_Explanations: {
+              FR: "L'attribut étendu 'getroffene' (nominatif féminin) se réfère à 'Entscheidung' et se décline faiblement.",
+              EN: "The extended attribute 'getroffene' (nominative feminine) refers to 'Entscheidung' and is weakly declined.",
+              ES: "El atributo extendido 'getroffene' (nominativo femenino) se refiere a 'Entscheidung' y se declina débilmente.",
+              PT: "O atributo estendido 'getroffene' (nominativo feminino) refere-se a 'Entscheidung' e é declinado fracamente.",
+              PL: "Rozszerzony atrybut 'getroffene' (mianownik żeński) odnosi się do 'Entscheidung' i jest słabo deklinowany.",
+              RU: "Расширенный атрибут 'getroffene' (именительный падеж женского рода) относится к 'Entscheidung' и склоняется слабо.",
+              TR: "Genişletilmiş öznitelik 'getroffene' (nominatif dişil) 'Entscheidung'a atıfta bulunur ve zayıf çekimlenir.",
+              IT: "L'attributo esteso 'getroffene' (nominativo femminile) si riferisce a 'Entscheidung' ed è declinato debolmente.",
+              UK: "Розширений атрибут 'getroffene' (називний відмінок жіночого роду) стосується 'Entscheidung' і відмінюється слабо.",
+              VI: "Thuộc tính mở rộng 'getroffene' (chủ cách giống cái) liên quan đến 'Entscheidung' và biến cách yếu.",
+              TL: "Ang extended attribute na 'getroffene' (nominative feminine) ay tumutukoy sa 'Entscheidung' at weakly declined.",
+              ZH: "扩展定语'getroffene'(主格阴性)指'Entscheidung'，进行弱变格。",
+              ID: "Atribut diperluas 'getroffene' (nominatif feminin) merujuk pada 'Entscheidung' dan dideklinasi lemah.",
+              TH: "Extended attribute 'getroffene' (nominative feminine) อ้างถึง 'Entscheidung' และ weakly declined",
+              MS: "Atribut diperluas 'getroffene' (nominatif feminin) merujuk kepada 'Entscheidung' dan dideklinasi lemah.",
+              AR: "الصفة الموسعة 'getroffene' (فاعل مؤنث) تشير إلى 'Entscheidung' وتُعرب إعراباً ضعيفاً.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grB23",
+        well_Answered: false,
+        Text: "Die subjektiven Modalverben drücken die Einstellung des Sprechers zur Aussage aus. 'müssen' drückt starke Vermutung aus, 'können' Möglichkeit, 'mögen' schwache Vermutung, 'sollen' Hörensagen, 'wollen' Behauptung. Sie stehen mit Infinitiv Perfekt: Er muss gekommen sein. Sie will reich gewesen sein.",
+        questions: [
+          {
+            title: "Er ____ den Schlüssel verloren haben.",
+            options: [
+              { id: "a", text: "muss", isCorrect: true },
+              { id: "b", text: "kann", isCorrect: false },
+              { id: "c", text: "soll", isCorrect: false },
+              { id: "d", text: "will", isCorrect: false },
+            ],
+            explanation:
+              "'muss' drückt eine starke Vermutung des Sprechers aus (fast sicher, dass er den Schlüssel verloren hat).",
+            languages_Explanations: {
+              FR: "'muss' exprime une forte supposition du locuteur (presque certain qu'il a perdu la clé).",
+              EN: "'muss' expresses a strong assumption by the speaker (almost certain that he lost the key).",
+              ES: "'muss' expresa una fuerte suposición del hablante (casi seguro de que perdió la llave).",
+              PT: "'muss' expressa uma forte suposição do falante (quase certo de que ele perdeu a chave).",
+              PL: "'muss' wyraża silne przypuszczenie mówiącego (prawie pewne, że zgubił klucz).",
+              RU: "'muss' выражает сильное предположение говорящего (почти уверен, что он потерял ключ).",
+              TR: "'muss' konuşanın güçlü varsayımını ifade eder (anahtarı kaybettiğinden neredeyse emin).",
+              IT: "'muss' esprime una forte supposizione del parlante (quasi certo che ha perso la chiave).",
+              UK: "'muss' виражає сильне припущення мовця (майже впевнений, що він втратив ключ).",
+              VI: "'muss' thể hiện sự suy đoán mạnh của người nói (gần như chắc chắn rằng anh ta đã mất chìa khóa).",
+              TL: "Ang 'muss' ay nagpapahayag ng malakas na pagkakapalagay ng nagsasalita (halos sigurado na nawala niya ang susi).",
+              ZH: "'muss'表达说话者的强烈推测(几乎确定他丢了钥匙)。",
+              ID: "'muss' mengungkapkan dugaan kuat pembicara (hampir yakin dia kehilangan kunci).",
+              TH: "'muss' แสดงการสันนิษฐานที่แข็งแกร่งของผู้พูด (เกือบแน่ใจว่าเขาทำกุญแจหาย)",
+              MS: "'muss' menyatakan andaian kuat penutur (hampir pasti dia kehilangan kunci).",
+              AR: "'muss' يعبر عن افتراض قوي من المتحدث (متأكد تقريباً أنه فقد المفتاح).",
+            },
+          },
+        ],
+      },
+    ],
+    C1: [
+      {
+        id: "grC11",
+        well_Answered: false,
+        Text: "Die Graduierung von Adjektiven und Adverbien erfolgt durch Komparativ und Superlativ, aber auch durch Graduierungspartikeln (sehr, ziemlich, äußerst, überaus). Intensivierung kann auch durch Präfixe (uralt, hochmodern) oder Wortbildung (bildschön, steinreich) erreicht werden. Die Wahl der Graduierung hängt von Stil und Kontext ab.",
+        questions: [
+          {
+            title: "Diese Lösung ist ____ ungeeignet für unser Problem.",
+            options: [
+              { id: "a", text: "sehr", isCorrect: false },
+              { id: "b", text: "äußerst", isCorrect: true },
+              { id: "c", text: "ziemlich", isCorrect: false },
+              { id: "d", text: "etwas", isCorrect: false },
+            ],
+            explanation:
+              "'äußerst' drückt die höchste Intensivierung aus und ist in formellen Kontexten angemessen.",
+            languages_Explanations: {
+              FR: "'äußerst' exprime l'intensification la plus élevée et convient aux contextes formels.",
+              EN: "'äußerst' expresses the highest intensification and is appropriate in formal contexts.",
+              ES: "'äußerst' expresa la intensificación más alta y es apropiado en contextos formales.",
+              PT: "'äußerst' expressa a intensificação mais alta e é apropriado em contextos formais.",
+              PL: "'äußerst' wyraża najwyższą intensyfikację i jest odpowiednie w kontekstach formalnych.",
+              RU: "'äußerst' выражает наивысшую интенсификацию и уместно в формальных контекстах.",
+              TR: "'äußerst' en yüksek yoğunlaşmayı ifade eder ve resmi bağlamlarda uygundur.",
+              IT: "'äußerst' esprime l'intensificazione più alta ed è appropriato in contesti formali.",
+              UK: "'äußerst' виражає найвищу інтенсифікацію і доречно в формальних контекстах.",
+              VI: "'äußerst' thể hiện sự tăng cường cao nhất và phù hợp trong ngữ cảnh trang trọng.",
+              TL: "Ang 'äußerst' ay nagpapahayag ng pinakamataas na intensification at angkop sa mga pormal na konteksto.",
+              ZH: "'äußerst'表达最高程度的强化，在正式语境中合适。",
+              ID: "'äußerst' mengekspresikan intensifikasi tertinggi dan sesuai dalam konteks formal.",
+              TH: "'äußerst' แสดงการเสริมความรุนแรงสูงสุดและเหมาะสมในบริบทที่เป็นทางการ",
+              MS: "'äußerst' menyatakan intensifikasi tertinggi dan sesuai dalam konteks formal.",
+              AR: "'äußerst' يعبر عن أعلى تكثيف ومناسب في السياقات الرسمية.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grC12",
+        well_Answered: false,
+        Text: "Die nominalen Satzgefüge entstehen durch Nominalisierung von Nebensätzen. Anstatt 'Nachdem er angekommen war...' verwendet man 'Nach seiner Ankunft...'. Dies macht den Stil konziser und objektiver. Typische Nominalisierungen: Präposition + nominalisiertes Verb (bei der Durchführung, während der Bearbeitung).",
+        questions: [
+          {
+            title: "_____ der Verhandlungen war schwierig.",
+            options: [
+              { id: "a", text: "Die Führung", isCorrect: true },
+              { id: "b", text: "Das Führen", isCorrect: false },
+              { id: "c", text: "Führend", isCorrect: false },
+              { id: "d", text: "Geführt", isCorrect: false },
+            ],
+            explanation:
+              "'Die Führung' ist die korrekte Nominalisierung für den Vorgang des Führens/Leitens.",
+            languages_Explanations: {
+              FR: "'Die Führung' est la nominalisation correcte pour le processus de diriger/mener.",
+              EN: "'Die Führung' is the correct nominalization for the process of leading/conducting.",
+              ES: "'Die Führung' es la nominalización correcta para el proceso de dirigir/conducir.",
+              PT: "'Die Führung' é a nominalização correta para o processo de liderar/conduzir.",
+              PL: "'Die Führung' to poprawna nominalizacja dla procesu prowadzenia/kierowania.",
+              RU: "'Die Führung' - правильная номинализация для процесса ведения/руководства.",
+              TR: "'Die Führung' yönetme/yürütme süreci için doğru isimleştirmedir.",
+              IT: "'Die Führung' è la nominalizzazione corretta per il processo di condurre/dirigere.",
+              UK: "'Die Führung' - правильна номіналізація для процесу ведення/керування.",
+              VI: "'Die Führung' là danh từ hóa đúng cho quá trình dẫn dắt/chỉ đạo.",
+              TL: "Ang 'Die Führung' ay ang tamang nominalization para sa proseso ng pamumuno/pagpapatupad.",
+              ZH: "'Die Führung'是领导/进行过程的正确名词化。",
+              ID: "'Die Führung' adalah nominalisasi yang benar untuk proses memimpin/melaksanakan.",
+              TH: "'Die Führung' เป็นการทำให้เป็นนามที่ถูกต้องสำหรับกระบวนการนำ/ดำเนินการ",
+              MS: "'Die Führung' adalah nominalisasi yang betul untuk proses memimpin/menjalankan.",
+              AR: "'Die Führung' هي الاسمية الصحيحة لعملية القيادة/الإجراء.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grC13",
+        well_Answered: false,
+        Text: "Die funktionalen Satzperspektiven zeigen verschiedene Informationsstrukturen. Das Thema (bekannte Information) steht meist am Satzanfang, das Rhema (neue Information) am Ende. Durch Umstellung kann die Betonung verändert werden: 'Den Film habe ich gesehen' betont 'den Film', 'Gesehen habe ich den Film' betont 'gesehen'.",
+        questions: [
+          {
+            title: "____ hat er mir nicht erzählt.",
+            options: [
+              { id: "a", text: "Davon", isCorrect: true },
+              { id: "b", text: "Daher", isCorrect: false },
+              { id: "c", text: "Deshalb", isCorrect: false },
+              { id: "d", text: "Darüber", isCorrect: false },
+            ],
+            explanation:
+              "'Davon' steht topikalisiert am Satzanfang und betont, dass er gerade über diese Sache nichts erzählt hat.",
+            languages_Explanations: {
+              FR: "'Davon' est topicalisé en début de phrase et souligne qu'il n'a rien dit de cette chose particulière.",
+              EN: "'Davon' is topicalized at the beginning of the sentence and emphasizes that he didn't tell about this particular thing.",
+              ES: "'Davon' está topicalizado al inicio de la oración y enfatiza que no contó sobre esta cosa en particular.",
+              PT: "'Davon' está topicalizado no início da frase e enfatiza que ele não contou sobre esta coisa em particular.",
+              PL: "'Davon' jest topikalizowane na początku zdania i podkreśla, że nie opowiedział o tej konkretnej rzeczy.",
+              RU: "'Davon' топикализировано в начале предложения и подчеркивает, что он не рассказал об этой конкретной вещи.",
+              TR: "'Davon' cümle başında topikalleştirilmiş ve bu özel şey hakkında hiçbir şey anlatmadığını vurgular.",
+              IT: "'Davon' è topicalizzato all'inizio della frase e sottolinea che non ha raccontato di questa cosa particolare.",
+              UK: "'Davon' топікалізовано на початку речення і підкреслює, що він не розповів про цю конкретну річ.",
+              VI: "'Davon' được đặt chủ đề ở đầu câu và nhấn mạnh rằng anh ta không kể về việc này.",
+              TL: "Ang 'Davon' ay na-topicalize sa simula ng pangungusap at binibigyang-diin na hindi niya ikwento ang partikular na bagay na ito.",
+              ZH: "'Davon'在句首被话题化，强调他没有讲述这件特定的事情。",
+              ID: "'Davon' ditopikalisasi di awal kalimat dan menekankan bahwa dia tidak menceritakan hal khusus ini.",
+              TH: "'Davon' ถูก topicalized ที่ต้นประโยคและเน้นว่าเขาไม่ได้เล่าเรื่องนี้โดยเฉพาะ",
+              MS: "'Davon' ditopikalisasi pada permulaan ayat dan menekankan bahawa dia tidak menceritakan perkara khusus ini.",
+              AR: "'Davon' موضوع في بداية الجملة ويؤكد أنه لم يحك عن هذا الشيء بالتحديد.",
+            },
+          },
+        ],
+      },
+    ],
+    C2: [
+      {
+        id: "grC21",
+        well_Answered: false,
+        Text: "Die Diskursmarker strukturieren komplexe Texte und zeigen logische Beziehungen zwischen Argumenten. Sie können konzessiv (allerdings, freilich), adversativ (hingegen, demgegenüber), konsekutiv (folglich, mithin) oder explanativ (das heißt, sprich) sein. Die Wahl hängt von der gewünschten argumentativen Nuancierung ab.",
+        questions: [
+          {
+            title: "Die Theorie ist plausibel; ____ fehlen empirische Belege.",
+            options: [
+              { id: "a", text: "jedoch", isCorrect: false },
+              { id: "b", text: "allerdings", isCorrect: true },
+              { id: "c", text: "folglich", isCorrect: false },
+              { id: "d", text: "mithin", isCorrect: false },
+            ],
+            explanation:
+              "'allerdings' ist ein konzessiver Diskursmarker, der eine Einschränkung trotz grundsätzlicher Zustimmung ausdrückt.",
+            languages_Explanations: {
+              FR: "'allerdings' est un marqueur discursif concessif qui exprime une restriction malgré un accord de principe.",
+              EN: "'allerdings' is a concessive discourse marker that expresses a restriction despite basic agreement.",
+              ES: "'allerdings' es un marcador discursivo concesivo que expresa una restricción a pesar del acuerdo básico.",
+              PT: "'allerdings' é um marcador discursivo concessivo que expressa uma restrição apesar do acordo básico.",
+              PL: "'allerdings' to koncesyjny znacznik dyskursu, który wyraża ograniczenie pomimo podstawowej zgody.",
+              RU: "'allerdings' - уступительный дискурсивный маркер, выражающий ограничение несмотря на основное согласие.",
+              TR: "'allerdings' temel anlaşmaya rağmen bir kısıtlama ifade eden ödünleyici söylem belirleyicisidir.",
+              IT: "'allerdings' è un marcatore discorsivo concessivo che esprime una restrizione nonostante l'accordo di base.",
+              UK: "'allerdings' - поступливий дискурсивний маркер, що виражає обмеження попри основну згоду.",
+              VI: "'allerdings' là từ nối nhượng bộ thể hiện sự hạn chế dù có sự đồng ý cơ bản.",
+              TL: "Ang 'allerdings' ay isang concessive discourse marker na nagpapahayag ng pagkakahanggad sa kabila ng pangunahing kasunduan.",
+              ZH: "'allerdings'是让步性话语标记，表达尽管基本同意但有所限制。",
+              ID: "'allerdings' adalah penanda wacana konsesif yang menyatakan pembatasan meskipun ada kesepakatan dasar.",
+              TH: "'allerdings' เป็น concessive discourse marker ที่แสดงข้อจำกัดแม้จะมีข้อตกลงพื้นฐาน",
+              MS: "'allerdings' adalah penanda wacana konsesif yang menyatakan sekatan walaupun terdapat persetujuan asas.",
+              AR: "'allerdings' علامة خطاب تنازلية تعبر عن قيد رغم الاتفاق الأساسي.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grC22",
+        well_Answered: false,
+        Text: "Die metaphorischen und metonymischen Sprachverwendungen durchziehen die deutsche Sprache auf allen Ebenen. Metaphern übertragen Bedeutungen (Zeit ist Geld), Metonymien ersetzen durch Assoziation (Bonn für die deutsche Regierung). Diese Figuren sind besonders in gehobener Sprache und Fachsprachen prevalent.",
+        questions: [
+          {
+            title: "Das Parlament hat ____ Stimme erhoben.",
+            options: [
+              { id: "a", text: "seine", isCorrect: true },
+              { id: "b", text: "ihrer", isCorrect: false },
+              { id: "c", text: "dessen", isCorrect: false },
+              { id: "d", text: "deren", isCorrect: false },
+            ],
+            explanation:
+              "'seine' bezieht sich auf 'das Parlament' (neutral). Die metaphorische 'Stimme' steht für die kollektive Meinungsäußerung.",
+            languages_Explanations: {
+              FR: "'seine' se réfère à 'das Parlament' (neutre). La 'voix' métaphorique représente l'expression collective d'opinion.",
+              EN: "'seine' refers to 'das Parlament' (neuter). The metaphorical 'voice' stands for collective opinion expression.",
+              ES: "'seine' se refiere a 'das Parlament' (neutro). La 'voz' metafórica representa la expresión colectiva de opinión.",
+              PT: "'seine' refere-se a 'das Parlament' (neutro). A 'voz' metafórica representa a expressão coletiva de opinião.",
+              PL: "'seine' odnosi się do 'das Parlament' (nijaki). Metaforyczny 'głos' oznacza zbiorowe wyrażenie opinii.",
+              RU: "'seine' относится к 'das Parlament' (средний род). Метафорический 'голос' означает коллективное выражение мнения.",
+              TR: "'seine' 'das Parlament'a (nötr) atıfta bulunur. Metaforik 'ses' kolektif görüş ifadesini temsil eder.",
+              IT: "'seine' si riferisce a 'das Parlament' (neutro). La 'voce' metaforica rappresenta l'espressione collettiva di opinione.",
+              UK: "'seine' стосується 'das Parlament' (середній рід). Метафоричний 'голос' означає колективне вираження думки.",
+              VI: "'seine' liên quan đến 'das Parlament' (trung tính). 'Tiếng nói' ẩn dụ đại diện cho việc bày tỏ ý kiến tập thể.",
+              TL: "Ang 'seine' ay tumutukoy sa 'das Parlament' (neutral). Ang metaphorical na 'boses' ay kumakatawan sa kolektibong pagpapahayag ng opinyon.",
+              ZH: "'seine'指'das Parlament'(中性)。隐喻的'声音'代表集体意见表达。",
+              ID: "'seine' merujuk pada 'das Parlament' (netral). 'Suara' metaforis mewakili ekspresi opini kolektif.",
+              TH: "'seine' อ้างถึง 'das Parlament' (เป็นกลาง) 'เสียง' เชิงอุปมาแทนการแสดงความคิดเห็นร่วม",
+              MS: "'seine' merujuk kepada 'das Parlament' (neutral). 'Suara' metafora mewakili ekspresi pendapat kolektif.",
+              AR: "'seine' يشير إلى 'das Parlament' (محايد). 'الصوت' المجازي يمثل التعبير الجماعي عن الرأي.",
+            },
+          },
+        ],
+      },
+      {
+        id: "grC23",
+        well_Answered: false,
+        Text: "Die stilistischen Register variieren je nach Kommunikationssituation erheblich. Gehobene Sprache verwendet komplexe Syntax, Nominalisierungen und Fremdwörter. Fachsprachen haben spezifische Terminologien. Umgangssprache bevorzugt einfache Strukturen und Ellipsen. Die Registerwahl beeinflusst grammatische Entscheidungen maßgeblich.",
+        questions: [
+          {
+            title: "Die Implementierung dieser Maßnahme ____ einer gründlichen Evaluation.",
+            options: [
+              { id: "a", text: "braucht", isCorrect: false },
+              { id: "b", text: "bedarf", isCorrect: true },
+              { id: "c", text: "benötigt", isCorrect: false },
+              { id: "d", text: "will", isCorrect: false },
+            ],
+            explanation:
+              "'bedarf' ist das gehobene Register-Äquivalent zu 'braucht' und verlangt den Genitiv ('einer Evaluation').",
+            languages_Explanations: {
+              FR: "'bedarf' est l'équivalent de registre soutenu de 'braucht' et exige le génitif ('einer Evaluation').",
+              EN: "'bedarf' is the elevated register equivalent of 'braucht' and requires the genitive ('einer Evaluation').",
+              ES: "'bedarf' es el equivalente de registro elevado de 'braucht' y requiere genitivo ('einer Evaluation').",
+              PT: "'bedarf' é o equivalente de registro elevado de 'braucht' e requer genitivo ('einer Evaluation').",
+              PL: "'bedarf' to odpowiednik w podniosłym rejestrze dla 'braucht' i wymaga dopełniacza ('einer Evaluation').",
+              RU: "'bedarf' - высокий регистровый эквивалент 'braucht' и требует родительного падежа ('einer Evaluation').",
+              TR: "'bedarf' 'braucht'ın yüksek kayıt eşdeğeridir ve genitif ('einer Evaluation') gerektirir.",
+              IT: "'bedarf' è l'equivalente di registro elevato di 'braucht' e richiede il genitivo ('einer Evaluation').",
+              UK: "'bedarf' - високий регістровий еквівалент 'braucht' і вимагає родового відмінка ('einer Evaluation').",
+              VI: "'bedarf' là từ tương đương thanh lịch của 'braucht' và cần sở hữu cách ('einer Evaluation').",
+              TL: "Ang 'bedarf' ay ang elevated register equivalent ng 'braucht' at nangangailangan ng genitive ('einer Evaluation').",
+              ZH: "'bedarf'是'braucht'的高级语域对等词，需要第二格('einer Evaluation')。",
+              ID: "'bedarf' adalah padanan register tinggi dari 'braucht' dan memerlukan genitif ('einer Evaluation').",
+              TH: "'bedarf' เป็นคำที่เทียบเท่าในระดับสูงของ 'braucht' และต้องการ genitive ('einer Evaluation')",
+              MS: "'bedarf' adalah setara daftar tinggi 'braucht' dan memerlukan genitif ('einer Evaluation').",
+              AR: "'bedarf' هو المكافئ السجل المرتفع لـ 'braucht' ويتطلب المضاف إليه ('einer Evaluation').",
+            },
+          },
+        ],
+      },
+    ],
+  }
 };
 
 

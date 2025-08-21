@@ -8,13 +8,16 @@ import LevelSelectionView from '../components/lesen/LevelSelectionView';
 import PopupExerciseSelector from '../components/lesen/PopupExerciseSelector';
 import ExerciseModal from '../components/lesen/ExerciseModal';
 import { colors } from '../styles/colors';
+// AJOUT : Import des composants d'authentification
+import { AuthProvider,useAuth } from '../hooks/useAuth'; 
+import AuthScreen from './AuthScreen';
 
 const LesenScreen = ({ navigation }) => {
 
   const { userData } = useUserData();
-
+  const { isAuthenticated, loading } = useAuth();
   const { syncNow, isSyncing } = useSyncData();
-  const { getExercisesForLevel, saveCurrentAnswers, finishExercise, getCurrentAnswers, getLevelStats,finishExerciseWithSync } = useExerciseData();
+  const { getExercisesForLevel, saveCurrentAnswers, getCurrentAnswers, getLevelStats,finishExerciseWithSync } = useExerciseData();
   const userNativeLanguage = userData.nativeLanguage || "FR";
 
   const [selectedLevel, setSelectedLevel] = useState(null);
@@ -25,6 +28,8 @@ const LesenScreen = ({ navigation }) => {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [exerciseResults, setExerciseResults] = useState(null);
+  const [initialExerciseIndex, setInitialExerciseIndex] = useState(0);
+
 
   // Traductions pour les titres de niveaux
   const levelTitles = {
@@ -346,6 +351,13 @@ const LesenScreen = ({ navigation }) => {
     }
   ];
 
+  const getLastExerciseIndex = (levelId) => {
+    const levelData = userData.data?.lesen?.[levelId];
+    if (levelData && typeof levelData.index === 'number') {
+      return levelData.index;
+    }
+    return 0; // Par défaut, commencer au premier exercice
+  };
  
   // Calculer les résultats de l'exercice
   const calculateExerciseResults = () => {
@@ -395,6 +407,11 @@ const LesenScreen = ({ navigation }) => {
     setSelectedLevel(levelId);
     const exercises = getExercisesForLevel('lesen', levelId);
     setAvailableExercises(exercises);
+    
+    // AJOUT : Récupérer l'index initial
+    const lastIndex = getLastExerciseIndex(levelId);
+    setInitialExerciseIndex(lastIndex);
+    
     setShowExerciseSelector(true);
   };
 
@@ -463,6 +480,10 @@ const LesenScreen = ({ navigation }) => {
     setAvailableExercises([]);
   };
 
+  if(!isAuthenticated && initialExerciseIndex>2){
+    return(<AuthScreen />)
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <LevelSelectionView
@@ -470,6 +491,7 @@ const LesenScreen = ({ navigation }) => {
         onBack={() => navigation.goBack()}
         onSelectLevel={handleLevelSelect}
         getUbungenForLevel={getExercisesForLevel}
+        getLastExerciseIndex={getLastExerciseIndex}
         userNativeLanguage={userNativeLanguage}
       />
 
@@ -477,8 +499,10 @@ const LesenScreen = ({ navigation }) => {
         visible={showExerciseSelector}
         levelInfo={levels.find(l => l.id === selectedLevel)}
         availableExercises={availableExercises}
+        initialExerciseIndex={initialExerciseIndex}
         onSelectExercise={handleExerciseSelect}
         onCancel={handleCloseSelectorPopup}
+        
       />
 
       <ExerciseModal

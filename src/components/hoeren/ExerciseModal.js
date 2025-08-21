@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Modal, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import ExerciseView from './ExerciseView';
 import ResultsView from './ResultsView';
 import { colors } from '../../styles/colors';
+import { Audio } from 'expo-av';
 
 const ExerciseModal = ({
   visible,
@@ -32,9 +33,85 @@ const ExerciseModal = ({
     }]
   };
 
+  const [isStartAudioPlaying, setIsStartAudioPlaying] = useState(false);
+  const [startAudioFinished, setStartAudioFinished] = useState(false);
+  const startAudioRef = useRef(null);
+
+  useEffect(() => {
+    if (visible && !showResults) {
+      setIsStartAudioPlaying(false);
+      setStartAudioFinished(false);
+      // Lancer l'audio de démarrage ET déclencher le compte à rebours en même temps
+      playStartAudio();
+      setStartAudioFinished(true); // On dit tout de suite que c'est fini pour déclencher le compte à rebours
+    }
+    
+    // Nettoyer l'audio quand le modal se ferme
+    if (!visible) {
+      cleanupStartAudio();
+      setStartAudioFinished(false);
+    }
+  }, [visible, showResults]);
+
+
+  const playStartAudio = async () => {
+    try {
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        playsInSilentModeIOS: true,
+        staysActiveInBackground: false,
+        shouldDuckAndroid: true,
+      });
+  
+      const { sound: newSound } = await Audio.Sound.createAsync(
+        require('../../../assets/audios/Hoeren_start_zweimal.mp3'),
+        { 
+          shouldPlay: true, 
+          isLooping: false,
+          volume: 1.0,
+        },
+        onPlaybackStatusUpdate
+      );
+  
+      startAudioRef.current = newSound;
+      
+    } catch (error) {
+      console.error('Erreur lors de la lecture de l\'audio de démarrage:', error);
+    }
+  };
+  
+  // Ajouter cette fonction callback
+  const onPlaybackStatusUpdate = (status) => {
+    if (status.isLoaded) {
+      if (status.didJustFinish) {
+        cleanupStartAudio();
+      }
+    } else if (status.error) {
+      console.error('Erreur de lecture:', status.error);
+    }
+  };
+  
+
+  // Fonction pour nettoyer l'audio
+  const cleanupStartAudio = async () => {
+    if (startAudioRef.current) {
+      try {
+        await startAudioRef.current.unloadAsync();
+        startAudioRef.current = null;
+      } catch (error) {
+        console.error('Erreur lors du nettoyage de l\'audio:', error);
+      }
+    }
+  };
+  
+
   // Trouver l'index de l'exercice actuel pour navigation
   const currentExerciseIndex = availableExercises.findIndex(ex => ex.id === selectedExercise.id);
   const hasNextExercise = currentExerciseIndex < availableExercises.length - 1;
+
+  // AJOUT : Index pour affichage (commence à 1 au lieu de 0)
+  const currentExerciseNumber = currentExerciseIndex + 1;
+  const totalExercises = availableExercises.length;
 
   return (
     <Modal
@@ -63,11 +140,15 @@ const ExerciseModal = ({
               currentAudioIndex={0}
               selectedAnswers={selectedAnswers}
               levelInfo={levelInfo}
+              currentExerciseNumber={currentExerciseNumber}
+              totalExercises={totalExercises}
               onBack={onClose}
               onNextAudio={() => {}}
               onPreviousAudio={() => {}}
               onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
               onFinishExercise={onFinishExercise}
+              isStartAudioPlaying={isStartAudioPlaying}
+              startAudioFinished={startAudioFinished}
             />
           )}
         </View>

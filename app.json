@@ -13,17 +13,32 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.goethetestprep",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLName": "google-auth",
+            "CFBundleURLSchemes": ["com.yourcompany.goethetestprep"]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.yourcompany.goethetestprep"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-av"]
+    "plugins": [
+      "expo-av",
+      "expo-web-browser",
+      "expo-apple-authentication"
+    ],
+    "scheme": "goethetestprep"
   }
 }

@@ -8,14 +8,17 @@ import { useUserData } from '../context/AppDataContext';
 import { useExerciseData } from '../hooks/useExerciseData';
 import { useSyncData } from '../hooks/useSyncData';
 import { colors } from '../styles/colors';
+// AJOUT : Import des composants d'authentification
+import { AuthProvider,useAuth } from '../hooks/useAuth'; 
+import AuthScreen from './AuthScreen';
 
 const SprechenScreen = ({ navigation }) => {
-  // Langue native de l'utilisateur
+  
+  const { isAuthenticated, loading } = useAuth();
   const { userData } = useUserData();
   const { 
     getExercisesForLevel, 
     saveCurrentAnswers, 
-    finishExercise, 
     getCurrentAnswers, 
     getLevelStats, 
     finishExerciseWithSync 
@@ -32,6 +35,7 @@ const SprechenScreen = ({ navigation }) => {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [exerciseResults, setExerciseResults] = useState(null);
+  const [initialExerciseIndex, setInitialExerciseIndex] = useState(0);
 
   
 
@@ -355,7 +359,14 @@ const SprechenScreen = ({ navigation }) => {
     }
   ];
 
-  // Obtenir les exercices pour un niveau donné
+  // Fonction pour récupérer le dernier index d'exercice
+const getLastExerciseIndex = (levelId) => {
+  const levelData = userData.data?.sprechen?.[levelId];
+  if (levelData && typeof levelData.index === 'number') {
+    return levelData.index;
+  }
+  return 0; // Par défaut, commencer au premier exercice
+};
   
   
   // Gestionnaires d'événements
@@ -363,6 +374,8 @@ const SprechenScreen = ({ navigation }) => {
     setSelectedLevel(levelId);
     const exercises = getExercisesForLevel('sprechen', levelId); // ← UTILISE LA FONCTION SPÉCIALISÉE
     setAvailableExercises(exercises);
+    const lastIndex = getLastExerciseIndex(levelId);
+    setInitialExerciseIndex(lastIndex);
     setShowExerciseSelector(true);
   };
 
@@ -442,6 +455,10 @@ const SprechenScreen = ({ navigation }) => {
     setAvailableExercises([]);
   };
 
+  if(!isAuthenticated && initialExerciseIndex>2){
+    return(<AuthScreen />)
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <LevelSelectionView
@@ -449,6 +466,7 @@ const SprechenScreen = ({ navigation }) => {
         onBack={() => navigation.goBack()}
         onSelectLevel={handleLevelSelect}
         getUbungenForLevel={getExercisesForLevel}
+        getLastExerciseIndex={getLastExerciseIndex}
         userNativeLanguage={userNativeLanguage}
       />
 
@@ -458,6 +476,7 @@ const SprechenScreen = ({ navigation }) => {
         availableExercises={availableExercises}
         onSelectExercise={handleExerciseSelect}
         onCancel={handleCloseSelectorPopup}
+        initialExerciseIndex={initialExerciseIndex}
       />
 
       <ExerciseModal
