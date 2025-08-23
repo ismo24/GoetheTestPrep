@@ -310,9 +310,12 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.title}>Goethe Test Prep</Text>
-        </View>
+      <View style={styles.titleContainer}>
+            <Text style={styles.appTitle}>
+              <Text style={styles.appTitleOrange}>Goethe </Text>
+              <Text style={styles.appTitleBlack}>Expert</Text>
+            </Text>
+          </View>
         
         <View style={styles.skillsSection}>
           <Text style={[styles.sectionTitle, styles.animatedTitle]}>
@@ -371,7 +374,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '800',
     marginBottom: Platform.OS == "android" ? 10 : 16,
     color: colors.text,
   },
@@ -389,6 +392,23 @@ const styles = StyleSheet.create({
   },
   prepContainer: {
     // Container pour les cartes PrepCard (layout vertical)
+  },
+  titleContainer: {
+    padding: Platform.OS == "android" ? 15 : 20,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  appTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    fontWeight: '800',
+  },
+  appTitleOrange: {
+    color: colors.primary,
+    
+  },
+  appTitleBlack: {
+    color: '#000',
   },
 });
 

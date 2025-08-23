@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   prepTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '800',
     color: colors.text,
     marginBottom: 4,
   },

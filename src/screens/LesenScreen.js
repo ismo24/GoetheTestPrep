@@ -362,15 +362,17 @@ const LesenScreen = ({ navigation }) => {
   // Calculer les résultats de l'exercice
   const calculateExerciseResults = () => {
     if (!selectedExercise || !selectedExercise.data || !selectedExercise.data.questions) return null;
-
+  
     let totalQuestions = selectedExercise.data.questions.length;
     let correctAnswers = 0;
     const detailedResults = [];
-
+  
     selectedExercise.data.questions.forEach((question, questionIndex) => {
       const selectedOptionId = selectedAnswers[questionIndex];
       
+      // MODIFICATION : Gérer le cas où aucune réponse n'est sélectionnée
       if (selectedOptionId) {
+        // Cas normal : une réponse a été sélectionnée
         const selectedOption = question.options?.find(opt => opt.id === selectedOptionId);
         const isCorrect = selectedOption?.isCorrect || false;
         
@@ -382,14 +384,28 @@ const LesenScreen = ({ navigation }) => {
           selectedAnswer: selectedOption?.text || '',
           correctAnswer: question.options?.find(opt => opt.isCorrect)?.text || '',
           isCorrect,
+          hasAnswer: true, // AJOUT : Indique qu'une réponse a été donnée
           explanation: question.explanation,
-          nativeExplanation: question.languages_Explanations?.[userNativeLanguage] || null // AJOUT
+          nativeExplanation: question.languages_Explanations?.[userNativeLanguage] || null
+        });
+      } else {
+        // AJOUT : Cas où aucune réponse n'est sélectionnée (timer expiré)
+        detailedResults.push({
+          questionIndex: questionIndex + 1,
+          questionText: question.title,
+          selectedAnswer: '',
+          correctAnswer: question.options?.find(opt => opt.isCorrect)?.text || '',
+          isCorrect: false, // Pas de réponse = incorrect
+          hasAnswer: false, // AJOUT : Indique qu'aucune réponse n'a été donnée
+          explanation: question.explanation,
+          nativeExplanation: question.languages_Explanations?.[userNativeLanguage] || null
         });
       }
     });
-
+  
+    // AJOUT : Retourner les résultats calculés
     const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
-
+  
     return {
       totalQuestions,
       correctAnswers,

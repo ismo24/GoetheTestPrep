@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LevelSelectionView from '../components/schreiben/LevelSelectionView';
-import PopupExerciseSelector from '../components/sprechen/PopupExerciseSelector';
+import PopupExerciseSelector from '../components/schreiben/PopupExerciseSelector';
 import ExerciseModal from '../components/schreiben/ExerciseModal';
 import { useUserData } from '../context/AppDataContext';
 import { useExerciseData } from '../hooks/useExerciseData';

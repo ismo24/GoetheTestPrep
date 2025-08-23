@@ -189,8 +189,8 @@ const AuthScreen = ({ navigation, onClose }) => { // AJOUT : prop onClose
           {/* App Title */}
           <View style={styles.titleContainer}>
             <Text style={styles.appTitle}>
-              <Text style={styles.appTitleOrange}>Goethe</Text>
-              <Text style={styles.appTitleBlack}>Test Pro</Text>
+              <Text style={styles.appTitleOrange}>Goethe </Text>
+              <Text style={styles.appTitleBlack}>Expert</Text>
             </Text>
           </View>
 

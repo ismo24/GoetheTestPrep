@@ -329,7 +329,7 @@ const PopupExerciseSelector = ({
               </TouchableOpacity>
 
               <TouchableOpacity 
-                style={[styles.actionButton, styles.confirmButton, { backgroundColor: colors.success }]}
+                style={[styles.actionButton, styles.confirmButton, { backgroundColor: 'black' }]}
                 onPress={handleConfirm}
               >
                 <Text style={styles.confirmButtonText}>
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '800',
     color: colors.text,
     textAlign: 'center',
     marginBottom: 24,
@@ -444,18 +444,27 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontWeight: '500',
   },
-  actions: {
+actions: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     paddingTop: 5,
     paddingBottom: 10,
     gap: 12,
+    margin:10
   },
   actionButton: {
     flex: 1,
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 10,
   },
   cancelButton: {
     backgroundColor: colors.lightGray,
@@ -465,12 +474,12 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     fontSize: 16,
-    fontWeight: '600',
-    color: colors.gray,
+    fontWeight: '800',
+    color: 'black',
   },
   confirmButtonText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '800',
     color: colors.white,
   },
   // Styles pour l'état vide

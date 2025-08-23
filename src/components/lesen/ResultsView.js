@@ -507,38 +507,39 @@ const ResultsView = ({
                 </Text>
 
                 <View style={styles.answersComparison}>
-                  <View style={styles.answerRow}>
-                    <Text style={styles.answerLabel}>
-                      {translations.yourAnswer[userNativeLanguage]}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.answerText,
-                        {
-                          color: 'black'
-                          // questionResult.isCorrect
-                          //   ? colors.success
-                          //   : colors.error,
-                        },
-                      ]}
-                    >
-                      {questionResult.selectedAnswer}
-                    </Text>
-                  </View>
+  {/* MODIFICATION : N'afficher "Votre réponse" que si une réponse a été donnée */}
+  {questionResult.hasAnswer && (
+    <View style={styles.answerRow}>
+      <Text style={styles.answerLabel}>
+        {translations.yourAnswer[userNativeLanguage]}
+      </Text>
+      <Text
+        style={[
+          styles.answerText,
+          {
+            color: 'black'
+          },
+        ]}
+      >
+        {questionResult.selectedAnswer}
+      </Text>
+    </View>
+  )}
 
-                  {!questionResult.isCorrect && (
-                    <View style={styles.answerRow}>
-                      <Text style={styles.answerLabel}>
-                        {translations.correctAnswer[userNativeLanguage]}
-                      </Text>
-                      <Text
-                        style={[styles.answerText, { color: 'black' }]}
-                      >
-                        {questionResult.correctAnswer}
-                      </Text>
-                    </View>
-                  )}
-                </View>
+  {/* MODIFICATION : Toujours afficher la bonne réponse si la question est incorrecte OU si aucune réponse n'a été donnée */}
+  {(!questionResult.isCorrect || !questionResult.hasAnswer) && (
+    <View style={styles.answerRow}>
+      <Text style={styles.answerLabel}>
+        {translations.correctAnswer[userNativeLanguage]}
+      </Text>
+      <Text
+        style={[styles.answerText, { color: 'black' }]}
+      >
+        {questionResult.correctAnswer}
+      </Text>
+    </View>
+  )}
+</View>
 
                 {questionResult.explanation && (
   <View style={styles.explanationBox}>

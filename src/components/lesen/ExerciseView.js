@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
@@ -21,6 +21,80 @@ const ExerciseView = ({
   const [isTextHidden, setIsTextHidden] = useState(false);
   const [textHeight] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
+  
+  // États pour le timer
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [isTimerActive, setIsTimerActive] = useState(false);
+  const intervalRef = useRef(null);
+
+  // Calculer la durée totale du timer (2 minutes par question)
+  const totalTimeInSeconds = (currentText.questions?.length || 1) * 2 * 60;
+
+  // Initialiser le timer
+  useEffect(() => {
+    setTimeLeft(totalTimeInSeconds);
+    setIsTimerActive(true);
+    
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [totalTimeInSeconds]);
+
+  // Gérer le décompte du timer
+  useEffect(() => {
+    if (isTimerActive && timeLeft > 0) {
+      intervalRef.current = setInterval(() => {
+        setTimeLeft(prevTime => {
+          if (prevTime <= 1) {
+            setIsTimerActive(false);
+            // Utiliser setTimeout pour éviter l'appel pendant le rendu
+            setTimeout(() => {
+              onFinishExercise();
+            }, 0);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isTimerActive, timeLeft, onFinishExercise]);
+
+  // Fonction pour formater le temps en MM:SS
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')} : ${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Arrêter le timer quand l'exercice est terminé
+  useEffect(() => {
+    const allQuestionsAnswered = currentText.questions?.every((_, index) => 
+      selectedAnswers[index] !== undefined
+    );
+    
+    if (allQuestionsAnswered) {
+      setIsTimerActive(false);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      // Utiliser setTimeout pour éviter l'appel pendant le rendu
+      setTimeout(() => {
+        onFinishExercise();
+      }, 0);
+    }
+  }, [selectedAnswers, currentText.questions, onFinishExercise]);
 
   const toggleTextVisibility = () => {
     const newHiddenState = !isTextHidden;
@@ -45,12 +119,6 @@ const ExerciseView = ({
     selectedAnswers[index] !== undefined
   );
 
-  useEffect(()=> {
-    if(allQuestionsAnswered){
-      onFinishExercise()
-    }
-  },[allQuestionsAnswered])
-
   return (
     <>
       <View style={styles.header}>
@@ -65,12 +133,7 @@ const ExerciseView = ({
             backgroundColor="#E5E5E5"
             progressColor={colors.primary}
           />
-</View>
-        {/* <TouchableOpacity style={{opacity:0}} >
-        <Text style={styles.exerciseCounterText}>
-              yes
-            </Text>
-        </TouchableOpacity> */}
+        </View>
       </View>
 
       <ScrollView 
@@ -84,28 +147,27 @@ const ExerciseView = ({
             {
               maxHeight: textHeight.interpolate({
                 inputRange: [0, 1],
-                outputRange: [80, 1000],
+                outputRange: [50, 1000],
                 extrapolate: 'clamp',
               }),
             }
           ]}
         >
-          <View style={styles.passageHeader}>
-            <Text style={styles.passageTitle}>Text</Text>
-            <TouchableOpacity onPress={toggleTextVisibility} style={styles.eyeButton}>
+          <TouchableOpacity onPress={toggleTextVisibility}  style={isTextHidden? styles.passageHeaderHidden:styles.passageHeader}>
+            <Text style={styles.passageTitle}>Lesetext</Text>
+            <View style={styles.eyeButton}>
               <Ionicons 
                 name={isTextHidden ? "eye-off-outline" : "eye-outline"} 
                 size={20} 
                 color={colors.gray} 
               />
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
 
-         
-          
           <Animated.View
             style={{
               opacity: opacity,
+
               transform: [{
                 scaleY: textHeight.interpolate({
                   inputRange: [0, 1],
@@ -124,10 +186,6 @@ const ExerciseView = ({
 
         {/* Questions */}
         <View style={styles.questionsSection}>
-          {/* <Text style={styles.questionsSectionTitle}>
-            Fragen ({currentText.questions?.length || 0})
-          </Text> */}
-          
           {currentText.questions?.map((question, questionIndex) => {
             const isAnswered = selectedAnswers[questionIndex] !== undefined;
             
@@ -190,7 +248,15 @@ const ExerciseView = ({
             {Object.keys(selectedAnswers).length} von {currentText.questions?.length || 0} Fragen beantwortet
           </Text>
         </View>
+        
       </ScrollView>
+
+      {/* Timer Container - Mise à jour avec le timer fonctionnel */}
+      <View style={[styles.timerContainer, { backgroundColor: timeLeft <= 60 ? '#FF4444' : colors.primary }]}>
+        <Text style={styles.timerText}>
+          {formatTime(timeLeft)}
+        </Text>
+      </View>
 
       {/* Bouton sticky "Beenden" */}
       <View style={[styles.stickyButtonContainer,{opacity: allQuestionsAnswered ? 1 : 0}]}>
@@ -215,6 +281,7 @@ const ExerciseView = ({
   );
 };
 
+// Les styles restent identiques - pas de modifications nécessaires
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
@@ -253,7 +320,6 @@ const styles = StyleSheet.create({
     minWidth: 250, 
     maxWidth: 300, 
   },
-
   exerciseCounterText: {
     color: colors.text,
     fontSize: 20,
@@ -267,20 +333,27 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     margin: 16,
     marginBottom: 16,
-    borderRadius: 12,
-    padding: 20,
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical:5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    overflow: 'hidden'
   },
   passageHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom:8,
+    paddingVertical:5,
+  },
+  passageHeaderHidden: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical:5,
   },
   passageTitle: {
     fontSize: 18,
@@ -295,7 +368,7 @@ const styles = StyleSheet.create({
   separatorLine: {
     height: 1,
     backgroundColor: colors.lightGray,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   passageText: {
     fontSize: 16,
@@ -314,7 +387,7 @@ const styles = StyleSheet.create({
   },
   questionCard: {
     backgroundColor: colors.white,
-    borderRadius: 12,
+    borderRadius: 20,
     padding: 20,
     marginBottom: 16,
     shadowColor: '#000',
@@ -397,7 +470,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     backgroundColor: colors.white,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
   },
   progressText: {
@@ -405,21 +478,35 @@ const styles = StyleSheet.create({
     color: colors.gray,
     fontWeight: '500',
   },
+  timerContainer: {
+    position: 'absolute',
+    bottom: '4%',
+    left: 80,
+    right: 80,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    padding: 16,
+    backgroundColor: colors.primary,
+    borderRadius: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  timerText: {
+    fontSize: 24,
+    color: 'white',
+    fontWeight: '800',
+  },
   stickyButtonContainer: {
     position: 'absolute',
     bottom: '8%',
     left: 0,
     right: 0,
-    // backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    // borderTopWidth: 1,
-    // borderTopColor: colors.lightGray,
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: -2 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 4,
-    // elevation: 8,
   },
   stickyButton: {
     flexDirection: 'row',
@@ -440,7 +527,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-
 });
 
 export default ExerciseView;

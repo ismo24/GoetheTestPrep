@@ -83,15 +83,16 @@ const ExerciseView = ({
             {
               maxHeight: textHeight.interpolate({
                 inputRange: [0, 1],
-                outputRange: [80, 1000],
+                outputRange: [50, 1000],
                 extrapolate: "clamp",
               }),
             },
           ]}
         >
-          <View style={styles.passageHeader}>
+          <TouchableOpacity
+              onPress={toggleTextVisibility} style={isTextHidden? styles.passageHeaderHidden:styles.passageHeader}>
             <Text style={styles.passageTitle}>Aufgabe</Text>
-            <TouchableOpacity
+            <View 
               onPress={toggleTextVisibility}
               style={styles.eyeButton}
             >
@@ -100,8 +101,8 @@ const ExerciseView = ({
                 size={20}
                 color={colors.gray}
               />
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
 
           
 
@@ -282,20 +283,27 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     margin: 16,
     marginBottom: 16,
-    borderRadius: 12,
-    padding: 20,
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical:5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    overflow: 'hidden'
   },
   passageHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom:8,
+    paddingVertical:5,
+  },
+  passageHeaderHidden: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical:5,
   },
   passageTitle: {
     fontSize: 18,
@@ -310,7 +318,7 @@ const styles = StyleSheet.create({
   separatorLine: {
     height: 1,
     backgroundColor: colors.lightGray,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   passageText: {
     fontSize: 16,
@@ -329,7 +337,7 @@ const styles = StyleSheet.create({
   },
   questionCard: {
     backgroundColor: colors.white,
-    borderRadius: 12,
+    borderRadius: 20,
     padding: 20,
     marginBottom: 16,
     shadowColor: '#000',
@@ -412,7 +420,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     backgroundColor: colors.white,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
   },
   progressText: {

@@ -641,7 +641,7 @@ const styles = StyleSheet.create({
   },
   questionCard: {
     backgroundColor: colors.white,
-    borderRadius: 12,
+    borderRadius: 20,
     padding: 20,
     marginBottom: 16,
     shadowColor: '#000',
@@ -724,7 +724,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     backgroundColor: colors.white,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
   },
   progressText: {
