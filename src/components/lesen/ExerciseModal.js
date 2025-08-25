@@ -49,7 +49,7 @@ const ExerciseModal = ({
       {/* <StatusBar backgroundColor={colors.background} barStyle="dark-content" /> */}
       <View style={[styles.container,{marginTop:Platform.OS=="ios"?30:0}]}>
         <View style={styles.content}>
-          {showResults && exerciseResults ? (
+          {/* {showResults && exerciseResults ? (
             <ResultsView
               selectedUbung={selectedExercise}
               exerciseResults={exerciseResults}
@@ -58,21 +58,27 @@ const ExerciseModal = ({
               onRestart={onRestart}
               onNext={hasNextExercise ? onNextExercise : null}
             />
-          ) : (
+          ) : ( */}
             <ExerciseView
               selectedUbung={adaptedExercise}
               currentTextIndex={0}
               selectedAnswers={selectedAnswers}
+              exerciseResults={exerciseResults}
               levelInfo={levelInfo}
               currentExerciseNumber={currentExerciseNumber}
               totalExercises={totalExercises}
+              showResults={showResults} // AJOUT : Passer l'état showResults
+              hasNextExercise={hasNextExercise} // AJOUT : Info sur exercice suivant
+            
               onBack={onClose}
               onNextText={() => {}}
               onPreviousText={() => {}}
               onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
               onFinishExercise={onFinishExercise}
+              onRestart={onRestart} // AJOUT : Passer onRestart
+              onNextExercise={onNextExercise} // AJOUT : Passer onNextExercise
             />
-          )}
+          {/* )} */}
         </View>
       </View>
     </Modal>

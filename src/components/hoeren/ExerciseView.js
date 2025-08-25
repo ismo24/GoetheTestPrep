@@ -1,281 +1,29 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
-import { colors } from '../../styles/colors';
-import ProgressBar from '../common/ProgressBar';
-
-const AudioPlayer = ({ audioUrl, onAudioFinished, autoPlay = false, countdown = 5 }) => {
-  const [sound, setSound] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [countdownTime, setCountdownTime] = useState(countdown);
-  const [showCountdown, setShowCountdown] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  
-  const countdownInterval = useRef(null);
-  const isMounted = useRef(true);
-
-  // Nettoyer les ressources
-  useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-      if (sound) {
-        sound.unloadAsync().catch(console.error);
-      }
-      if (countdownInterval.current) {
-        clearInterval(countdownInterval.current);
-        countdownInterval.current = null;
-      }
-    };
-  }, [sound]);
-
-  // Charger l'audio quand le composant est monté
-  useEffect(() => {
-    if (audioUrl) {
-      loadAudio();
-    }
-  }, [audioUrl]);
-
-  // Optimisation du callback pour éviter les re-créations
-  const onPlaybackStatusUpdate = useCallback((status) => {
-    if (!isMounted.current) return;
-    
-    if (status.isLoaded) {
-      setCurrentTime(Math.floor(status.positionMillis / 1000));
-      if (status.durationMillis) {
-        setDuration(Math.floor(status.durationMillis / 1000));
-      }
-      
-      if (status.didJustFinish) {
-        setIsPlaying(false);
-        if (onAudioFinished) onAudioFinished();
-      }
-    } else if (status.error) {
-      console.error('Erreur de lecture:', status.error);
-      setIsPlaying(false);
-      setIsLoading(false);
-    }
-  }, [onAudioFinished]);
-
-  // Compte à rebours avant lecture automatique
-  useEffect(() => {
-    // Nettoyer l'interval existant
-    if (countdownInterval.current) {
-      clearInterval(countdownInterval.current);
-      countdownInterval.current = null;
-    }
-  
-    // Démarrer le compte à rebours quand autoPlay=true et audio chargé
-    if (autoPlay && isLoaded && isMounted.current) {
-      console.log('🎯 Démarrage du compte à rebours');
-      setShowCountdown(true);
-      setCountdownTime(countdown);
-      
-      countdownInterval.current = setInterval(() => {
-        if (!isMounted.current) {
-          if (countdownInterval.current) {
-            clearInterval(countdownInterval.current);
-            countdownInterval.current = null;
-          }
-          return;
-        }
-        
-        setCountdownTime(prev => {
-          console.log('⏰ Compte à rebours:', prev);
-          if (prev <= 1) {
-            setShowCountdown(false);
-            playAudio();
-            if (countdownInterval.current) {
-              clearInterval(countdownInterval.current);
-              countdownInterval.current = null;
-            }
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-  
-    return () => {
-      if (countdownInterval.current) {
-        clearInterval(countdownInterval.current);
-        countdownInterval.current = null;
-      }
-    };
-  }, [autoPlay, isLoaded, countdown]);
-
-  const loadAudio = async () => {
-    if (!isMounted.current) return;
-    
-    try {
-      setIsLoading(true);
-      
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-        playsInSilentModeIOS: true,
-        staysActiveInBackground: false,
-        shouldDuckAndroid: true,
-      });
-
-      const { sound: newSound } = await Audio.Sound.createAsync(
-        { uri: audioUrl },
-        { 
-          shouldPlay: false, 
-          isLooping: false,
-          volume: 1.0,
-        },
-        onPlaybackStatusUpdate
-      );
-
-      if (isMounted.current) {
-        setSound(newSound);
-        setIsLoaded(true);
-        setIsLoading(false);
-      } else {
-        // Si le composant a été démonté, nettoyer l'audio
-        newSound.unloadAsync().catch(console.error);
-      }
-      
-    } catch (error) {
-      console.error('Erreur lors du chargement audio:', error);
-      if (isMounted.current) {
-        setIsLoading(false);
-        Alert.alert('Erreur Audio', 'Impossible de charger le fichier audio');
-      }
-    }
-  };
-
-  const playAudio = useCallback(async () => {
-    if (sound && isLoaded && isMounted.current) {
-      try {
-        const status = await sound.getStatusAsync();
-        if (status.isLoaded && isMounted.current) {
-          await sound.playAsync();
-          setIsPlaying(true);
-        }
-      } catch (error) {
-        console.error('Erreur lors de la lecture:', error);
-        if (isMounted.current) {
-          Alert.alert('Erreur', 'Impossible de lire le fichier audio');
-        }
-      }
-    }
-  }, [sound, isLoaded]);
-
-  const pauseAudio = useCallback(async () => {
-    if (sound && isMounted.current) {
-      try {
-        await sound.pauseAsync();
-        setIsPlaying(false);
-      } catch (error) {
-        console.error('Erreur lors de la pause:', error);
-      }
-    }
-  }, [sound]);
-
-  const togglePlayPause = useCallback(() => {
-    if (isPlaying) {
-      pauseAudio();
-    } else {
-      playAudio();
-    }
-  }, [isPlaying, playAudio, pauseAudio]);
-
-  const restartAudio = useCallback(async () => {
-    if (sound && isMounted.current) {
-      try {
-        await sound.setPositionAsync(0);
-        setCurrentTime(0);
-        if (isPlaying) {
-          await sound.playAsync();
-        }
-      } catch (error) {
-        console.error('Erreur lors du redémarrage:', error);
-      }
-    }
-  }, [sound, isPlaying]);
-
-  const formatTime = useCallback((seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  }, []);
-
-  if (showCountdown) {
-    return (
-      <View style={styles.countdownContainer}>
-        <View style={styles.countdownCircle}>
-          <Text style={styles.countdownText}>{countdownTime}</Text>
-        </View>
-        <Text style={styles.countdownLabel}>Audio startet automatisch in...</Text>
-      </View>
-    );
-  }
-
-  return (
-    <View style={styles.audioContainer}>
-      <View style={styles.playerContainer}>
-        <TouchableOpacity 
-          style={[styles.playButton, { opacity: (isLoading || !isLoaded) ? 0.5 : 1 }]} 
-          onPress={togglePlayPause}
-          disabled={isLoading || !isLoaded}
-        >
-          {isLoading ? (
-            <Ionicons name="hourglass" size={24} color={colors.white} />
-          ) : (
-            <Ionicons 
-              name={isPlaying ? "pause" : "play"} 
-              size={24} 
-              color={colors.white} 
-            />
-          )}
-        </TouchableOpacity>
-
-        <View style={styles.timeDisplay}>
-          <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
-        </View>
-
-        <View style={styles.progressContainer}>
-          <View style={styles.progressBar}>
-            <View
-              style={[
-                styles.progressFill,
-                {
-                  width: duration > 0 ? `${(currentTime / duration) * 100}%` : '0%',
-                }
-              ]}
-            />
-          </View>
-        </View>
-
-        <View style={styles.timeDisplay}>
-          <Text style={styles.timeText}>{formatTime(duration)}</Text>
-        </View>
-
-        <TouchableOpacity onPress={restartAudio} disabled={!isLoaded} style={styles.restartButton}>
-          <Ionicons name="refresh" size={20} color={isLoaded ? colors.gray : colors.lightGray} />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.statusContainer}>
-        <Text style={styles.statusText}>
-          {isLoading ? 'Chargement...' : 
-           !isLoaded ? 'Erreur de chargement' : 
-           isPlaying ? 'En lecture' : 'Prêt'}
-        </Text>
-      </View>
-    </View>
-  );
-};
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { colors } from "../../styles/colors";
+import ProgressBar from "../common/ProgressBar";
+import AudioPlayer from "./AudioPlayer";
 
 const ExerciseView = ({
   selectedUbung,
   currentAudioIndex,
   selectedAnswers,
+  exerciseResults,
+  showResults,
+  hasNextExercise,
   levelInfo,
   currentExerciseNumber,
   totalExercises,
@@ -284,23 +32,195 @@ const ExerciseView = ({
   onPreviousAudio,
   onSelectAnswer,
   onFinishExercise,
+  onRestart,
+  onNextExercise,
   isStartAudioPlaying = false,
-  startAudioFinished = false
+  startAudioFinished = false,
+  userNativeLanguage = "FR",
+  onRestartAudioSequence,
 }) => {
   const [audioStarted, setAudioStarted] = useState(false);
+  const hasFinishedExercise = useRef(false);
+  const audioPlayerRef = useRef(null);
+  const [audioKey, setAudioKey] = useState(0);
+
+  const translations = {
+    explanation: {
+      DE: "Erklärung:",
+      FR: "Explication :",
+      EN: "Explanation:",
+    },
+    buttons: {
+      repeat: {
+        DE: "Wiederholen",
+        FR: "Répéter",
+        EN: "Repeat",
+      },
+      continue: {
+        DE: "Weiter",
+        FR: "Continuer",
+        EN: "Continue",
+      },
+    },
+  };
 
   // Memoiser les données pour éviter les re-calculs
   const currentAudio = useMemo(() => {
     return selectedUbung?.data?.[currentAudioIndex];
   }, [selectedUbung, currentAudioIndex]);
 
-  // Debug logs
-  console.log('🔍 ExerciseView Debug:');
-  console.log('selectedUbung:', selectedUbung);
-  console.log('currentAudioIndex:', currentAudioIndex);
-  console.log('currentAudio:', currentAudio);
-  console.log('audioStarted:', audioStarted);
-  console.log('questions:', currentAudio?.questions);
+  // ✅ CORRECTION : Memoiser avec une clé stable
+  const allQuestionsAnswered = useMemo(() => {
+    if (!currentAudio?.questions) return false;
+    return currentAudio.questions.every(
+      (_, index) => selectedAnswers[index] !== undefined
+    );
+  }, [currentAudio?.questions, selectedAnswers]);
+
+  // ✅ CORRECTION : Fonction pour obtenir le résultat d'une question
+  const getQuestionResult = useCallback((questionIndex) => {
+    if (!showResults || !exerciseResults) return null;
+    
+    // Vérifier plusieurs structures possibles
+    const result = exerciseResults.detailedResults?.[0]?.questions?.[questionIndex] || 
+                   exerciseResults.questions?.[questionIndex] ||
+                   exerciseResults[questionIndex];
+    
+    return result;
+  }, [showResults, exerciseResults]);
+
+  // ✅ NOUVELLE FONCTION : Vérifier si une question a été répondue
+  const hasUserAnswered = useCallback((questionIndex) => {
+    if (!showResults) {
+      // Mode normal : vérifier dans selectedAnswers
+      return selectedAnswers[questionIndex] !== undefined;
+    }
+    
+    // Mode résultats : vérifier si l'utilisateur a donné une réponse
+    const questionResult = getQuestionResult(questionIndex);
+    const hasSelectedAnswer = selectedAnswers[questionIndex] !== undefined;
+    
+    return questionResult && (
+      questionResult.hasAnswer === true ||
+      questionResult.userAnswer !== undefined ||
+      questionResult.userAnswer !== null ||
+      hasSelectedAnswer
+    );
+  }, [showResults, selectedAnswers, getQuestionResult]);
+
+  // ✅ FONCTION : Déterminer la couleur du badge
+  const getBadgeColor = useCallback((questionIndex) => {
+    const questionResult = getQuestionResult(questionIndex);
+    const userAnswered = hasUserAnswered(questionIndex);
+    
+    if (questionResult?.isCorrect) {
+      return colors.success; // Vert pour correct
+    } else if (userAnswered) {
+      return "#FF4444"; // Rouge pour incorrect mais répondu  
+    } else {
+      return "black"; // Noir pour pas de réponse
+    }
+  }, [getQuestionResult, hasUserAnswered]);
+
+  // ✅ NOUVEAU : Fonction pour arrêter les audios
+  const stopAllAudio = useCallback(async () => {
+    if (audioPlayerRef.current) {
+      try {
+        await audioPlayerRef.current.stopAudio();
+        console.log("🔇 Audio arrêté automatiquement");
+      } catch (error) {
+        console.error("Erreur lors de l'arrêt de l'audio:", error);
+      }
+    }
+  }, []);
+
+  // ✅ NOUVEAU : Fonction pour réinitialiser complètement l'audio
+  const resetAudioSequence = useCallback(async () => {
+    console.log("🔄 Reset complet de la séquence audio");
+    
+    // 1. Arrêter l'audio actuel
+    await stopAllAudio();
+    
+    // 2. Reset des états locaux
+    setAudioStarted(false);
+    hasFinishedExercise.current = false;
+    
+    // 3. Forcer le re-rendu de l'AudioPlayer avec une nouvelle clé
+    setAudioKey(prev => prev + 1);
+    
+    // 4. Déclencher le callback parent pour relancer l'audio initial
+    if (onRestartAudioSequence) {
+      onRestartAudioSequence();
+    }
+    
+    console.log("✅ Séquence audio réinitialisée");
+  }, [stopAllAudio, onRestartAudioSequence]);
+
+  // ✅ NOUVEAU : Arrêter l'audio quand showResults devient true
+  useEffect(() => {
+    if (showResults) {
+      console.log("📊 Passage en mode résultats - Arrêt de l'audio");
+      stopAllAudio();
+    }
+  }, [showResults, stopAllAudio]);
+
+  // ✅ NOUVEAU : Wrappers pour arrêter l'audio avant navigation
+  const handleBack = useCallback(async () => {
+    console.log("⬅️ Retour - Arrêt de l'audio");
+    await stopAllAudio();
+    if (onBack) onBack();
+  }, [onBack, stopAllAudio]);
+
+  // ✅ MODIFIÉ : Wrapper pour redémarrer avec reset complet
+  const handleRestart = useCallback(async () => {
+    console.log("🔄 Redémarrage complet avec reset audio");
+    await resetAudioSequence();
+  }, [resetAudioSequence]);
+
+  const handleNextExercise = useCallback(async () => {
+    console.log("➡️ Exercice suivant - Arrêt de l'audio");
+    await stopAllAudio();
+    if (onNextExercise) onNextExercise();
+  }, [onNextExercise, stopAllAudio]);
+
+  // ✅ CORRECTION : Fonction stable pour finir l'exercice
+  const stableOnFinishExercise = useCallback(() => {
+    // Protection contre les appels multiples
+    if (hasFinishedExercise.current || showResults) {
+      return;
+    }
+    
+    hasFinishedExercise.current = true;
+    console.log("🔥 Appel de onFinishExercise - UNE SEULE FOIS");
+    
+    if (onFinishExercise) {
+      onFinishExercise();
+    }
+  }, [onFinishExercise, showResults]);
+
+  // ✅ CORRECTION : Effet simplifié et stable
+  useEffect(() => {
+    // Reset du flag quand on change d'exercice ou qu'on recommence
+    if (!showResults) {
+      hasFinishedExercise.current = false;
+    }
+  }, [showResults, currentAudioIndex]);
+
+  // ✅ CORRECTION : Un seul effet pour gérer la fin d'exercice
+  useEffect(() => {
+    if (
+      allQuestionsAnswered && 
+      !showResults && 
+      !hasFinishedExercise.current
+    ) {
+      // Petit délai pour éviter les appels simultanés
+      const timer = setTimeout(() => {
+        stableOnFinishExercise();
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [allQuestionsAnswered, showResults, stableOnFinishExercise]);
 
   // Reset audio state when changing audio
   useEffect(() => {
@@ -315,20 +235,13 @@ const ExerciseView = ({
     setAudioStarted(true);
   }, []);
 
-  // Memoiser le calcul pour éviter les re-calculs inutiles
-  const allQuestionsAnswered = useMemo(() => {
-    if (!currentAudio?.questions) return false;
-    return currentAudio.questions.every((_, index) => 
-      selectedAnswers[index] !== undefined
-    );
-  }, [currentAudio?.questions, selectedAnswers]);
-
-  // Optimiser l'effet avec une dépendance stable
+  // ✅ NOUVEAU : Cleanup à la destruction du composant
   useEffect(() => {
-    if (allQuestionsAnswered && onFinishExercise) {
-      onFinishExercise();
-    }
-  }, [allQuestionsAnswered, onFinishExercise]);
+    return () => {
+      console.log("🧹 Nettoyage du composant ExerciseView - Arrêt de l'audio");
+      stopAllAudio();
+    };
+  }, [stopAllAudio]);
 
   // Vérifier si currentAudio existe avant le rendu
   if (!currentAudio) {
@@ -338,15 +251,15 @@ const ExerciseView = ({
       </View>
     );
   }
-  
+
   return (
     <>
       <View style={styles.header}>
-        <TouchableOpacity onPress={onBack} style={styles.closeButton}>
+        <TouchableOpacity onPress={handleBack} style={styles.closeButton}>
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
         <View style={styles.exerciseCounter}>
-          <ProgressBar 
+          <ProgressBar
             currentIndex={currentExerciseNumber || 1}
             totalCount={totalExercises || 1}
             height={8}
@@ -359,14 +272,15 @@ const ExerciseView = ({
         </TouchableOpacity>
       </View>
 
-      <ScrollView 
+      <ScrollView
         style={styles.exerciseContent}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
         {/* Lecteur Audio */}
         <View style={styles.audioSection}>
           <AudioPlayer
-            key={currentAudio.audioUrl}
+            ref={audioPlayerRef}
+            key={`${currentAudio.audioUrl}-${audioKey}`}
             audioUrl={currentAudio.audioUrl}
             onAudioFinished={handleAudioFinished}
             autoPlay={startAudioFinished}
@@ -378,6 +292,7 @@ const ExerciseView = ({
         <View style={styles.questionsSection}>
           {currentAudio.questions?.map((question, questionIndex) => {
             const isAnswered = selectedAnswers[questionIndex] !== undefined;
+            const questionResult = getQuestionResult(questionIndex);
             
             return (
               <View key={`${question.id || questionIndex}`} style={styles.questionCard}>
@@ -385,10 +300,25 @@ const ExerciseView = ({
                   <Text style={styles.questionTitle}>
                     Frage {currentAudio.questions?.length !== 1 ? questionIndex + 1 : ""}
                   </Text>
-                  {isAnswered && (
-                    <View style={styles.answeredBadge}>
-                      <Ionicons name="checkmark" size={16} color={colors.white} />
+                  
+                  {/* ✅ CORRECTION PRINCIPALE : Badge avec logique améliorée */}
+                  {showResults ? (
+                    <View style={[
+                      styles.answeredBadge,
+                      { backgroundColor: getBadgeColor(questionIndex) }
+                    ]}>
+                      <Ionicons
+                        name={questionResult?.isCorrect ? "checkmark" : "close"}
+                        size={16}
+                        color={colors.white}
+                      />
                     </View>
+                  ) : (
+                    isAnswered && (
+                      <View style={styles.answeredBadge}>
+                        <Ionicons name="checkmark" size={16} color={colors.white} />
+                      </View>
+                    )
                   )}
                 </View>
                 
@@ -399,27 +329,50 @@ const ExerciseView = ({
                 <View style={styles.optionsContainer}>
                   {question.options?.map((option) => {
                     const isSelected = selectedAnswers[questionIndex] === option.id;
+                    const isCorrect = option.isCorrect;
                     
                     return (
                       <TouchableOpacity
                         key={`${option.id}-${questionIndex}`}
                         style={[
                           styles.optionButton,
-                          isSelected && styles.optionSelected
+                          isSelected && !showResults && styles.optionSelected
                         ]}
-                        onPress={() => onSelectAnswer(questionIndex, option.id)}
+                        onPress={!showResults ? () => onSelectAnswer(questionIndex, option.id) : null}
+                        disabled={showResults}
                       >
-                        <View style={[
-                          styles.optionCircle,
-                          isSelected && styles.optionCircleSelected
-                        ]}>
-                          {isSelected && (
-                            <View style={styles.optionDot} />
-                          )}
-                        </View>
+                        {showResults ? (
+                          isCorrect ? (
+                            <View style={[styles.correctIndicator, { borderRadius: 10 }]}>
+                              <Ionicons
+                                name="checkmark-circle"
+                                size={20}
+                                color={colors.success}
+                              />
+                            </View>
+                          ) : (
+                            <View style={[styles.incorrectIndicator, { borderRadius: 10 }]}>
+                              <Ionicons
+                                name="close-circle"
+                                size={20}
+                                color={isSelected ? "#FF4444" : colors.lightGray}
+                              />
+                            </View>
+                          )
+                        ) : (
+                          <View style={[
+                            styles.optionCircle,
+                            isSelected && styles.optionCircleSelected
+                          ]}>
+                            {isSelected && (
+                              <View style={styles.optionDot} />
+                            )}
+                          </View>
+                        )}
+                        
                         <Text style={[
                           styles.optionText,
-                          isSelected && styles.optionTextSelected
+                          isSelected && !showResults && styles.optionTextSelected
                         ]}>
                           ({option.id.toUpperCase()}) {option.text}
                         </Text>
@@ -427,68 +380,129 @@ const ExerciseView = ({
                     );
                   })}
                 </View>
+
+                {/* Explication après les résultats */}
+                {showResults && questionResult?.explanation && (
+                  <View style={styles.explanationBox}>
+                    <View style={styles.explanationHeader}>
+                      <Ionicons
+                        name="bulb-outline"
+                        size={16}
+                        color={colors.primary}
+                      />
+                      <Text style={styles.explanationTitle}>
+                        {translations.explanation[userNativeLanguage]}
+                      </Text>
+                    </View>
+                    
+                    <Text style={styles.explanationText}>
+                      {questionResult.explanation}
+                    </Text>
+                    
+                    {userNativeLanguage !== "DE" && questionResult.nativeExplanation && (
+                      <View style={styles.nativeExplanationContainer}>
+                        <View style={styles.nativeExplanationSeparator} />
+                        <Text style={styles.nativeExplanationText}>
+                          {questionResult.nativeExplanation}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                )}
               </View>
             );
           })}
         </View>
 
         {/* Statut de progression */}
-        <View style={styles.progressInfo}>
-          <Text style={styles.progressText}>
-            {Object.keys(selectedAnswers).length} von {currentAudio.questions?.length || 0} Fragen beantwortet
-          </Text>
-        </View>
+        {!showResults && (
+          <View style={styles.progressInfo}>
+            <Text style={styles.progressText}>
+              {Object.keys(selectedAnswers).length} von {currentAudio.questions?.length || 0} Fragen beantwortet
+            </Text>
+          </View>
+        )}
       </ScrollView>
 
-      {/* Bouton sticky "Beenden" */}
-      <View style={[styles.stickyButtonContainer, {opacity: allQuestionsAnswered ? 1 : 0}]}>
-        <TouchableOpacity 
-          style={[
-            styles.stickyButton, 
-            { 
-              backgroundColor: allQuestionsAnswered ? colors.primary : colors.gray,
-              opacity: allQuestionsAnswered ? 1 : 0
-            }
-          ]}
-          onPress={onFinishExercise}
-          disabled={!allQuestionsAnswered}
-        >
-          <Text style={styles.stickyButtonText}>
-            {allQuestionsAnswered ? 'BEENDEN' : 'ALLE FRAGEN BEANTWORTEN'}
-          </Text>
-          <Ionicons name="checkmark-circle" size={20} color={colors.white} />
-        </TouchableOpacity>
-      </View>
+      {/* Boutons selon le mode */}
+      {showResults ? (
+        <View style={styles.resultsButtonContainer}>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.restartButton]}
+            onPress={handleRestart}
+          >
+            <Text style={styles.restartButtonText}>
+              {translations.buttons.repeat[userNativeLanguage]}
+            </Text>
+          </TouchableOpacity>
+
+          {hasNextExercise ? (
+            <TouchableOpacity
+              style={[styles.actionButton, { backgroundColor: 'black' }]}
+              onPress={handleNextExercise}
+            >
+              <Text style={styles.actionButtonText}>
+                {translations.buttons.continue[userNativeLanguage]}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.actionButton, { backgroundColor: colors.primary }]}
+              onPress={handleBack}
+            >
+              <Text style={styles.actionButtonText}>Exercices</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      ) : (
+        <View style={[styles.stickyButtonContainer, {opacity: allQuestionsAnswered ? 1 : 0}]}>
+          <TouchableOpacity 
+            style={[
+              styles.stickyButton, 
+              { 
+                backgroundColor: allQuestionsAnswered ? colors.primary : colors.gray,
+                opacity: allQuestionsAnswered ? 1 : 0
+              }
+            ]}
+            onPress={stableOnFinishExercise}
+            disabled={!allQuestionsAnswered}
+          >
+            <Text style={styles.stickyButtonText}>
+              {allQuestionsAnswered ? 'BEENDEN' : 'ALLE FRAGEN BEANTWORTEN'}
+            </Text>
+            <Ionicons name="checkmark-circle" size={20} color={colors.white} />
+          </TouchableOpacity>
+        </View>
+      )}
     </>
   );
 };
 
-// Styles restent identiques...
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 16,
     backgroundColor: colors.background,
   },
   headerCenter: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   closeButton: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    borderColor: '#D6D6DB',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
+    borderColor: "#D6D6DB",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
@@ -496,117 +510,24 @@ const styles = StyleSheet.create({
   },
   exerciseCounter: {
     paddingHorizontal: 16,
-    marginLeft:12,
+    marginLeft: 12,
     paddingVertical: 8,
     borderRadius: 20,
-    minWidth: 250, 
-    maxWidth: 300, 
+    minWidth: 250,
+    maxWidth: 300,
   },
   exerciseCounterText: {
     color: colors.text,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   exerciseContent: {
     backgroundColor: colors.background,
   },
-  
-  // Styles pour le lecteur audio
   audioSection: {
     margin: 16,
     marginBottom: 8,
   },
-  countdownContainer: {
-    backgroundColor: colors.white,
-    borderRadius: 12,
-    padding: 40,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  countdownCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: colors.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  countdownText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: colors.white,
-  },
-  countdownLabel: {
-    fontSize: 16,
-    color: colors.gray,
-    textAlign: 'center',
-  },
-  audioContainer: {
-    backgroundColor: colors.white,
-    borderRadius: 12,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  playerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.lightGray,
-    borderRadius: 25,
-    padding: 8,
-    gap: 12,
-  },
-  playButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  timeDisplay: {
-    minWidth: 40,
-  },
-  timeText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: colors.text,
-  },
-  progressContainer: {
-    flex: 1,
-    marginHorizontal: 8,
-  },
-  progressBar: {
-    height: 4,
-    backgroundColor: '#E5E5EA',
-    borderRadius: 2,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: colors.primary,
-    borderRadius: 2,
-  },
-  restartButton: {
-    padding: 4,
-  },
-  statusContainer: {
-    marginTop: 8,
-    alignItems: 'center',
-  },
-  statusText: {
-    fontSize: 12,
-    color: colors.gray,
-  },
-
   instructionBox: {
     backgroundColor: colors.lightGray,
     borderRadius: 8,
@@ -614,12 +535,12 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   instructionContent: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   instructionText: {
     fontSize: 14,
     color: colors.text,
-    textAlign: 'center',
+    textAlign: "center",
     marginVertical: 12,
     lineHeight: 20,
   },
@@ -632,10 +553,8 @@ const styles = StyleSheet.create({
   skipButtonText: {
     color: colors.white,
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
-
-  // Styles pour les questions
   questionsSection: {
     marginHorizontal: 16,
   },
@@ -644,30 +563,30 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     marginBottom: 16,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
   },
   questionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 8,
   },
   questionTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.text,
   },
   answeredBadge: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
   },
   questionText: {
     fontSize: 16,
@@ -679,17 +598,17 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   optionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 8,
     backgroundColor: colors.lightGray,
   },
   optionSelected: {
-    backgroundColor: 'black',
+    backgroundColor: "black",
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: "black",
   },
   optionCircle: {
     width: 20,
@@ -698,17 +617,17 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.gray,
     marginRight: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   optionCircleSelected: {
-    borderColor: 'white',
+    borderColor: "white",
   },
   optionDot: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   optionText: {
     fontSize: 15,
@@ -716,8 +635,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   optionTextSelected: {
-    color: 'white',
-    fontWeight: '500',
+    color: "white",
+    fontWeight: "500",
   },
   progressInfo: {
     marginHorizontal: 16,
@@ -725,30 +644,30 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: colors.white,
     borderRadius: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   progressText: {
     fontSize: 14,
     color: colors.gray,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   stickyButtonContainer: {
-    position: 'absolute',
-    bottom: '8%',
+    position: "absolute",
+    bottom: "8%",
     left: 0,
     right: 0,
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
   stickyButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 16,
     borderRadius: 25,
     gap: 8,
     marginHorizontal: 30,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -757,18 +676,108 @@ const styles = StyleSheet.create({
   stickyButtonText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: colors.background,
   },
   loadingText: {
     fontSize: 18,
     color: colors.text,
-    textAlign: 'center',
+    textAlign: "center",
+  },
+  correctIndicator: {
+    marginRight: 12,
+    width: 24,
+    height: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  incorrectIndicator: {
+    marginRight: 12,
+    width: 24,
+    height: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  explanationBox: {
+    backgroundColor: colors.lightGray,
+    borderRadius: 8,
+    padding: 12,
+    marginTop: 16,
+  },
+  explanationHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+    gap: 6,
+  },
+  explanationTitle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: colors.text,
+  },
+  explanationText: {
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
+  },
+  nativeExplanationContainer: {
+    marginTop: 12,
+    paddingTop: 12,
+  },
+  nativeExplanationSeparator: {
+    height: 1,
+    backgroundColor: colors.lightGray,
+    marginBottom: 12,
+    opacity: 0.5,
+  },
+  nativeExplanationText: {
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
+    fontStyle: "italic",
+    opacity: 0.8,
+  },
+  resultsButtonContainer: {
+    position: "absolute",
+    bottom: "4%",
+    left: 0,
+    right: 0,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    flexDirection: "row",
+    gap: 12,
+  },
+  actionButton: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 16,
+    borderRadius: 12,
+    gap: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  restartButton: {
+    backgroundColor: colors.lightGray,
+  },
+  restartButtonText: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  actionButtonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

@@ -4,6 +4,15 @@ import { colors } from "../../styles/colors";
 const SolutionCard = ({ selectedUbung }) => {
   return (
     <View style={styles.container}>
+      {/* ✅ NOUVEAU : Titre inspiré de readingPassage */}
+      <View style={styles.passageHeader}>
+        <Text style={styles.passageTitle}>Lösungsmuster</Text>
+      </View>
+      
+      {/* ✅ NOUVEAU : Trait de séparation */}
+      <View style={styles.separatorLine} />
+      
+      {/* Contenu existant inchangé */}
       {selectedUbung.questionType === "SMS" ||
       selectedUbung.questionType === "monologue" ? (
         selectedUbung.solution &&
@@ -73,15 +82,35 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     margin: 16,
     marginBottom: 16,
-    borderRadius: 12,
-    padding: 20,
+    borderRadius: 20, // ✅ Changé de 12 à 20 pour correspondre au Schreiben
+    paddingHorizontal: 20, // ✅ Changé de padding: 20 pour correspondre au Schreiben
+    paddingVertical: 5, // ✅ Ajouté pour correspondre au Schreiben
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    overflow: "hidden",
+
   },
+  // ✅ NOUVEAUX STYLES inspirés du SolutionCard Schreiben
+  passageHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingVertical: 5,
+  },
+  passageTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.text,
+  },
+  separatorLine: {
+    height: 1,
+    backgroundColor: colors.lightGray,
+    marginBottom: 16,
+  },
+  // Styles existants inchangés
   paragraphText: {
     fontSize: 16,
     lineHeight: 24,
@@ -143,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SolutionCard;
+export default SolutionCard

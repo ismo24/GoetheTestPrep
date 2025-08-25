@@ -226,7 +226,7 @@ const SettingsScreen = ({ navigation }) => {
     const baseItems = [
       {
         title: 'Get Pro',
-        subtitle: 'Get Higher Score!',
+        // subtitle: 'Get Higher Score!',
         icon: 'star',
         hasUpgrade: true,
         action: () => console.log('Get Pro'),
@@ -283,25 +283,24 @@ const SettingsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.profileSection}>
-          <View style={styles.avatar}>
-            <Ionicons name="person" size={24} color={colors.gray} />
-          </View>
-          <View style={styles.profileInfo}>
-            <Text style={styles.profileTitle}>Profile</Text>
-            {isAuthenticated && user ? (
-              <View style={styles.userInfo}>
-                <Text style={styles.userEmail}>{user.email}</Text>
-                {user.displayName && (
-                  <Text style={styles.userName}>{user.displayName}</Text>
-                )}
-              </View>
-            ) : (
-              <Text style={styles.notSignedIn}>Not signed in</Text>
-            )}
-          </View>
+  <View style={styles.profileSection}>
+    <View style={styles.avatar}>
+      <Ionicons name="person" size={72} color={colors.gray} />
+    </View>
+    <View style={styles.profileInfo}>
+      {isAuthenticated && user ? (
+        <View style={styles.userInfo}>
+          <Text style={styles.userEmail}>{user.email}</Text>
+          {user.displayName && (
+            <Text style={styles.userName}>{user.displayName}</Text>
+          )}
         </View>
-      </View>
+      ) : (
+        <Text style={styles.notSignedIn}>Not signed in</Text>
+      )}
+    </View>
+  </View>
+</View>
 
       <ScrollView style={styles.content}>
         {getMenuItems().map((item, index) => (
@@ -376,46 +375,51 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   header: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     padding: 20,
+    height: 180, // Augmenté légèrement pour s'adapter à la nouvelle disposition
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    borderRadius: 20, // Ajouté pour la cohérence
   },
   profileSection: {
-    flexDirection: 'row',
+    flexDirection: 'column', // Changé de 'row' à 'column'
     alignItems: 'center',
+    justifyContent: 'center',
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 100, // Augmenté pour s'adapter à l'icône plus grande
+    height: 100, // Augmenté pour s'adapter à l'icône plus grande
+    borderRadius: 50, // Ajusté en conséquence
     backgroundColor: colors.lightGray,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginBottom: 16, // Changé de marginRight à marginBottom
   },
   profileInfo: {
-    flex: 1,
+    alignItems: 'center', // Centré horizontalement
   },
-  profileTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.text,
-  },
+  // Supprimé profileTitle car on n'affiche plus "Profile"
   userInfo: {
-    marginTop: 4,
+    alignItems: 'center', // Centré horizontalement
   },
   userEmail: {
-    fontSize: 14,
-    color: colors.gray,
+    fontSize: 16, // Légèrement augmenté
+    color: colors.text, // Changé de gray à text pour plus de visibilité
+    fontWeight: '500',
+    textAlign: 'center',
   },
   userName: {
-    fontSize: 12,
+    fontSize: 14, // Légèrement augmenté
     color: colors.gray,
-    marginTop: 2,
+    marginTop: 4, // Augmenté l'espacement
+    textAlign: 'center',
   },
   notSignedIn: {
-    fontSize: 14,
+    fontSize: 16, // Légèrement augmenté
     color: colors.gray,
-    marginTop: 4,
+    textAlign: 'center',
   },
   content: {
     flex: 1,
@@ -429,6 +433,14 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderBottomWidth: 1,
     borderBottomColor: colors.lightGray,
+    marginVertical:5,
+    marginHorizontal:20,
+    borderRadius:20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   menuContent: {
     flexDirection: 'row',

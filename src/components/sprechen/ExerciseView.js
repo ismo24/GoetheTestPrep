@@ -3,12 +3,15 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from '
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
 import ProgressBar from '../common/ProgressBar';
-
+import SolutionCard from './SolutionCard';
 
 const ExerciseView = ({
   selectedUbung,
   currentTextIndex,
   selectedAnswers,
+  exerciseResults, // ✅ NOUVEAU
+  showResults, // ✅ NOUVEAU
+  hasNextExercise, // ✅ NOUVEAU
   levelInfo,
   currentExerciseNumber,
   totalExercises,
@@ -17,13 +20,30 @@ const ExerciseView = ({
   onPreviousText,
   onSelectAnswer,
   onFinishExercise,
+  onRestart, // ✅ NOUVEAU
+  onNextExercise, // ✅ NOUVEAU
+  userNativeLanguage = "FR" // ✅ NOUVEAU
 }) => {
   const currentText = selectedUbung.data || selectedUbung;
   const [isTextHidden, setIsTextHidden] = useState(false);
   const [textHeight] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
 
- 
+  // ✅ NOUVEAU : Traductions
+  const translations = {
+    buttons: {
+      repeat: {
+        DE: "Wiederholen",
+        FR: "Répéter",
+        EN: "Repeat",
+      },
+      continue: {
+        DE: "Weiter",
+        FR: "Continuer",
+        EN: "Continue",
+      },
+    },
+  };
 
   const toggleTextVisibility = () => {
     const newHiddenState = !isTextHidden;
@@ -43,13 +63,6 @@ const ExerciseView = ({
     ]).start();
   };
 
-  // Vérifier si toutes les questions ont une réponse
-  const allQuestionsAnswered = (currentText.questions || selectedUbung.data?.questions)?.every((_, index) => 
-    selectedAnswers[index] !== undefined
-  );
-
-
-
   return (
     <>
       <View style={styles.header}>
@@ -57,7 +70,7 @@ const ExerciseView = ({
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-        <View style={styles.exerciseCounter}>
+          <View style={styles.exerciseCounter}>
             <ProgressBar 
               currentIndex={currentExerciseNumber || 1}
               totalCount={totalExercises || 1}
@@ -67,9 +80,6 @@ const ExerciseView = ({
             />
           </View>
         </View>
-        {/* <TouchableOpacity style={{ opacity: 0 }}>
-          <Text style={styles.exerciseCounterText}>yes</Text>
-        </TouchableOpacity> */}
       </View>
 
       <ScrollView
@@ -90,12 +100,11 @@ const ExerciseView = ({
           ]}
         >
           <TouchableOpacity
-              onPress={toggleTextVisibility} style={isTextHidden? styles.passageHeaderHidden:styles.passageHeader}>
+            onPress={toggleTextVisibility} 
+            style={isTextHidden ? styles.passageHeaderHidden : styles.passageHeader}
+          >
             <Text style={styles.passageTitle}>Aufgabe</Text>
-            <View 
-              onPress={toggleTextVisibility}
-              style={styles.eyeButton}
-            >
+            <View style={styles.eyeButton}>
               <Ionicons
                 name={isTextHidden ? "eye-off-outline" : "eye-outline"}
                 size={20}
@@ -103,8 +112,6 @@ const ExerciseView = ({
               />
             </View>
           </TouchableOpacity>
-
-          
 
           <Animated.View
             style={{
@@ -121,113 +128,127 @@ const ExerciseView = ({
             }}
           >
             <View style={styles.separatorLine} />
-           {Array.isArray(currentText.Text) ? (
-  currentText.Text.map((value, index) => (
-    <Text key={index} style={styles.passageText}>
-      {value}
-    </Text>
-  ))
-) : (
-  <Text style={styles.passageText}>{currentText.Text}</Text>
-)}
-
+            {Array.isArray(currentText.Text) ? (
+              currentText.Text.map((value, index) => (
+                <Text key={index} style={styles.passageText}>
+                  {value}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.passageText}>{currentText.Text}</Text>
+            )}
           </Animated.View>
         </Animated.View>
 
-        
-
-   {/* Partie montrant les formulaires s'il s'agit d'un formulaire */}
-{/* Partie montrant les formulaires s'il s'agit d'un formulaire */}
-{selectedUbung.questionType == "formular" ? (
-  <View style={styles.questionsSection}>
-    <View style={styles.questionCard}>
-      
-      
-      <View style={styles.formularContainer}>
-        {Object.entries(selectedUbung.formular_grid).map(([key, value]) => {
-          const [predefinedValue, characterCount] = value;
-          const displayValue = predefinedValue || "_".repeat(characterCount);
-          
-          // Formatage du label : exactement 10 caractères ou garder tel quel si plus long
-          const formattedLabel = key.length <= 10 
-            ? `${key}:`.padEnd(10, ' ') 
-            : `${key}: `;
-          
-          return (
-            <Text key={key} style={styles.formularRow}>
-              <Text style={styles.formularLabel}>
-                {formattedLabel}
-              </Text>
-              <Text style={styles.formularField}>
-                {displayValue}
-              </Text>
-            </Text>
-          );
-        })}
-      </View>
-    </View>
-  </View>
-) : null}
-
-        {/* Questions */}
-        <View style={styles.questionsSection}>
-          {/* return ( */}
-          <View style={styles.questionCard}>
-            <View style={styles.questionHeader}>
-              <Text style={styles.questionTitle}>Tipps</Text>
-            </View>
-
-            <View style={styles.optionsContainer}>
-            {(currentText.Tipps || selectedUbung.data?.Tipps)?.map((Tipp, TippIndex) => {
-                return (
-                  <View
-                    key={currentText.Tipps.indexOf(Tipp)}
-                    style={[styles.optionButton]}
-                  >
-                    <View style={[styles.optionCircle]}>
-                      {<View style={styles.optionDot} />}
-                    </View>
-                    <Text
-                      style={[
-                        styles.optionText,
-                        // isSelected && styles.optionTextSelected
-                      ]}
-                    >
-                      {Tipp}
+        {/* Formulaire si applicable */}
+        {selectedUbung.questionType == "formular" ? (
+          <View style={styles.questionsSection}>
+            <View style={styles.questionCard}>
+              <View style={styles.formularContainer}>
+                {Object.entries(selectedUbung.formular_grid).map(([key, value]) => {
+                  const [predefinedValue, characterCount] = value;
+                  const displayValue = predefinedValue || "_".repeat(characterCount);
+                  
+                  const formattedLabel = key.length <= 10 
+                    ? `${key}:`.padEnd(10, ' ') 
+                    : `${key}: `;
+                  
+                  return (
+                    <Text key={key} style={styles.formularRow}>
+                      <Text style={styles.formularLabel}>
+                        {formattedLabel}
+                      </Text>
+                      <Text style={styles.formularField}>
+                        {displayValue}
+                      </Text>
                     </Text>
-                  </View>
-                );
-              })}
+                  );
+                })}
+              </View>
             </View>
           </View>
-          {/* );
-          // })} */}
-        </View>
+        ) : null}
 
-        {/* Statut de progression */}
-        {/* <View style={styles.progressInfo}>
-          <Text style={styles.progressText}>
-            {Object.keys(selectedAnswers).length} von {currentText.questions?.length || 0} Fragen beantwortet
-          </Text>
-        </View> */}
+        {/* ✅ CHANGEMENT 1 : Tipps OU SolutionCard uniquement */}
+        {showResults ? (
+          // Mode résultats : SolutionCard remplace la section Tipps
+          <SolutionCard selectedUbung={selectedUbung} />
+        ) : (
+          // Mode normal : Section Tipps normale
+          <View style={styles.questionsSection}>
+            <View style={styles.questionCard}>
+              <View style={styles.questionHeader}>
+                <Text style={styles.questionTitle}>Tipps</Text>
+              </View>
+
+              <View style={styles.optionsContainer}>
+                {(currentText.Tipps || selectedUbung.data?.Tipps)?.map((Tipp, TippIndex) => {
+                  return (
+                    <View
+                      key={currentText.Tipps.indexOf(Tipp)}
+                      style={[styles.optionButton]}
+                    >
+                      <View style={[styles.optionCircle]}>
+                        {<View style={styles.optionDot} />}
+                      </View>
+                      <Text style={[styles.optionText]}>
+                        {Tipp}
+                      </Text>
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+          </View>
+        )}
       </ScrollView>
 
-      {/* Bouton sticky "Beenden" */}
-      <View style={[styles.stickyButtonContainer]}>
-        <TouchableOpacity
-          style={[
-            styles.stickyButton,
-            {
-              backgroundColor: colors.success,
-            },
-          ]}
-          onPress={onFinishExercise}
-          // disabled={!allQuestionsAnswered}
-        >
-          <Text style={styles.stickyButtonText}>BEISPIEL SEHEN</Text>
-          <Ionicons name="checkmark-circle" size={20} color={colors.white} />
-        </TouchableOpacity>
-      </View>
+      {/* ✅ CHANGEMENT 2 : Bouton "BEISPIEL SEHEN" OU boutons Répéter/Continuer uniquement */}
+      {showResults ? (
+        // Mode résultats : Boutons Répéter/Continuer remplacent le bouton
+        <View style={styles.resultsButtonContainer}>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.restartButton]}
+            onPress={onRestart}
+          >
+            <Text style={styles.restartButtonText}>
+              {translations.buttons.repeat[userNativeLanguage]}
+            </Text>
+          </TouchableOpacity>
+
+          {hasNextExercise ? (
+            <TouchableOpacity
+              style={[styles.actionButton, { backgroundColor: 'black' }]}
+              onPress={onNextExercise}
+            >
+              <Text style={styles.actionButtonText}>
+                {translations.buttons.continue[userNativeLanguage]}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.actionButton, { backgroundColor: colors.primary }]}
+              onPress={onBack}
+            >
+              <Text style={styles.actionButtonText}>Exercices</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      ) : (
+        // Mode normal : Bouton "BEISPIEL SEHEN" normal
+        <View style={[styles.stickyButtonContainer]}>
+          <TouchableOpacity
+            style={[
+              styles.stickyButton,
+              { backgroundColor: colors.primary }
+            ]}
+            onPress={onFinishExercise}
+          >
+            <Text style={styles.stickyButtonText}>BEISPIEL SEHEN</Text>
+            <Ionicons name="checkmark-circle" size={20} color={colors.white} />
+          </TouchableOpacity>
+        </View>
+      )}
     </>
   );
 };
@@ -264,7 +285,7 @@ const styles = StyleSheet.create({
   },
   exerciseCounter: {
     paddingHorizontal: 16,
-    marginLeft:12,
+    marginLeft: 12,
     paddingVertical: 8,
     borderRadius: 20,
     minWidth: 250, 
@@ -285,7 +306,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 20,
     paddingHorizontal: 20,
-    paddingVertical:5,
+    paddingVertical: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -296,14 +317,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom:8,
-    paddingVertical:5,
+    marginBottom: 8,
+    paddingVertical: 5,
   },
   passageHeaderHidden: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical:5,
+    paddingVertical: 5,
   },
   passageTitle: {
     fontSize: 18,
@@ -391,8 +412,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    // borderWidth: 2,
-    // borderColor: colors.gray,
     marginRight: 12,
     justifyContent: 'center',
     alignItems: 'center',
@@ -404,7 +423,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
   optionText: {
     fontSize: 15,
@@ -430,19 +449,16 @@ const styles = StyleSheet.create({
   },
   stickyButtonContainer: {
     position: 'absolute',
-    bottom: '8%',
+    bottom: '4%',
     left: 0,
     right: 0,
-    // backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    // borderTopWidth: 1,
-    // borderTopColor: colors.lightGray,
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: -2 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 4,
-    // elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   stickyButton: {
     flexDirection: 'row',
@@ -451,12 +467,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 25,
     gap: 8,
-    marginHorizontal:30,
+    marginHorizontal: 30,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 8,
+    elevation: 3,
   },
   stickyButtonText: {
     color: colors.white,
@@ -478,13 +494,50 @@ const styles = StyleSheet.create({
   formularLabel: {
     fontWeight: '500',
     color: colors.text,
-    fontFamily: 'monospace', // Important pour l'alignement des espaces
+    fontFamily: 'monospace',
   },
   formularField: {
-    fontFamily: 'monospace', // Pour un alignement uniforme des traits
+    fontFamily: 'monospace',
     color: colors.text,
   },
-
+  // ✅ NOUVEAUX STYLES pour les boutons de résultats
+  resultsButtonContainer: {
+    position: 'absolute',
+    bottom: '4%',
+    left: 0,
+    right: 0,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    flexDirection: 'row',
+    gap: 12,
+  },
+  actionButton: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 16,
+    borderRadius: 12,
+    gap: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  restartButton: {
+    backgroundColor: colors.lightGray,
+  },
+  restartButtonText: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  actionButtonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 
 export default ExerciseView;

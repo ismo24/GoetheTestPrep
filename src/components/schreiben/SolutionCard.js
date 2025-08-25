@@ -4,6 +4,15 @@ import { colors } from "../../styles/colors";
 const SolutionCard = ({ selectedUbung }) => {
   return (
     <View style={styles.container}>
+      {/* ✅ NOUVEAU : Titre inspiré de readingPassage */}
+      <View style={styles.passageHeader}>
+        <Text style={styles.passageTitle}>Lösungsmuster</Text>
+      </View>
+      
+      {/* ✅ NOUVEAU : Trait de séparation */}
+      <View style={styles.separatorLine} />
+      
+      {/* Contenu existant inchangé */}
       {selectedUbung.questionType !== "formular" ? (
         selectedUbung.solution && Object.values(selectedUbung.solution)?.map((value, index) => {
           // Si value est un tableau, on mappe ses éléments
@@ -60,15 +69,34 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     margin: 16,
     marginBottom: 16,
-    borderRadius: 12,
-    padding: 20,
+    borderRadius: 20,
+    paddingHorizontal: 20, // ✅ Changé de padding: 20 pour correspondre à readingPassage
+    paddingVertical: 5, // ✅ Ajouté pour correspondre à readingPassage
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    overflow: 'hidden'
-  },    
+  },
+  // ✅ NOUVEAUX STYLES inspirés de readingPassage
+  passageHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingVertical: 5,
+  },
+  passageTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.text,
+  },
+  separatorLine: {
+    height: 1,
+    backgroundColor: colors.lightGray,
+    marginBottom: 16,
+  },
+  // Styles existants inchangés
   paragraphText: {
     fontSize: 16,
     lineHeight: 24,

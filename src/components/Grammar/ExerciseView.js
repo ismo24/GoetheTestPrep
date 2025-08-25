@@ -8,19 +8,73 @@ const ExerciseView = ({
   selectedUbung,
   currentTextIndex,
   selectedAnswers,
-  levelInfo,
   currentExerciseNumber,
   totalExercises,
+  exerciseResults,
+  showResults,
+  hasNextExercise,
+  levelInfo,
   onBack,
   onNextText,
   onPreviousText,
   onSelectAnswer,
-  onFinishExercise
+  onFinishExercise,
+  onRestart,
+  onNextExercise,
 }) => {
   const currentText = selectedUbung.data[currentTextIndex];
   const [isTextHidden, setIsTextHidden] = useState(false);
   const [textHeight] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const translations = {
+    explanation: {
+      DE: "Erklärung:",
+      FR: "Explication :",
+      EN: "Explanation:",
+    },
+    buttons: {
+      repeat: {
+        DE: "Wiederholen",
+        FR: "Répéter",
+        EN: "Repeat",
+      },
+      continue: {
+        DE: "Weiter",
+        FR: "Continuer",
+        EN: "Continue",
+      },
+    },
+  };
+
+  const userNativeLanguage = "FR"; // À récupérer depuis les props ou context
+
+  // Fonction pour obtenir le résultat d'une question
+  const getQuestionResult = (questionIndex) => {
+    if (!showResults || !exerciseResults) return null;
+    return exerciseResults.detailedResults[0]?.questions[questionIndex];
+  };
+
+  useEffect(() => {
+    if (showResults) {
+      setIsProcessing(false);
+    }
+  }, [showResults]);
+
+  // Déclencher la fin d'exercice quand toutes les questions sont répondues
+  useEffect(() => {
+    const allQuestionsAnswered = currentText.questions?.every(
+      (_, index) => selectedAnswers[index] !== undefined
+    );
+
+    if (allQuestionsAnswered && !showResults && !isProcessing) {
+      setIsProcessing(true);
+      setTimeout(() => {
+        onFinishExercise();
+      }, 0);
+    }
+  }, [selectedAnswers, currentText.questions, onFinishExercise, showResults, isProcessing]);
 
   const toggleTextVisibility = () => {
     const newHiddenState = !isTextHidden;
@@ -41,15 +95,9 @@ const ExerciseView = ({
   };
 
   // Vérifier si toutes les questions ont une réponse
-  const allQuestionsAnswered = currentText.questions?.every((_, index) => 
-    selectedAnswers[index] !== undefined
+  const allQuestionsAnswered = currentText.questions?.every(
+    (_, index) => selectedAnswers[index] !== undefined
   );
-
-  useEffect(()=> {
-    if(allQuestionsAnswered){
-      onFinishExercise()
-    }
-  },[allQuestionsAnswered])
 
   return (
     <>
@@ -57,7 +105,6 @@ const ExerciseView = ({
         <TouchableOpacity onPress={onBack} style={styles.closeButton}>
           <Ionicons name="close" size={20} color="#000" />
         </TouchableOpacity>
-        <View style={styles.headerCenter}>
         <View style={styles.exerciseCounter}>
           <ProgressBar 
             currentIndex={currentExerciseNumber || 1}
@@ -67,12 +114,6 @@ const ExerciseView = ({
             progressColor={colors.primary}
           />
         </View>
-        </View>
-        {/* <TouchableOpacity style={{opacity:0}} >
-        <Text style={styles.exerciseCounterText}>
-              yes
-            </Text>
-        </TouchableOpacity> */}
       </View>
 
       <ScrollView 
@@ -92,9 +133,12 @@ const ExerciseView = ({
             }
           ]}
         >
-          <TouchableOpacity onPress={toggleTextVisibility} style={isTextHidden? styles.passageHeaderHidden:styles.passageHeader}>
+          <TouchableOpacity 
+            onPress={toggleTextVisibility} 
+            style={isTextHidden ? styles.passageHeaderHidden : styles.passageHeader}
+          >
             <Text style={styles.passageTitle}>Grammatik</Text>
-            <View  style={styles.eyeButton}>
+            <View style={styles.eyeButton}>
               <Ionicons 
                 name={isTextHidden ? "eye-off-outline" : "eye-outline"} 
                 size={20} 
@@ -103,8 +147,6 @@ const ExerciseView = ({
             </View>
           </TouchableOpacity>
 
-         
-          
           <Animated.View
             style={{
               opacity: opacity,
@@ -117,7 +159,7 @@ const ExerciseView = ({
               }],
             }}
           >
-             <View style={styles.separatorLine} />
+            <View style={styles.separatorLine} />
             <Text style={styles.passageText}>
               {currentText.Text}
             </Text>
@@ -126,23 +168,45 @@ const ExerciseView = ({
 
         {/* Questions */}
         <View style={styles.questionsSection}>
-          {/* <Text style={styles.questionsSectionTitle}>
-            Fragen ({currentText.questions?.length || 0})
-          </Text> */}
-          
           {currentText.questions?.map((question, questionIndex) => {
             const isAnswered = selectedAnswers[questionIndex] !== undefined;
+            const questionResult = getQuestionResult(questionIndex);
             
             return (
               <View key={questionIndex} style={styles.questionCard}>
                 <View style={styles.questionHeader}>
                   <Text style={styles.questionTitle}>
-                    Frage {currentText.questions?.length!==1?questionIndex + 1:""} 
+                    Frage {currentText.questions?.length !== 1 ? questionIndex + 1 : ""} 
                   </Text>
-                  {isAnswered && (
-                    <View style={styles.answeredBadge}>
-                      <Ionicons name="checkmark" size={16} color={colors.white} />
+
+                  {/* Affichage conditionnel du badge selon l'état */}
+                  {showResults ? (
+                    // Mode résultats : afficher selon la performance
+                    <View
+                      style={[
+                        styles.answeredBadge,
+                        {
+                          backgroundColor: questionResult?.isCorrect
+                            ? colors.success // Vert si correct
+                            : isAnswered // Si une réponse a été sélectionnée mais incorrecte
+                            ? "#FF4444" // Rouge si répondu mais incorrect
+                            : "black", // Noir si pas de réponse du tout
+                        },
+                      ]}
+                    >
+                      <Ionicons
+                        name={questionResult?.isCorrect ? "checkmark" : "close"}
+                        size={16}
+                        color={colors.white}
+                      />
                     </View>
+                  ) : (
+                    // Mode normal : afficher si répondu
+                    isAnswered && (
+                      <View style={styles.answeredBadge}>
+                        <Ionicons name="checkmark" size={16} color={colors.white} />
+                      </View>
+                    )
                   )}
                 </View>
                 
@@ -153,27 +217,57 @@ const ExerciseView = ({
                 <View style={styles.optionsContainer}>
                   {question.options?.map((option) => {
                     const isSelected = selectedAnswers[questionIndex] === option.id;
+                    const isCorrect = option.isCorrect;
                     
                     return (
                       <TouchableOpacity
                         key={option.id}
                         style={[
                           styles.optionButton,
-                          isSelected && styles.optionSelected
+                          isSelected && !showResults && styles.optionSelected
                         ]}
-                        onPress={() => onSelectAnswer(questionIndex, option.id)}
+                        onPress={
+                          !showResults
+                            ? () => onSelectAnswer(questionIndex, option.id)
+                            : null
+                        }
+                        disabled={showResults}
                       >
-                        <View style={[
-                          styles.optionCircle,
-                          isSelected && styles.optionCircleSelected
-                        ]}>
-                          {isSelected && (
-                            <View style={styles.optionDot} />
-                          )}
-                        </View>
+                        {/* Logique pour les icônes */}
+                        {showResults ? (
+                          // Mode résultats : afficher les icônes de résultat
+                          isCorrect ? (
+                            <View style={[styles.correctIndicator, { borderRadius: 10 }]}>
+                              <Ionicons
+                                name="checkmark-circle"
+                                size={20}
+                                color={colors.success}
+                              />
+                            </View>
+                          ) : (
+                            <View style={[styles.incorrectIndicator, { borderRadius: 10 }]}>
+                              <Ionicons
+                                name="close-circle"
+                                size={20}
+                                color={isSelected ? "#FF4444" : colors.lightGray}
+                              />
+                            </View>
+                          )
+                        ) : (
+                          // Mode normal : afficher les cercles de sélection
+                          <View style={[
+                            styles.optionCircle,
+                            isSelected && styles.optionCircleSelected
+                          ]}>
+                            {isSelected && (
+                              <View style={styles.optionDot} />
+                            )}
+                          </View>
+                        )}
+                        
                         <Text style={[
                           styles.optionText,
-                          isSelected && styles.optionTextSelected
+                          isSelected && !showResults && styles.optionTextSelected
                         ]}>
                           ({option.id.toUpperCase()}) {option.text}
                         </Text>
@@ -181,38 +275,106 @@ const ExerciseView = ({
                     );
                   })}
                 </View>
+
+                {/* Section d'explication après les résultats */}
+                {showResults && questionResult?.explanation && (
+                  <View style={styles.explanationBox}>
+                    <View style={styles.explanationHeader}>
+                      <Ionicons
+                        name="bulb-outline"
+                        size={16}
+                        color={colors.primary}
+                      />
+                      <Text style={styles.explanationTitle}>
+                        {translations.explanation[userNativeLanguage]}
+                      </Text>
+                    </View>
+
+                    <Text style={styles.explanationText}>
+                      {questionResult.explanation}
+                    </Text>
+
+                    {userNativeLanguage !== "DE" &&
+                      questionResult.nativeExplanation && (
+                        <View style={styles.nativeExplanationContainer}>
+                          <View style={styles.nativeExplanationSeparator} />
+                          <Text style={styles.nativeExplanationText}>
+                            {questionResult.nativeExplanation}
+                          </Text>
+                        </View>
+                      )}
+                  </View>
+                )}
               </View>
             );
           })}
         </View>
 
         {/* Statut de progression */}
-        <View style={styles.progressInfo}>
-          <Text style={styles.progressText}>
-            {Object.keys(selectedAnswers).length} von {currentText.questions?.length || 0} Fragen beantwortet
-          </Text>
-        </View>
+        {!showResults && (
+          <View style={styles.progressInfo}>
+            <Text style={styles.progressText}>
+              {Object.keys(selectedAnswers).length} von {currentText.questions?.length || 0} Fragen beantwortet
+            </Text>
+          </View>
+        )}
       </ScrollView>
 
-      {/* Bouton sticky "Beenden" */}
-      <View style={[styles.stickyButtonContainer,{opacity: allQuestionsAnswered ? 1 : 0}]}>
-        <TouchableOpacity 
+      {/* Boutons selon l'état */}
+      {showResults ? (
+        <View style={styles.resultsButtonContainer}>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.restartButton]}
+            onPress={onRestart}
+          >
+            <Text style={styles.restartButtonText}>
+              {translations.buttons.repeat[userNativeLanguage]}
+            </Text>
+          </TouchableOpacity>
+
+          {hasNextExercise ? (
+            <TouchableOpacity
+              style={[styles.actionButton, { backgroundColor: "black" }]}
+              onPress={onNextExercise}
+            >
+              <Text style={styles.actionButtonText}>
+                {translations.buttons.continue[userNativeLanguage]}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.actionButton, { backgroundColor: colors.primary }]}
+              onPress={onBack}
+            >
+              <Text style={styles.actionButtonText}>Exercices</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      ) : (
+        <View
           style={[
-            styles.stickyButton, 
-            { 
-              backgroundColor: allQuestionsAnswered ? colors.primary : colors.gray,
-              opacity: allQuestionsAnswered ? 1 : 0
-            }
+            styles.stickyButtonContainer,
+            { opacity: allQuestionsAnswered ? 1 : 0 },
           ]}
-          onPress={onFinishExercise}
-          disabled={!allQuestionsAnswered}
         >
-          <Text style={styles.stickyButtonText}>
-            {allQuestionsAnswered ? 'BEENDEN' : 'ALLE FRAGEN BEANTWORTEN'}
-          </Text>
-          <Ionicons name="checkmark-circle" size={20} color={colors.white} />
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity 
+            style={[
+              styles.stickyButton, 
+              { 
+                backgroundColor: allQuestionsAnswered ? colors.primary : colors.gray,
+                opacity: allQuestionsAnswered ? 1 : 0
+              }
+            ]}
+            onPress={onFinishExercise}
+            disabled={!allQuestionsAnswered}
+          >
+            <Text style={styles.stickyButtonText}>
+              {allQuestionsAnswered ? 'BEENDEN' : 'ALLE FRAGEN BEANTWORTEN'}
+            </Text>
+            <Ionicons name="checkmark-circle" size={20} color={colors.white} />
+          </TouchableOpacity>
+        </View>
+      )}
     </>
   );
 };
@@ -247,8 +409,14 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
   },
-
-  
+  exerciseCounter: {
+    paddingHorizontal: 16,
+    marginLeft: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
+    minWidth: 250, 
+    maxWidth: 300, 
+  },
   exerciseCounterText: {
     color: colors.text,
     fontSize: 20,
@@ -264,7 +432,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 20,
     paddingHorizontal: 20,
-    paddingVertical:5,
+    paddingVertical: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -275,14 +443,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom:8,
-    paddingVertical:5,
+    marginBottom: 8,
+    paddingVertical: 5,
   },
   passageHeaderHidden: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical:5,
+    paddingVertical: 5,
   },
   passageTitle: {
     fontSize: 18,
@@ -340,7 +508,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: 'black',
+    backgroundColor: 'black', // Couleur par défaut pour le mode normal
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -412,16 +580,8 @@ const styles = StyleSheet.create({
     bottom: '8%',
     left: 0,
     right: 0,
-    // backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    // borderTopWidth: 1,
-    // borderTopColor: colors.lightGray,
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: -2 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 4,
-    // elevation: 8,
   },
   stickyButton: {
     flexDirection: 'row',
@@ -430,7 +590,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 25,
     gap: 8,
-    marginHorizontal:30,
+    marginHorizontal: 30,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
@@ -442,13 +602,96 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  exerciseCounter: {
+  // Nouveaux styles pour les résultats
+  correctIndicator: {
+    marginRight: 12,
+    width: 24,
+    height: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  incorrectIndicator: {
+    marginRight: 12,
+    width: 24,
+    height: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  explanationBox: {
+    backgroundColor: colors.lightGray,
+    borderRadius: 8,
+    padding: 12,
+    marginTop: 16,
+  },
+  explanationHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+    gap: 6,
+  },
+  explanationTitle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: colors.text,
+  },
+  explanationText: {
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
+  },
+  nativeExplanationContainer: {
+    marginTop: 12,
+    paddingTop: 12,
+  },
+  nativeExplanationSeparator: {
+    height: 1,
+    backgroundColor: colors.lightGray,
+    marginBottom: 12,
+    opacity: 0.5,
+  },
+  nativeExplanationText: {
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
+    fontStyle: "italic",
+    opacity: 0.8,
+  },
+  resultsButtonContainer: {
+    position: "absolute",
+    bottom: "4%",
+    left: 0,
+    right: 0,
     paddingHorizontal: 16,
-    marginLeft:12,
-    paddingVertical: 8,
-    borderRadius: 20,
-    minWidth: 250, 
-    maxWidth: 300, 
+    paddingVertical: 12,
+    flexDirection: "row",
+    gap: 12,
+  },
+  actionButton: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 16,
+    borderRadius: 12,
+    gap: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  restartButton: {
+    backgroundColor: colors.lightGray,
+  },
+  restartButtonText: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  actionButtonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

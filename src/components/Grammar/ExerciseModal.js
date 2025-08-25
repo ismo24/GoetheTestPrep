@@ -1,7 +1,6 @@
 import React from 'react';
-import { Modal, View, StyleSheet, StatusBar,Platform } from 'react-native';
+import { Modal, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import ExerciseView from './ExerciseView';
-import ResultsView from './ResultsView';
 import { colors } from '../../styles/colors';
 
 const ExerciseModal = ({
@@ -34,7 +33,6 @@ const ExerciseModal = ({
   // Trouver l'index de l'exercice actuel pour navigation
   const currentExerciseIndex = availableExercises.findIndex(ex => ex.id === selectedExercise.id);
   const hasNextExercise = currentExerciseIndex < availableExercises.length - 1;
-  // AJOUT : Index pour affichage (commence à 1 au lieu de 0)
   const currentExerciseNumber = currentExerciseIndex + 1;
   const totalExercises = availableExercises.length;
 
@@ -45,35 +43,28 @@ const ExerciseModal = ({
       presentationStyle="fullScreen"
       onRequestClose={onClose}
       statusBarTranslucent={true}
-      
     >
-      {/* <StatusBar backgroundColor={colors.background} barStyle="dark-content" /> */}
-      <View style={[styles.container,{marginTop:Platform.OS=="ios"?30:0}]}>
+      <View style={[styles.container, {marginTop: Platform.OS == "ios" ? 30 : 0}]}>
         <View style={styles.content}>
-          {showResults && exerciseResults ? (
-            <ResultsView
-              selectedUbung={selectedExercise}
-              exerciseResults={exerciseResults}
-              levelInfo={levelInfo}
-              onBack={onClose}
-              onRestart={onRestart}
-              onNext={hasNextExercise ? onNextExercise : null}
-            />
-          ) : (
-            <ExerciseView
-              selectedUbung={adaptedExercise}
-              currentTextIndex={0}
-              selectedAnswers={selectedAnswers}
-              levelInfo={levelInfo}
-              currentExerciseNumber={currentExerciseNumber}
-              totalExercises={totalExercises}
-              onBack={onClose}
-              onNextText={() => {}}
-              onPreviousText={() => {}}
-              onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
-              onFinishExercise={onFinishExercise}
-            />
-          )}
+          <ExerciseView
+            selectedUbung={adaptedExercise}
+            currentTextIndex={0}
+            selectedAnswers={selectedAnswers}
+            exerciseResults={exerciseResults} // AJOUT : Passer les résultats
+            levelInfo={levelInfo}
+            currentExerciseNumber={currentExerciseNumber}
+            totalExercises={totalExercises}
+            showResults={showResults} // AJOUT : Passer l'état showResults
+            hasNextExercise={hasNextExercise} // AJOUT : Info sur exercice suivant
+            
+            onBack={onClose}
+            onNextText={() => {}}
+            onPreviousText={() => {}}
+            onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
+            onFinishExercise={onFinishExercise}
+            onRestart={onRestart} // AJOUT : Passer onRestart
+            onNextExercise={onNextExercise} // AJOUT : Passer onNextExercise
+          />
         </View>
       </View>
     </Modal>

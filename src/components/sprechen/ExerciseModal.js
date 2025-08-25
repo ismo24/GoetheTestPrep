@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import ExerciseView from './ExerciseView';
-import ResultsView from './ResultsView';
 import { colors } from '../../styles/colors';
-
 
 const ExerciseModal = ({
   visible,
@@ -18,6 +16,7 @@ const ExerciseModal = ({
   onFinishExercise,
   onRestart,
   onNextExercise,
+  userNativeLanguage = "FR"
 }) => {
   if (!visible || !selectedExercise) {
     return null;
@@ -27,22 +26,9 @@ const ExerciseModal = ({
   const currentExerciseIndex = availableExercises.findIndex(ex => ex.id === selectedExercise.id);
   const hasNextExercise = currentExerciseIndex < availableExercises.length - 1;
 
-    // AJOUT : Index pour affichage (commence à 1 au lieu de 0)
+  // Index pour affichage (commence à 1 au lieu de 0)
   const currentExerciseNumber = currentExerciseIndex + 1;
   const totalExercises = availableExercises.length;
-  
-  // État pour gérer l'affichage de l'image en plein écran
-  const [showFullScreenImg, setShowFullScreenImg] = useState(null);
-
-  // Fonction pour ouvrir l'image en plein écran
-  const handleShowFullScreenImage = (imageUrl) => {
-    setShowFullScreenImg(imageUrl);
-  };
-
-  // Fonction pour fermer l'image en plein écran
-  const handleCloseFullScreenImage = () => {
-    setShowFullScreenImg(null);
-  };
 
   return (
     <Modal
@@ -54,30 +40,26 @@ const ExerciseModal = ({
     >
       <View style={[styles.container, { marginTop: Platform.OS == "ios" ? 30 : 0 }]}>
         <View style={styles.content}>
-          {showResults ? (
-            <ResultsView
-              selectedUbung={selectedExercise}
-              levelInfo={levelInfo}
-              onBack={onClose}
-              onRestart={onRestart}
-              onNext={hasNextExercise ? onNextExercise : null}
-            />
-          ) : (
-            <ExerciseView
-              selectedUbung={selectedExercise}
-              currentTextIndex={0}
-              selectedAnswers={selectedAnswers}
-              levelInfo={levelInfo}
-              currentExerciseNumber={currentExerciseNumber}
-              totalExercises={totalExercises}
-              onBack={onClose}
-              onNextText={() => {}}
-              onPreviousText={() => {}}
-              onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
-              onFinishExercise={onFinishExercise}
-              onShowFullScreenImage={handleShowFullScreenImage} // Nouvelle prop
-            />
-          )}
+          {/* ✅ MODIFICATION : Plus de distinction showResults, toujours ExerciseView */}
+          <ExerciseView
+            selectedUbung={selectedExercise}
+            currentTextIndex={0}
+            selectedAnswers={selectedAnswers}
+            exerciseResults={exerciseResults} // ✅ AJOUT
+            showResults={showResults} // ✅ AJOUT
+            hasNextExercise={hasNextExercise} // ✅ AJOUT
+            levelInfo={levelInfo}
+            currentExerciseNumber={currentExerciseNumber}
+            totalExercises={totalExercises}
+            onBack={onClose}
+            onNextText={() => {}}
+            onPreviousText={() => {}}
+            onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
+            onFinishExercise={onFinishExercise}
+            onRestart={onRestart} // ✅ AJOUT
+            onNextExercise={onNextExercise} // ✅ AJOUT
+            userNativeLanguage={userNativeLanguage} // ✅ AJOUT
+          />
         </View>
       </View>
     </Modal>

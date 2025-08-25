@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import ExerciseView from './ExerciseView';
-import ResultsView from './ResultsView';
 import { colors } from '../../styles/colors';
 import BigImageWrapper from './BigImageWrapper';
 
@@ -18,6 +17,7 @@ const ExerciseModal = ({
   onFinishExercise,
   onRestart,
   onNextExercise,
+  userNativeLanguage = "FR"
 }) => {
   if (!visible || !selectedExercise) {
     return null;
@@ -27,7 +27,7 @@ const ExerciseModal = ({
   const currentExerciseIndex = availableExercises.findIndex(ex => ex.id === selectedExercise.id);
   const hasNextExercise = currentExerciseIndex < availableExercises.length - 1;
 
-  // AJOUT : Index pour affichage (commence à 1 au lieu de 0)
+  // Index pour affichage (commence à 1 au lieu de 0)
   const currentExerciseNumber = currentExerciseIndex + 1;
   const totalExercises = availableExercises.length;
   
@@ -60,19 +60,15 @@ const ExerciseModal = ({
               questionType={selectedExercise.questionType}
               onClose={handleCloseFullScreenImage}
             />
-          ) : showResults ? (
-            <ResultsView
-              selectedUbung={selectedExercise}
-              levelInfo={levelInfo}
-              onBack={onClose}
-              onRestart={onRestart}
-              onNext={hasNextExercise ? onNextExercise : null}
-            />
           ) : (
+            // ✅ MODIFICATION : Plus de distinction showResults, toujours ExerciseView
             <ExerciseView
               selectedUbung={selectedExercise}
               currentTextIndex={0}
               selectedAnswers={selectedAnswers}
+              exerciseResults={exerciseResults} // ✅ AJOUT
+              showResults={showResults} // ✅ AJOUT
+              hasNextExercise={hasNextExercise} // ✅ AJOUT
               levelInfo={levelInfo}
               currentExerciseNumber={currentExerciseNumber}
               totalExercises={totalExercises}
@@ -81,7 +77,10 @@ const ExerciseModal = ({
               onPreviousText={() => {}}
               onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
               onFinishExercise={onFinishExercise}
-              onShowFullScreenImage={handleShowFullScreenImage} // Nouvelle prop
+              onRestart={onRestart} // ✅ AJOUT
+              onNextExercise={onNextExercise} // ✅ AJOUT
+              onShowFullScreenImage={handleShowFullScreenImage}
+              userNativeLanguage={userNativeLanguage} // ✅ AJOUT
             />
           )}
         </View>
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingTop: StatusBar.currentHeight || 0, // Pour Android
+    paddingTop: StatusBar.currentHeight || 0,
   },
   content: {
     flex: 1,

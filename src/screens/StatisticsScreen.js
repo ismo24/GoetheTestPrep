@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import StatCard from '../components/common/StatCard';
+import StatCard from '../components/Stats/StatCard';
 import { colors } from '../styles/colors';
 
-const StatisticsScreen = () => {
+const StatisticsScreen = ({ navigation }) => {
   const stats = [
     { skill: 'Lesen', answered: 0, total: 489, correct: 0 },
     { skill: 'Hören', answered: 0, total: 539, correct: 0 },
