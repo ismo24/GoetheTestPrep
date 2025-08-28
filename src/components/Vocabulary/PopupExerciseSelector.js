@@ -39,6 +39,53 @@ const PopupExerciseSelector = ({
   const [fadeAnim] = useState(new Animated.Value(0));
   const [scaleAnim] = useState(new Animated.Value(0.8));
 
+
+  // Dans PopupExerciseSelector.js, AJOUTEZ ces logs au début du useEffect :
+
+useEffect(() => {
+  console.log("🎯 PopupExerciseSelector useEffect triggered:");
+  console.log("visible:", visible);
+  console.log("initialExerciseIndex:", initialExerciseIndex);
+  console.log("availableExercises.length:", availableExercises.length);
+  
+  if (visible) {
+    // Initialiser avec l'index fourni
+    let startIndex = initialExerciseIndex;
+    
+    console.log("📍 Initial startIndex:", startIndex);
+    
+    // Vérifier que l'index est valide
+    if (startIndex < 0 || startIndex >= availableExercises.length) {
+      console.log("⚠️ Index invalide, reset à 0");
+      startIndex = 0;
+    }
+    
+    console.log("✅ Final startIndex:", startIndex);
+    setSelectedExerciseIndex(startIndex);
+    
+    // Animation d'entrée
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        tension: 100,
+        friction: 8,
+        useNativeDriver: true,
+      })
+    ]).start();
+  } else {
+    // Reset pour la prochaine ouverture
+    fadeAnim.setValue(0);
+    scaleAnim.setValue(0.8);
+  }
+}, [visible, initialExerciseIndex, availableExercises.length]);
+
+
+
   // Traductions pour l'interface
   const interfaceTranslations = {
     noExercisesAvailable: {

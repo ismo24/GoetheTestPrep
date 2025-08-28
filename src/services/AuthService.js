@@ -1,6 +1,8 @@
 // services/AuthService.js - Version Expo corrigée
 import { initializeApp, getApps } from 'firebase/app';
 import { 
+  initializeAuth,
+  getReactNativePersistence,
   getAuth, 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword,
@@ -12,6 +14,7 @@ import {
   onAuthStateChanged,
   deleteUser
 } from 'firebase/auth';
+
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
@@ -36,7 +39,15 @@ if (getApps().length === 0) {
   app = getApps()[0];
 }
 
-const auth = getAuth(app);
+let auth;
+try {
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage)
+  });
+} catch (error) {
+  // Si déjà initialisé, utiliser getAuth
+  auth = getAuth(app);
+}
 
 class AuthService {
   constructor() {

@@ -126,3 +126,22 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+
+
+
+lottie integration
+
+npm install @lottiefiles/dotlottie-react
+import React from 'react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
+const App = () => {
+  return (
+    <DotLottieReact
+      src="path/to/animation.lottie"
+      loop
+      autoplay
+    />
+  );
+};

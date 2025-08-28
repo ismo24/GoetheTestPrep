@@ -18,7 +18,7 @@ import React, {
   import { colors } from "../../styles/colors";
   
   const AudioPlayer = forwardRef(({
-    audioUrl,
+    audio_url,
     onAudioFinished,
     autoPlay = false,
     countdown = 5,
@@ -83,10 +83,10 @@ import React, {
   
     // Charger l'audio quand le composant est monté
     useEffect(() => {
-      if (audioUrl) {
+      if (audio_url) {
         loadAudio();
       }
-    }, [audioUrl]);
+    }, [audio_url]);
   
     // Optimisation du callback pour éviter les re-créations
     const onPlaybackStatusUpdate = useCallback(
@@ -171,7 +171,7 @@ import React, {
         });
   
         const { sound: newSound } = await Audio.Sound.createAsync(
-          { uri: audioUrl },
+          { uri: audio_url },
           {
             shouldPlay: false,
             isLooping: false,

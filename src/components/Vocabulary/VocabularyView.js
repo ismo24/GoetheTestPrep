@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Platform, Dimensions, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
 import ProgressBar from '../common/ProgressBar';
+
+const { windowswidth, windowsheight } = Dimensions.get('window');
+
 
 const VocabularyView = ({
   vocabularyItem,
@@ -13,6 +16,8 @@ const VocabularyView = ({
   onBack,
   onFinishVocabulary,
   onShowFullScreenImage,
+  onRevealWord, // NOUVEAU: callback pour gérer la révélation
+  levelId
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -34,8 +39,16 @@ const VocabularyView = ({
     }
   };
 
-  const handleGetNext = () => {
+
+  const handleGetNext =async (value) => {
     if(isRevealed){setIsRevealed(false)}
+    if (onRevealWord) {
+      try {
+        await onRevealWord(vocabularyItem.id, levelId, value);
+      } catch (error) {
+        console.error('Erreur lors de la révélation:', error);
+      }
+    }
     onNext?onNext():onBack()
   };
 
@@ -67,9 +80,20 @@ const VocabularyView = ({
   };
 
   // Fonction pour révéler le mot allemand
-  const handleReveal = () => {
+  const handleReveal = async () => {
     setIsRevealed(true);
+    
+    // NOUVEAU: Appeler la fonction callback pour gérer la répétition
+    // if (onRevealWord) {
+    //   try {
+    //     await onRevealWord(vocabularyItem.id, levelId, value);
+    //   } catch (error) {
+    //     console.error('Erreur lors de la révélation:', error);
+    //   }
+    // }
   };
+
+  
 
   // Fonction pour obtenir le texte à afficher selon l'état de révélation
   const getDisplayedSentence = () => {
@@ -150,11 +174,6 @@ const VocabularyView = ({
                     </View>
                   )}
                   
-                  {imageLoaded && !imageError && (
-                    <View style={styles.expandIndicator}>
-                      <Ionicons name="expand" size={16} color={colors.white} />
-                    </View>
-                  )}
                 </TouchableOpacity>
               )}
             </View>
@@ -190,16 +209,42 @@ const VocabularyView = ({
 
       {/* Bouton sticky */}
       <View style={styles.stickyButtonContainer}>
-        <TouchableOpacity
-          style={[styles.stickyButton, !isRevealed && styles.revealButton]}
-          onPress={isRevealed ? handleGetNext : handleReveal}
-        >
-          <Text style={styles.stickyButtonText}>
-            { isRevealed && !onNext ? "Terminer" :isRevealed ? 'CONTINUER' : 'RÉVÉLER'}
-          </Text>
-         
-        </TouchableOpacity>
-      </View>
+  {isRevealed ? (
+    
+    <View style={styles.answerButtonsContainer}>
+      <TouchableOpacity
+        style={[styles.answerButton, styles.dontKnowButton]}
+        onPress={() => handleGetNext(true)}
+      >
+        <Ionicons name="close" size={36} color="#000" />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.neverButton, styles.dontKnowButton]}
+        onPress={() => handleGetNext("never")}
+      >
+        <Text style={styles.neverText} >Jamais plus</Text>
+      </TouchableOpacity>
+      
+      <TouchableOpacity
+        style={[styles.answerButton, styles.dontKnowButton]}
+        onPress={() => handleGetNext(false)}
+      >
+        <Ionicons name="checkmark" size={36} color="#000" />
+      </TouchableOpacity>
+    </View>
+  ) : (
+    // Bouton continuer après révélation
+    <TouchableOpacity
+      style={styles.stickyButton}
+      onPress={handleReveal}
+    >
+      <Text style={styles.stickyButtonText}>
+        Révéler
+      </Text>
+    </TouchableOpacity>
+  )}
+</View>
     </>
   );
 };
@@ -212,6 +257,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     backgroundColor: colors.background,
+    marginTop:Platform.OS=="ios"?20:0
   },
   headerCenter: {
     flex: 1,
@@ -243,6 +289,7 @@ const styles = StyleSheet.create({
   },
   vocabularyCard: {
     backgroundColor: colors.white,
+    height:Platform.OS=='ios'?500:470,
     margin: 25,
     borderRadius: 20,
     padding: 24,
@@ -401,7 +448,7 @@ const styles = StyleSheet.create({
   },
   stickyButtonContainer: {
     position: 'absolute',
-    bottom: '8%',
+    bottom: Platform.OS=="ios"?'8%':'4%',
     left: 0,
     right: 0,
     paddingHorizontal: 16,
@@ -414,10 +461,10 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 25,
     gap: 8,
-    marginHorizontal: 30,
-    backgroundColor: colors.success,
+    marginHorizontal: 40,
+    backgroundColor: colors.primary,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 8,
@@ -440,6 +487,54 @@ const styles = StyleSheet.create({
     maxWidth: 300, // Limite la largeur maximale
     // borderColor:"red",
     // borderWidth:1
+  },
+  answerButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // paddingHorizontal: 60,
+    gap: 40,
+  },
+  answerButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 8,
+  },
+  neverButton:{
+    width: 80,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  neverText:{
+    textAlign:"center",
+    fontWeight:"600"
+  },
+  dontKnowButton: {
+    backgroundColor: '#FFFFFF',
+    padding:5,
+    // borderWidth: 2,
+    // borderColor: '#000000',
+  },
+  knowButton: {
+    backgroundColor: '#000000',
+  },
+  victoryText: {
+    fontSize: 28,
+    color: '#FFFFFF',
   },
 });
 

@@ -39,7 +39,7 @@ const ExerciseModal = ({
     return {
       ...selectedExercise,
       data: [{
-        audioUrl: selectedExercise.data?.audioUrl,
+        audio_url: selectedExercise.data?.audio_url,
         questions: selectedExercise.data?.questions || []
       }]
     };

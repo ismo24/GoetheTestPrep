@@ -4,7 +4,6 @@ import VocabularyView from './VocabularyView';
 import ResultsView from './ResultsView';
 import { colors } from '../../styles/colors';
 
-
 const ExerciseModal = ({
   visible,
   showResults,
@@ -18,19 +17,21 @@ const ExerciseModal = ({
   onFinishExercise,
   onRestart,
   onNextExercise,
+  onRevealWord,
+  actualIndex
 }) => {
   if (!visible || !selectedExercise) {
     return null;
   }
 
   // Trouver l'index de l'exercice actuel pour navigation
-  const currentExerciseIndex = availableExercises.findIndex(ex => ex.id === selectedExercise.id);
-  const hasNextExercise = currentExerciseIndex < availableExercises.length - 1;
+  const currentExerciseIndex = actualIndex;
+  const hasNextExercise = currentExerciseIndex < availableExercises.length  - 1;
 
-  // AJOUT : Index pour affichage (commence à 1 au lieu de 0)
-  const currentExerciseNumber = currentExerciseIndex + 1;
+  // Index pour affichage (commence à 1 au lieu de 0)
+  const currentExerciseNumber = currentExerciseIndex  + 1;
   const totalExercises = availableExercises.length;
-    
+       
   // État pour gérer l'affichage de l'image en plein écran
   const [showFullScreenImg, setShowFullScreenImg] = useState(null);
 
@@ -54,7 +55,7 @@ const ExerciseModal = ({
     >
       <View style={[styles.container, { marginTop: Platform.OS == "ios" ? 30 : 0 }]}>
         <View style={styles.content}>
-          {showResults ? (
+          {/* {showResults ? (
             <ResultsView
               selectedUbung={selectedExercise}
               levelInfo={levelInfo}
@@ -62,9 +63,9 @@ const ExerciseModal = ({
               onRestart={onRestart}
               onNext={hasNextExercise ? onNextExercise : null}
             />
-          ) : (
+          ) : ( */}
             <VocabularyView
-            vocabularyItem={selectedExercise}
+              vocabularyItem={selectedExercise}
               currentTextIndex={0}
               selectedAnswers={selectedAnswers}
               levelInfo={levelInfo}
@@ -76,9 +77,12 @@ const ExerciseModal = ({
               onPreviousText={() => {}}
               onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
               onFinishExercise={onFinishExercise}
-              onShowFullScreenImage={handleShowFullScreenImage} // Nouvelle prop
+              onShowFullScreenImage={handleShowFullScreenImage}
+              onRevealWord={onRevealWord} // NOUVEAU: Passer le callback
+              levelId={levelInfo?.id} // NOUVEAU: Passer l'ID du niveau
+              actualIndex={actualIndex}
             />
-          )}
+          {/* )} */}
         </View>
       </View>
     </Modal>
@@ -89,7 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingTop: StatusBar.currentHeight || 0, // Pour Android
+    paddingTop: StatusBar.currentHeight || 0,
   },
   content: {
     flex: 1,

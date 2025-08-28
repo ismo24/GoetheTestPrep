@@ -11,6 +11,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../styles/colors";
@@ -280,8 +281,8 @@ const ExerciseView = ({
         <View style={styles.audioSection}>
           <AudioPlayer
             ref={audioPlayerRef}
-            key={`${currentAudio.audioUrl}-${audioKey}`}
-            audioUrl={currentAudio.audioUrl}
+            key={`${currentAudio.audio_url}-${audioKey}`}
+            audio_url={currentAudio.audio_url}
             onAudioFinished={handleAudioFinished}
             autoPlay={startAudioFinished}
             countdown={10}
@@ -486,6 +487,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     backgroundColor: colors.background,
+    marginTop:Platform.OS=="ios"?20:0
   },
   headerCenter: {
     flexDirection: "row",

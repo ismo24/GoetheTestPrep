@@ -314,10 +314,11 @@ export const userInfos = {
           VokA15: {
             lastNote: 79,
           },
-        }
+        },
+        learning:["VokA11","VokA12","VokA13","VokA14","VokA15","VokA11"]
       },
       A2: {
-        index: 0,
+        index: 2,
         total: 5,
         data: {
           VokA21: {
@@ -335,7 +336,8 @@ export const userInfos = {
           VokA25: {
             lastNote: 79,
           },
-        }
+        },
+        learning:["VokA21","VokA22","VokA23","VokA24","VokA25","VokA21"]
       },
       B1: {
         index: 0,
@@ -356,7 +358,8 @@ export const userInfos = {
           VokB15: {
             lastNote: 79,
           },
-        }
+        },
+        learning:["VokB11","VokB12","VokB13","VokB14","VokB15","VokB11"]
       },
       B2: {
         index: 0,
@@ -377,7 +380,9 @@ export const userInfos = {
           VokB25: {
             lastNote: 79,
           },
-        }
+        },
+        learning:["VokB21","VokB22","VokB23","VokB24","VokB25","VokB21"]
+
       },
       C1: {
         index: 0,
@@ -398,7 +403,8 @@ export const userInfos = {
           VokC15: {
             lastNote: 79,
           },
-        }
+        },
+        learning:["VokC11","VokC12","VokC13","VokC14","VokC15","VokC11"]
       },
       C2: {
         index: 0,
@@ -419,7 +425,8 @@ export const userInfos = {
           VokC25: {
             lastNote: 79,
           },
-        }
+        },
+        learning:["VokC21","VokC22","VokC23","VokC24","VokC25","VokC21"]
       },
     },
     grammar: {
@@ -961,7 +968,7 @@ export const Fahigkeiten = {
       {
         id: "hoA11",
         well_Answered: false,
-        audioUrl:
+        audio_url:
           "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         questions: [
           {
@@ -998,7 +1005,7 @@ export const Fahigkeiten = {
       {
         id: "hoA12",
         well_Answered: false,
-        audioUrl:
+        audio_url:
           "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         questions: [
           {
@@ -1035,7 +1042,7 @@ export const Fahigkeiten = {
       {
         id: "hoA13",
         well_Answered: false,
-        audioUrl:
+        audio_url:
           "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         questions: [
           {
@@ -2021,7 +2028,7 @@ export const Fahigkeiten = {
         text: "___ esse einen Apfel",
         sentence: "Ich esse einen Apfel",
         image_url: "https://www.conservation-nature.fr/wp-content/uploads/visuel/fruit/shutterstock_575378506-1024x901.jpg",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Je",
           EN: "I",
@@ -2066,7 +2073,7 @@ export const Fahigkeiten = {
         text: "ich esse einen _____",
         sentence: "Ich esse einen Apfel",
         image_url: "https://www.conservation-nature.fr/wp-content/uploads/visuel/fruit/shutterstock_575378506-1024x901.jpg",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Pomme",
           EN: "Apple",
@@ -2111,7 +2118,7 @@ export const Fahigkeiten = {
         text: "Mein ____ ist groß",
         sentence: "Mein Haus ist groß",
         image_url: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Maison",
           EN: "House",
@@ -2156,7 +2163,7 @@ export const Fahigkeiten = {
         text: "Ich trinke ______",
         sentence: "Ich trinke Wasser",
         image_url: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Eau",
           EN: "Water",
@@ -2201,7 +2208,7 @@ export const Fahigkeiten = {
         text: "Der ____ bellt laut",
         sentence: "Der Hund bellt laut",
         image_url: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500&h=500&fit=crop&crop=face",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Chien",
           EN: "Dog",
@@ -2249,7 +2256,7 @@ export const Fahigkeiten = {
         text: "Die ____ ist wichtig",
         sentence: "Die Gesundheit ist wichtig",
         image_url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Santé",
           EN: "Health",
@@ -2294,7 +2301,7 @@ export const Fahigkeiten = {
         text: "Der ____ ist heute stark",
         sentence: "Der Verkehr ist heute stark",
         image_url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Circulation",
           EN: "Traffic",
@@ -2339,7 +2346,7 @@ export const Fahigkeiten = {
         text: "Ich sammle neue ________",
         sentence: "Ich sammle neue Erfahrung",
         image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop&crop=face",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Expérience",
           EN: "Experience",
@@ -2384,7 +2391,7 @@ export const Fahigkeiten = {
         text: "Wir schützen die ______",
         sentence: "Wir schützen die Umwelt",
         image_url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Environnement",
           EN: "Environment",
@@ -2429,7 +2436,7 @@ export const Fahigkeiten = {
         text: "Eine gute _________ ist wertvoll",
         sentence: "Eine gute Freundschaft ist wertvoll",
         image_url: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Amitié",
           EN: "Friendship",
@@ -2477,7 +2484,7 @@ export const Fahigkeiten = {
         text: "Er übernimmt die volle __________",
         sentence: "Er übernimmt die volle Verantwortung",
         image_url: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Responsabilité",
           EN: "Responsibility",
@@ -2522,7 +2529,7 @@ export const Fahigkeiten = {
         text: "Die moderne _________ verändert sich schnell",
         sentence: "Die moderne Gesellschaft verändert sich schnell",
         image_url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Société",
           EN: "Society",
@@ -2567,7 +2574,7 @@ export const Fahigkeiten = {
         text: "Die __________ der Technologie ist beeindruckend",
         sentence: "Die Entwicklung der Technologie ist beeindruckend",
         image_url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Développement",
           EN: "Development",
@@ -2612,7 +2619,7 @@ export const Fahigkeiten = {
         text: "Das ist eine große ____________",
         sentence: "Das ist eine große Herausforderung",
         image_url: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Défi",
           EN: "Challenge",
@@ -2657,7 +2664,7 @@ export const Fahigkeiten = {
         text: "Es gibt viele __________",
         sentence: "Es gibt viele Möglichkeiten",
         image_url: "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Possibilité",
           EN: "Possibility",
@@ -2705,7 +2712,7 @@ export const Fahigkeiten = {
         text: "__________ ist ein wichtiges Thema",
         sentence: "Nachhaltigkeit ist ein wichtiges Thema",
         image_url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Durabilité",
           EN: "Sustainability",
@@ -2750,7 +2757,7 @@ export const Fahigkeiten = {
         text: "Die _____________ beeinflusst alle Länder",
         sentence: "Die Globalisierung beeinflusst alle Länder",
         image_url: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Mondialisation",
           EN: "Globalization",
@@ -2795,7 +2802,7 @@ export const Fahigkeiten = {
         text: "Wir müssen einen _________ finden",
         sentence: "Wir müssen einen Kompromiss finden",
         image_url: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Compromis",
           EN: "Compromise",
@@ -2840,7 +2847,7 @@ export const Fahigkeiten = {
         text: "_________ ist in diesem Beruf wichtig",
         sentence: "Kreativität ist in diesem Beruf wichtig",
         image_url: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Créativité",
           EN: "Creativity",
@@ -2885,7 +2892,7 @@ export const Fahigkeiten = {
         text: "Die ________ des Systems wurde verbessert",
         sentence: "Die Effizienz des Systems wurde verbessert",
         image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Efficacité",
           EN: "Efficiency",
@@ -2933,7 +2940,7 @@ export const Fahigkeiten = {
         text: "Ein ______________ ist notwendig",
         sentence: "Ein Paradigmenwechsel ist notwendig",
         image_url: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Changement de paradigme",
           EN: "Paradigm shift",
@@ -2978,7 +2985,7 @@ export const Fahigkeiten = {
         text: "Die ________ seiner Gefühle war deutlich",
         sentence: "Die Ambivalenz seiner Gefühle war deutlich",
         image_url: "https://images.unsplash.com/photo-1553708881-112abc53fe54?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Ambivalence",
           EN: "Ambivalence",
@@ -3023,7 +3030,7 @@ export const Fahigkeiten = {
         text: "Der Ansatz ist ____________",
         sentence: "Der Ansatz ist interdisziplinär",
         image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Interdisciplinaire",
           EN: "Interdisciplinary",
@@ -3068,7 +3075,7 @@ export const Fahigkeiten = {
         text: "Diese _________ dauert schon Jahre",
         sentence: "Diese Kontroverse dauert schon Jahre",
         image_url: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Controverse",
           EN: "Controversy",
@@ -3113,7 +3120,7 @@ export const Fahigkeiten = {
         text: "Die ________ zwischen Theorie und Praxis",
         sentence: "Die Dialektik zwischen Theorie und Praxis",
         image_url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Dialectique",
           EN: "Dialectic",
@@ -3161,7 +3168,7 @@ export const Fahigkeiten = {
         text: "Die ____________ beschäftigt sich mit Erkenntnistheorie",
         sentence: "Die Epistemologie beschäftigt sich mit Erkenntnistheorie",
         image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop&crop=face",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Épistémologie",
           EN: "Epistemology",
@@ -3206,7 +3213,7 @@ export const Fahigkeiten = {
         text: "Die __________ ist eine Interpretationslehre",
         sentence: "Die Hermeneutik ist eine Interpretationslehre",
         image_url: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Herméneutique",
           EN: "Hermeneutics",
@@ -3251,7 +3258,7 @@ export const Fahigkeiten = {
         text: "Die _____________ untersucht Bewusstseinsphänomene",
         sentence: "Die Phänomenologie untersucht Bewusstseinsphänomene",
         image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Phénoménologie",
           EN: "Phenomenology",
@@ -3296,7 +3303,7 @@ export const Fahigkeiten = {
         text: "Die ________ fragt nach dem Sein",
         sentence: "Die Ontologie fragt nach dem Sein",
         image_url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Ontologie",
           EN: "Ontology",
@@ -3341,7 +3348,7 @@ export const Fahigkeiten = {
         text: "Diese ________ führt zu schnellen Lösungen",
         sentence: "Diese Heuristik führt zu schnellen Lösungen",
         image_url: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=500&h=500&fit=crop",
-        
+        audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
           FR: "Heuristique",
           EN: "Heuristic",

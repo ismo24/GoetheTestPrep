@@ -1,4 +1,4 @@
-// LesenScreen.js
+// VocabularyScreen.js
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LevelSelectionView from '../components/Vocabulary/LevelSelectionView';
@@ -8,7 +8,6 @@ import { useUserData } from '../context/AppDataContext';
 import { useExerciseData } from '../hooks/useExerciseData';
 import { useSyncData } from '../hooks/useSyncData';
 import { colors } from '../styles/colors';
-// AJOUT : Import des composants d'authentification
 import { AuthProvider,useAuth } from '../hooks/useAuth'; 
 import AuthScreen from './AuthScreen';
 
@@ -16,12 +15,19 @@ const VocabularyScreen = ({ navigation }) => {
   
   const { isAuthenticated, loading } = useAuth();
   const { userData } = useUserData();
-  const { getExercisesForLevel, saveCurrentAnswers, getCurrentAnswers, getLevelStats, finishExerciseWithSync } = useExerciseData();
+  const { 
+    getExercisesForLevel, 
+    saveCurrentAnswers, 
+    getCurrentAnswers, 
+    getLevelStats, 
+    finishExerciseWithSync,
+    handleVocabularyReveal // NOUVEAU: Import de la fonction de révélation
+  } = useExerciseData();
   const { syncNow, isSyncing } = useSyncData();
   const userNativeLanguage = userData.nativeLanguage || "FR";
 
-
   const [selectedLevel, setSelectedLevel] = useState(null);
+  const [actualIndex, setActualIndex] = useState();
   const [showExerciseSelector, setShowExerciseSelector] = useState(false);
   const [availableExercises, setAvailableExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState(null);
@@ -31,9 +37,7 @@ const VocabularyScreen = ({ navigation }) => {
   const [exerciseResults, setExerciseResults] = useState(null);
   const [initialExerciseIndex, setInitialExerciseIndex] = useState(0);
 
-  
-
-  // Traductions pour les titres de niveaux
+  // Traductions pour les titres de niveaux (code existant...)
   const levelTitles = {
     anfanger: {
       "DE": "Anfänger",
@@ -151,143 +155,122 @@ const VocabularyScreen = ({ navigation }) => {
     }
   };
 
-  // Traductions pour les sous-titres de niveaux
+  // Traductions pour les sous-titres (code existant...)
   const levelSubtitles = {
     grundlegendesLesen: {
-      "DE": "Grundlegendes Leseverstehen",
-      "FR": "Compréhension de lecture de base",
-      "EN": "Basic reading comprehension",
-      "ES": "Comprensión de lectura básica",
-      "PT": "Compreensão básica de leitura",
-      "PL": "Podstawowe rozumienie czytania",
-      "RU": "Базовое понимание прочитанного",
-      "TR": "Temel okuma anlayışı",
-      "IT": "Comprensione di base della lettura",
-      "UK": "Базове розуміння прочитаного",
-      "VI": "Hiểu đọc cơ bản",
-      "TL": "Pangunahing pag-unawa sa pagbabasa",
-      "ZH": "基础阅读理解",
-      "ID": "Pemahaman membaca dasar",
-      "TH": "ความเข้าใจการอ่านพื้นฐาน",
-      "MS": "Kefahaman bacaan asas",
-      "AR": "فهم القراءة الأساسي"
+      "DE": "Grundlegendes Wortschatz",
+      "FR": "Vocabulaire de base",
+      "EN": "Basic vocabulary",
+      "ES": "Vocabulario básico",
+      "PT": "Vocabulário básico",
+      "PL": "Podstawowe słownictwo",
+      "RU": "Базовая лексика",
+      "TR": "Temel kelime hazinesi",
+      "IT": "Vocabolario di base",
+      "UK": "Базова лексика",
+      "VI": "Từ vựng cơ bản",
+      "TL": "Pangunahing bokabularyo",
+      "ZH": "基础词汇",
+      "ID": "Kosakata dasar",
+      "TH": "คำศัพท์พื้นฐาน",
+      "MS": "Kosa kata asas",
+      "AR": "المفردات الأساسية"
     },
     einfacheTexte: {
-      "DE": "Einfache Texte verstehen",
-      "FR": "Comprendre des textes simples",
-      "EN": "Understanding simple texts",
-      "ES": "Entender textos simples",
-      "PT": "Entender textos simples",
-      "PL": "Rozumienie prostych tekstów",
-      "RU": "Понимание простых текстов",
-      "TR": "Basit metinleri anlama",
-      "IT": "Comprendere testi semplici",
-      "UK": "Розуміння простих текстів",
-      "VI": "Hiểu các văn bản đơn giản",
-      "TL": "Pag-unawa sa mga simpleng teksto",
-      "ZH": "理解简单文本",
-      "ID": "Memahami teks sederhana",
-      "TH": "เข้าใจข้อความง่ายๆ",
-      "MS": "Memahami teks mudah",
-      "AR": "فهم النصوص البسيطة"
+      "DE": "Alltägliche Wörter",
+      "FR": "Mots du quotidien",
+      "EN": "Everyday words",
+      "ES": "Palabras cotidianas",
+      "PT": "Palavras do dia a dia",
+      "PL": "Codzienne słowa",
+      "RU": "Повседневные слова",
+      "TR": "Günlük kelimeler",
+      "IT": "Parole quotidiane",
+      "UK": "Повсякденні слова",
+      "VI": "Từ ngữ hàng ngày",
+      "TL": "Araw-araw na salita",
+      "ZH": "日常用词",
+      "ID": "Kata-kata sehari-hari",
+      "TH": "คำในชีวิตประจำวัน",
+      "MS": "Perkataan harian",
+      "AR": "الكلمات اليومية"
     },
     alltaglicheTexte: {
-      "DE": "Alltägliche Texte verstehen",
-      "FR": "Comprendre des textes quotidiens",
-      "EN": "Understanding everyday texts",
-      "ES": "Entender textos cotidianos",
-      "PT": "Entender textos do cotidiano",
-      "PL": "Rozumienie codziennych tekstów",
-      "RU": "Понимание повседневных текстов",
-      "TR": "Günlük metinleri anlama",
-      "IT": "Comprendere testi quotidiani",
-      "UK": "Розуміння повсякденних текстів",
-      "VI": "Hiểu các văn bản hàng ngày",
-      "TL": "Pag-unawa sa mga araw-araw na teksto",
-      "ZH": "理解日常文本",
-      "ID": "Memahami teks sehari-hari",
-      "TH": "เข้าใจข้อความในชีวิตประจำวัน",
-      "MS": "Memahami teks harian",
-      "AR": "فهم النصوص اليومية"
+      "DE": "Mittlere Vokabeln",
+      "FR": "Vocabulaire intermédiaire",
+      "EN": "Intermediate vocabulary",
+      "ES": "Vocabulario intermedio",
+      "PT": "Vocabulário intermediário",
+      "PL": "Słownictwo średnio zaawansowane",
+      "RU": "Средняя лексика",
+      "TR": "Orta seviye kelime hazinesi",
+      "IT": "Vocabolario intermedio",
+      "UK": "Середня лексика",
+      "VI": "Từ vựng trung cấp",
+      "TL": "Katamtamang bokabularyo",
+      "ZH": "中级词汇",
+      "ID": "Kosakata menengah",
+      "TH": "คำศัพท์ระดับกลาง",
+      "MS": "Kosa kata pertengahan",
+      "AR": "المفردات المتوسطة"
     },
     komplexeTexte: {
-      "DE": "Komplexe Texte verstehen",
-      "FR": "Comprendre des textes complexes",
-      "EN": "Understanding complex texts",
-      "ES": "Entender textos complejos",
-      "PT": "Entender textos complexos",
-      "PL": "Rozumienie złożonych tekstów",
-      "RU": "Понимание сложных текстов",
-      "TR": "Karmaşık metinleri anlama",
-      "IT": "Comprendere testi complessi",
-      "UK": "Розуміння складних текстів",
-      "VI": "Hiểu các văn bản phức tạp",
-      "TL": "Pag-unawa sa mga kumplikadong teksto",
-      "ZH": "理解复杂文本",
-      "ID": "Memahami teks kompleks",
-      "TH": "เข้าใจข้อความที่ซับซ้อน",
-      "MS": "Memahami teks kompleks",
-      "AR": "فهم النصوص المعقدة"
+      "DE": "Erweiterte Vokabeln",
+      "FR": "Vocabulaire avancé",
+      "EN": "Advanced vocabulary",
+      "ES": "Vocabulario avanzado",
+      "PT": "Vocabulário avançado",
+      "PL": "Zaawansowane słownictwo",
+      "RU": "Продвинутая лексика",
+      "TR": "İleri seviye kelime hazinesi",
+      "IT": "Vocabolario avanzato",
+      "UK": "Просунута лексика",
+      "VI": "Từ vựng nâng cao",
+      "TL": "Mataas na antas na bokabularyo",
+      "ZH": "高级词汇",
+      "ID": "Kosakata lanjutan",
+      "TH": "คำศัพท์ระดับสูง",
+      "MS": "Kosa kata lanjutan",
+      "AR": "المفردات المتقدمة"
     },
     anspruchsvolleTexte: {
-      "DE": "Anspruchsvolle Texte verstehen",
-      "FR": "Comprendre des textes exigeants",
-      "EN": "Understanding demanding texts",
-      "ES": "Entender textos exigentes",
-      "PT": "Entender textos exigentes",
-      "PL": "Rozumienie wymagających tekstów",
-      "RU": "Понимание требовательных текстов",
-      "TR": "Zorlu metinleri anlama",
-      "IT": "Comprendere testi impegnativi",
-      "UK": "Розуміння вимогливих текстів",
-      "VI": "Hiểu các văn bản khó khăn",
-      "TL": "Pag-unawa sa mga mahirap na teksto",
-      "ZH": "理解要求很高的文本",
-      "ID": "Memahami teks yang menantang",
-      "TH": "เข้าใจข้อความที่ท้าทาย",
-      "MS": "Memahami teks yang mencabar",
-      "AR": "فهم النصوص المتطلبة"
+      "DE": "Spezialisierte Vokabeln",
+      "FR": "Vocabulaire spécialisé",
+      "EN": "Specialized vocabulary",
+      "ES": "Vocabulario especializado",
+      "PT": "Vocabulário especializado",
+      "PL": "Specjalistyczne słownictwo",
+      "RU": "Специализированная лексика",
+      "TR": "Uzmanlaşmış kelime hazinesi",
+      "IT": "Vocabolario specializzato",
+      "UK": "Спеціалізована лексика",
+      "VI": "Từ vựng chuyên môn",
+      "TL": "Espesyalisadong bokabularyo",
+      "ZH": "专业词汇",
+      "ID": "Kosakata khusus",
+      "TH": "คำศัพท์เฉพาะทาง",
+      "MS": "Kosa kata khusus",
+      "AR": "المفردات المتخصصة"
     },
     muttersprachlichesLesen: {
-      "DE": "Muttersprachliches Leseverstehen",
-      "FR": "Compréhension de lecture native",
-      "EN": "Native-level reading comprehension",
-      "ES": "Comprensión de lectura nativa",
-      "PT": "Compreensão de leitura nativa",
-      "PL": "Natywne rozumienie czytania",
-      "RU": "Родное понимание прочитанного",
-      "TR": "Ana dil düzeyinde okuma anlayışı",
-      "IT": "Comprensione di lettura madrelingua",
-      "UK": "Рідне розуміння прочитаного",
-      "VI": "Hiểu đọc ở mức độ bản ngữ",
-      "TL": "Katutubong antas ng pag-unawa sa pagbabasa",
-      "ZH": "母语水平阅读理解",
-      "ID": "Pemahaman membaca tingkat native",
-      "TH": "ความเข้าใจการอ่านระดับเจ้าของภาษา",
-      "MS": "Kefahaman bacaan peringkat ibunda",
-      "AR": "فهم القراءة على مستوى اللغة الأم"
+      "DE": "Muttersprachliche Vokabeln",
+      "FR": "Vocabulaire de niveau natif",
+      "EN": "Native-level vocabulary",
+      "ES": "Vocabulario de nivel nativo",
+      "PT": "Vocabulário de nível nativo",
+      "PL": "Słownictwo na poziomie natywnym",
+      "RU": "Лексика на родном уровне",
+      "TR": "Ana dil düzeyinde kelime hazinesi",
+      "IT": "Vocabolario di livello madrelingua",
+      "UK": "Лексика на рідному рівні",
+      "VI": "Từ vựng mức độ bản ngữ",
+      "TL": "Katutubong antas na bokabularyo",
+      "ZH": "母语水平词汇",
+      "ID": "Kosakata tingkat native",
+      "TH": "คำศัพท์ระดับเจ้าของภาษา",
+      "MS": "Kosa kata peringkat ibunda",
+      "AR": "مفردات مستوى اللغة الأم"
     }
-  };
-
-  // Traductions pour l'exercice
-  const exerciseTranslations = {
-    "DE": "Übung",
-    "FR": "Exercice",
-    "EN": "Exercise",
-    "ES": "Ejercicio",
-    "PT": "Exercício",
-    "PL": "Ćwiczenie",
-    "RU": "Упражнение",
-    "TR": "Egzersiz",
-    "IT": "Esercizio",
-    "UK": "Вправа",
-    "VI": "Bài tập",
-    "TL": "Ehersisyo",
-    "ZH": "练习",
-    "ID": "Latihan",
-    "TH": "แบบฝึกหัด",
-    "MS": "Latihan",
-    "AR": "تمرين"
   };
 
   const levels = [
@@ -354,22 +337,69 @@ const VocabularyScreen = ({ navigation }) => {
   ];
 
   // Fonction pour récupérer le dernier index d'exercice
+  // Si le problème persiste, utilisez cette version alternative dans VocabularyScreen :
+
 const getLastExerciseIndex = (levelId) => {
-  const levelData = userData.data?.vokabeln?.[levelId];
-  if (levelData && typeof levelData.index === 'number') {
-    return levelData.index;
+  try {
+    const levelData = userData.data?.vokabeln?.[levelId];
+    
+    // Cas 1: Si pas de données du tout
+    if (!levelData) {
+      console.log("Pas de données pour", levelId, "-> index 0");
+      return 0;
+    }
+    
+    // Cas 2: Si l'index existe dans les données utilisateur
+    if (typeof levelData.index === 'number' && levelData.index >= 0) {
+      const exercises = getExercisesForLevel('vokabeln', levelId);
+      
+      // Vérifier que l'index est dans la plage valide
+      if (levelData.index < exercises.length) {
+        console.log("Index valide trouvé:", levelData.index);
+        return levelData.index;
+      } else {
+        console.log("Index trop grand, ajustement:", exercises.length - 1);
+        return Math.max(0, exercises.length - 1);
+      }
+    }
+    
+    // Cas 3: Essayer de calculer l'index basé sur les exercices complétés
+    if (levelData.data && Object.keys(levelData.data).length > 0) {
+      const completedCount = Object.values(levelData.data)
+        .filter(exerciseData => exerciseData.lastNote !== undefined).length;
+      
+      console.log("Calcul basé sur exercices complétés:", completedCount);
+      return Math.max(0, completedCount);
+    }
+    
+    // Par défaut
+    console.log("Retour par défaut: index 0");
+    return 0;
+    
+  } catch (error) {
+    console.error("Erreur dans getLastExerciseIndex:", error);
+    return 0;
   }
-  return 0; // Par défaut, commencer au premier exercice
 };
- 
-  
   // Gestionnaires d'événements
   const handleLevelSelect = (levelId) => {
     setSelectedLevel(levelId);
     const exercises = getExercisesForLevel('vokabeln', levelId); 
     setAvailableExercises(exercises);
-
+  
     const lastIndex = getLastExerciseIndex(levelId);
+    setActualIndex(lastIndex)
+
+    // DEBUG: Ajoutez ces logs pour comprendre ce qui se passe
+    console.log("=== DEBUG VOCABULARY INDEX ===");
+    console.log("Level ID:", levelId);
+    console.log("Exercises count:", exercises.length);
+    console.log("User data for level:", userData.data?.vokabeln?.[levelId]);
+    console.log("Calculated last index:", lastIndex);
+    console.log("Learning list:", userData.data?.vokabeln?.[levelId]?.learning);
+    console.log("Current index in userData:", userData.data?.vokabeln?.[levelId]?.index);
+    console.log("===============================");
+    
     setInitialExerciseIndex(lastIndex);
     setShowExerciseSelector(true);
   };
@@ -380,7 +410,6 @@ const getLastExerciseIndex = (levelId) => {
     setShowExerciseModal(true);
     setShowResults(false);
     
-    // Charger les réponses existantes s'il y en a
     const existingAnswers = getCurrentAnswers(exercise.id);
     setSelectedAnswers(existingAnswers);
     setExerciseResults(null);
@@ -398,14 +427,27 @@ const getLastExerciseIndex = (levelId) => {
     saveCurrentAnswers(selectedExercise.id, updatedAnswers);
   };
 
+  // NOUVEAU: Gestionnaire pour la révélation des mots
+  const handleRevealWord = async (exerciseId, levelId,value) => {
+    try {
+      await handleVocabularyReveal(exerciseId, levelId,value,actualIndex);
+      
+      // Recharger la liste des exercices pour refléter les changements
+      const updatedExercises = getExercisesForLevel('vokabeln', levelId);
+      setAvailableExercises(updatedExercises);
+      handleFinishExercise()
+      console.log(`✅ Révélation du mot ${exerciseId} traitée avec succès`);
+    } catch (error) {
+      console.error('Erreur lors de la révélation du mot:', error);
+    }
+  };
 
   const handleFinishExercise = async () => {
-    // Pour Vocabulary, adapter selon votre système d'évaluation
     const results = {
       totalQuestions: 1,
       correctAnswers: 1,
       wrongAnswers: 0,
-      percentage: 95, // Score basé sur la mémorisation du vocabulaire
+      percentage: 95,
       detailedResults: [{
         textIndex: 1,
         questions: []
@@ -415,7 +457,6 @@ const getLastExerciseIndex = (levelId) => {
     setExerciseResults(results);
     setShowResults(true);
     
-    // Sync automatique avec le backend
     await finishExerciseWithSync('vokabeln', selectedLevel, selectedExercise.id, results);
   };
 
@@ -425,8 +466,15 @@ const getLastExerciseIndex = (levelId) => {
     setExerciseResults(null);
   };
 
+
+  
+
   const handleNextExercise = () => {
-    const currentIndex = availableExercises.findIndex(ex => ex.id === selectedExercise.id);
+    const currentIndex = getLastExerciseIndex(selectedLevel)
+    setActualIndex(currentIndex)
+    console.log("currentIndex",currentIndex)
+    console.log("availableExercises",availableExercises.length)
+
     if (currentIndex < availableExercises.length - 1) {
       const nextExercise = availableExercises[currentIndex + 1];
       setSelectedExercise(nextExercise);
@@ -450,8 +498,7 @@ const getLastExerciseIndex = (levelId) => {
     setAvailableExercises([]);
   };
 
-
-  if(!isAuthenticated && initialExerciseIndex>2){
+  if(!isAuthenticated && initialExerciseIndex > 2){
     return(<AuthScreen />)
   }
 
@@ -488,6 +535,8 @@ const getLastExerciseIndex = (levelId) => {
         onFinishExercise={handleFinishExercise}
         onRestart={handleRestartExercise}
         onNextExercise={handleNextExercise}
+        onRevealWord={handleRevealWord} // NOUVEAU: Passer le gestionnaire
+        actualIndex={actualIndex}
       />
     </SafeAreaView>
   );

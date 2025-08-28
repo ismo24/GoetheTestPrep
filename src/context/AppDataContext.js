@@ -66,6 +66,59 @@ const userDataReducer = (state, action) => {
         nativeLanguage: action.payload.nativeLanguage || state.nativeLanguage,
         subscription: action.payload.subscription || state.subscription
       };
+
+    // Actions à ajouter dans votre userReducer dans AppDataContext.js
+
+    case 'UPDATE_VOCABULARY_LEARNING': {
+      const { levelId, learning } = action.payload;
+      
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          vokabeln: {
+            ...state.data.vokabeln,
+            [levelId]: {
+              ...state.data.vokabeln[levelId],
+              learning: learning
+            }
+          }
+        }
+      };
+    }
+
+    // Vous pouvez également ajouter cette action pour initialiser la learning list si elle n'existe pas
+    // AJOUTEZ cette action dans votre userReducer (AppDataContext.js) :
+
+    case 'INITIALIZE_VOCABULARY_LEARNING': {
+      const { levelId, exerciseIds } = action.payload;
+      
+      // Ne pas écraser si la learning list existe déjà et n'est pas vide
+      const existingLearning = state.data.vokabeln?.[levelId]?.learning;
+      if (existingLearning && existingLearning.length > 0) {
+        console.log("Learning list déjà initialisée pour", levelId);
+        return state;
+      }
+      
+      console.log("🆕 Initialisation learning list pour", levelId, "avec", exerciseIds);
+      
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          vokabeln: {
+            ...state.data.vokabeln,
+            [levelId]: {
+              index: 0,
+              total: exerciseIds.length,
+              data: state.data.vokabeln?.[levelId]?.data || {},
+              ...state.data.vokabeln?.[levelId],
+              learning: exerciseIds
+            }
+          }
+        }
+      };
+    }
       
     default:
       return state;
