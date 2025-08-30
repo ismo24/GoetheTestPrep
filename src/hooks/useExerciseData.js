@@ -67,8 +67,10 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
       questionType: originalExercise.questionType,
       text: originalExercise.text || "",
       image_url: originalExercise.image_url || "",
+      audio_url: originalExercise.audio_url || "",
       word: originalExercise.word || "",
       sentence: originalExercise.sentence || "",
+      word_in_sentence:originalExercise.word_in_sentence || "",
       word_languages_explanations: originalExercise.word_languages_explanations || {},
       sentence_languages_explanations: originalExercise.sentence_languages_explanations || {}
     };
@@ -79,6 +81,193 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
   
   return orderedExercises;
 }, [lernData, userData, userDispatch]); // AJOUTER userDispatch aux dépendances
+
+  
+
+
+
+const getAllStats = useCallback(() => {
+  const skillTypes = ["lesen", "hoeren", "schreiben", "sprechen", "grammar"];
+  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+
+  const Statistiques = {
+    lesen: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+    hoeren: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+    schreiben: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+    sprechen: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+    vocabulary: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+    grammar: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] }
+  };
+
+  // Traitement des compétences standards (lesen, hoeren, schreiben, sprechen, grammar)
+  for (const skillType of skillTypes) {
+    for (const level of levels) {
+      const exercises = lernData[skillType]?.[level] || [];
+      const userLevelData = userData.data[skillType]?.[level] || { index: 0, total: 0, data: {} };
+      const levelStat = [];
+
+      // Pour chaque exercice, récupérer la note
+      exercises.forEach(exercise => {
+        const userExerciseData = userLevelData.data[exercise.id];
+        if (userExerciseData && userExerciseData.lastNote !== undefined) {
+          levelStat.push(userExerciseData.lastNote);
+        }
+      });
+
+      Statistiques[skillType][level] = levelStat;
+    }
+  }
+
+  // Traitement spécial pour vocabulary (vokabeln dans les données)
+  for (const level of levels) {
+    const userLevelData = userData.data.vokabeln?.[level] || { index: 0, total: 0, data: {}, learning: [] };
+    const levelStat = [];
+
+    // Utiliser la learning list pour vocabulary
+    const learningList = userLevelData.learning || [];
+    const uniqueExercises = [...new Set(learningList)]; // Éviter les doublons
+
+    uniqueExercises.forEach(exerciseId => {
+      const userExerciseData = userLevelData.data[exerciseId];
+      if (userExerciseData && userExerciseData.lastNote !== undefined) {
+        levelStat.push(userExerciseData.lastNote);
+      }
+    });
+
+    Statistiques.vocabulary[level] = levelStat;
+  }
+
+  return Statistiques;
+}, [lernData, userData]);
+
+// Fonction utilitaire pour obtenir des statistiques agrégées
+const getAggregatedStats = useCallback(() => {
+  const skillTypes = ["lesen", "hoeren", "schreiben", "sprechen", "grammar"];
+  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  const aggregated = {};
+
+  // Traitement des compétences standards
+  for (const skillType of skillTypes) {
+    aggregated[skillType] = {};
+    
+    for (const level of levels) {
+      const exercises = lernData[skillType]?.[level] || [];
+      const userLevelData = userData.data[skillType]?.[level] || { index: 0, total: 0, data: {} };
+      
+      const total = exercises.length;
+      let success = 0;
+      let sumPercentages = 0;
+
+      exercises.forEach(exercise => {
+        const userExerciseData = userLevelData.data[exercise.id];
+        const percentage = userExerciseData?.lastNote || 0;
+        
+        sumPercentages += percentage;
+        if (percentage === 100) {
+          success++;
+        }
+      });
+
+      const average = total > 0 ? Math.round(sumPercentages / total) : 0;
+
+      aggregated[skillType][level] = {
+        total,
+        success,
+        average
+      };
+    }
+  }
+
+  // Traitement spécial pour vocabulary (vokabeln)
+  aggregated.vocabulary = {};
+  
+  for (const level of levels) {
+    const allExercises = lernData.vokabeln?.[level] || [];
+    const userLevelData = userData.data.vokabeln?.[level] || { index: 0, total: 0, data: {}, learning: [] };
+    
+    const total = allExercises.length;
+    let success = 0;
+    let sumPercentages = 0;
+
+    allExercises.forEach(exercise => {
+      const userExerciseData = userLevelData.data[exercise.id];
+      const percentage = userExerciseData?.lastNote || 0;
+      
+      sumPercentages += percentage;
+      if (percentage === 100) {
+        success++;
+      }
+    });
+
+    const average = total > 0 ? Math.round(sumPercentages / total) : 0;
+
+    aggregated.vocabulary[level] = {
+      total,
+      success,
+      average
+    };
+  }
+
+  return aggregated;
+}, [lernData, userData]);
+
+// Fonction pour déterminer le niveau actuel d'un utilisateur pour une compétence
+const determineUserLevel = (skillStats, threshold = 60) => {
+  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  let currentLevel = undefined;
+
+  for (const level of levels) {
+    if (skillStats[level] && skillStats[level].average >= threshold) {
+      currentLevel = level;
+    }
+  }
+
+  return currentLevel;
+};
+
+// Fonction pour obtenir les statistiques globales de l'utilisateur
+const getOverallUserStats = useCallback(() => {
+  const aggregatedStats = getAggregatedStats();
+  const skillTypes = ["lesen", "hoeren", "schreiben", "sprechen", "vocabulary", "grammar"];
+  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  const overallStats = {};
+
+  skillTypes.forEach(skillType => {
+    let totalExercises = 0;
+    let totalSuccess = 0;
+    let sumAverages = 0;
+    let levelsWithExercises = 0;
+
+    // Calculer les totaux et moyennes pour cette compétence
+    levels.forEach(level => {
+      const levelStats = aggregatedStats[skillType][level];
+      totalExercises += levelStats.total;
+      totalSuccess += levelStats.success;
+      
+      // Compter les niveaux qui ont des exercices pour calculer la moyenne
+      if (levelStats.total > 0) {
+        sumAverages += levelStats.average;
+        levelsWithExercises++;
+      }
+    });
+
+    // Calculer la moyenne des pourcentages par niveau
+    const average = levelsWithExercises > 0 ? Math.round(sumAverages / levelsWithExercises) : 0;
+
+    // Déterminer le niveau actuel
+    const currentLevel = determineUserLevel(aggregatedStats[skillType], 60);
+
+    overallStats[skillType] = {
+      total: totalExercises,
+      success: totalSuccess,
+      average: average,
+      level: currentLevel
+    };
+  });
+
+  return overallStats;
+}, [getAggregatedStats]);
+
 
   // Obtenir les exercices pour un niveau donné
   const getExercisesForLevel = useCallback((skillType, levelId) => {
@@ -119,11 +308,18 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
         case 'hoeren':
           return {
             ...baseExercise,
-            audio_url: exercise.audio_url
+            audio_url: exercise.audio_url,
+            repeat_audio:exercise.repeat_audio
           };
         
-        case 'lesen':
+        
         case 'grammar':
+          return {
+            ...baseExercise,
+            text_language_explanations:exercise.text_language_explanations || ""
+          }
+
+        case 'lesen':
         default:
           return baseExercise;
       }
@@ -135,6 +331,7 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
     const userLevelData = userData.data.vokabeln?.[levelId] || { learning: [] };
     const currentLearningList = [...(userLevelData.learning || [])];
     
+    console.log("Fonction appelée")
 
     if(value=="never"){
       console.log("Cet exercice n'est pas à rajouer")
@@ -183,12 +380,12 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
       const isDuplicateAt = elementAt === exerciseId;
       
       if (isDuplicateBefore || isDuplicateAt) {
-        // console.log(`⚠️ Duplication adjacente détectée pour ${exerciseId} à la position ${insertPosition}`);
-        // console.log(`Élément avant (${insertPosition-1}): ${elementBefore}`);
-        // console.log(`Élément à (${insertPosition}): ${elementAt}`);
-        // console.log(`❌ Ajout annulé pour éviter la duplication adjacente`);
+       
+        console.log("isDuplicateBefore || isDuplicateAt",elementBefore ,elementAt)
         return; // Annuler l'ajout
       }
+
+      console.log("Ici on devrait en ajouter")
       
       // Insérer l'exercice à la position calculée
       currentLearningList.splice(insertPosition, 0, exerciseId);
@@ -285,11 +482,50 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
   }, [userData.currentSession]);
 
   // Terminer un exercice avec synchronisation
-  const finishExerciseWithSync = useCallback(async (skillType, level, exerciseId, results) => {
+  const saveOverallStats = useCallback(() => {
+    const stats = getOverallUserStats();
+    const timestamp = Date.now();
+  
+    userDispatch({
+      type: 'UPDATE_OVERALL_STATS',
+      payload: {
+        stats,
+        timestamp
+      }
+    });
+  
+    return stats;
+  }, [getOverallUserStats, userDispatch]);
+  
+  // 2. Fonction pour récupérer les statistiques avec cache intelligent
+  const getCachedOverallStats = useCallback((maxAge = 5 * 60 * 1000) => { // 5 minutes par défaut
+    const cachedStats = userData.overallStats;
+  
+    // Vérifier si le cache est valide
+    if (cachedStats && cachedStats.lastUpdated) {
+      const age = Date.now() - cachedStats.lastUpdated;
+      if (age < maxAge) {
+        return cachedStats.data;
+      }
+    }
+  
+    // Cache expiré ou inexistant, recalculer et sauvegarder
+    return saveOverallStats();
+  }, [userData.overallStats, saveOverallStats]);
+  
+  // 3. Fonction pour forcer le rafraîchissement des statistiques
+  const refreshOverallStats = useCallback(() => {
+    userDispatch({ type: 'CLEAR_STATS_CACHE' });
+    return saveOverallStats();
+  }, [saveOverallStats, userDispatch]);
+  
+  // 4. Modifier votre fonction finishExerciseWithSync pour mettre à jour automatiquement les stats
+  const finishExerciseWithSync = useCallback(async (skillType, level, exerciseId, results, actualIndex) => {
     const exerciseKey = `${skillType}-${level}-${exerciseId}`;
+  
+    console.log("finishExerciseWithSync a commencé :", skillType, level, exerciseId);
     
     if (processingExercises.current.has(exerciseKey)) {
-      // console.log(`⚠️ Exercice ${exerciseKey} déjà en cours de traitement, ignoré`);
       return;
     }
     
@@ -298,24 +534,22 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
     try {
       const note = results.percentage;
       
-      // console.log(`🎯 Traitement de l'exercice ${exerciseKey} avec note ${note}`);
-      
       // Sauvegarder localement d'abord
       userDispatch({
         type: 'UPDATE_EXERCISE_RESULT',
         payload: { skillType, level, exerciseId, note }
       });
-
+  
       // NOUVEAU: Logique spécifique pour vokabeln
       if (skillType === 'vokabeln') {
         const userLevelData = userData.data.vokabeln?.[level] || { learning: [] };
         const learning = userLevelData.learning || [];
-        const currentIndex = userLevelData.index || 0;
-        
+        const currentIndex = (actualIndex !== null && actualIndex !== undefined && Number.isInteger(actualIndex)) ? actualIndex : userLevelData.index || 0;
+          
         // Avancer à la prochaine position dans la learning list
         if (currentIndex < learning.length - 1) {
           const newIndex = currentIndex + 1;
-          // console.log(`📈 Mise à jour index vocabulaire: ${currentIndex} → ${newIndex}`);
+          console.log(`📈 Mise à jour index vocabulaire: ${currentIndex} → ${newIndex}`);
           
           userDispatch({
             type: 'UPDATE_LEVEL_INDEX',
@@ -330,7 +564,6 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
         
         if (exerciseIndex >= currentIndex && exerciseIndex < exercises.length - 1) {
           const newIndex = exerciseIndex + 1;
-          // console.log(`📈 Mise à jour de l'index: ${currentIndex} → ${newIndex}`);
           
           userDispatch({
             type: 'UPDATE_LEVEL_INDEX',
@@ -338,19 +571,25 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
           });
         }
       }
-
+  
       // Nettoyer la session courante
       userDispatch({
         type: 'SAVE_CURRENT_ANSWERS',
         payload: { exerciseId, answers: {} }
       });
-
+  
+      // NOUVEAU: Recalculer automatiquement les statistiques après un exercice terminé
+      setTimeout(() => {
+        saveOverallStats();
+      }, 100); // Petit délai pour s'assurer que les mises à jour précédentes sont appliquées
+  
     } finally {
       setTimeout(() => {
         processingExercises.current.delete(exerciseKey);
       }, 1000);
     }
-  }, [userData, userDispatch, lernData]);
+  }, [userData, userDispatch, lernData, saveOverallStats]);
+  
 
   return {
     getExercisesForLevel,
@@ -359,6 +598,12 @@ const getVokabelnExercisesForLevel = useCallback((levelId) => {
     saveCurrentAnswers,
     getCurrentAnswers,
     finishExerciseWithSync,
-    handleVocabularyReveal // NOUVEAU: Exporter la fonction de révélation
+    handleVocabularyReveal,
+    getAllStats,
+    getAggregatedStats,
+    getOverallUserStats,
+    saveOverallStats,
+    getCachedOverallStats,
+    refreshOverallStats
   };
 };

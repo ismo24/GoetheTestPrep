@@ -5,11 +5,13 @@ import SkillCard from '../components/common/SkillCard';
 import PrepCard from '../components/common/PrepCard';
 import { colors } from '../styles/colors';
 
+
 const HomeScreen = ({ navigation }) => {
   const userNativeLanguage = "FR";
   
   // États pour gérer l'affichage des titres
   const [showNativeLanguage, setShowNativeLanguage] = useState(true);
+  
 
   // Traductions pour les compétences principales
   const skillTranslations = {
@@ -306,6 +308,10 @@ const HomeScreen = ({ navigation }) => {
   const getSectionTitle = (sectionIndex) => {
     return LocalTiles[sectionIndex][userNativeLanguage];
   };
+
+
+
+
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>

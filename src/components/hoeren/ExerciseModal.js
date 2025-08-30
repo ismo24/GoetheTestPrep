@@ -25,6 +25,10 @@ const ExerciseModal = ({
   const startAudioRef = useRef(null);
   const isMounted = useRef(true);
   const hasInitialized = useRef(false);
+  const audioFiles = {
+    zweimal: require('../../../assets/audios/Hoeren_start_zweimal.mp3'),
+    einmal: require('../../../assets/audios/Hoeren_start_einmal.mp3')
+  };
   
   // ✅ NOUVEAU : Tracker le dernier exercice pour détecter les changements
   const lastExerciseId = useRef(null);
@@ -218,16 +222,23 @@ const ExerciseModal = ({
     
     try {
       setIsStartAudioPlaying(true);
+  
+      console.log('Repeat_audio :', selectedExercise.data.repeat_audio);
       
+      // ✅ Utiliser l'objet pré-défini
+      const audioSource = selectedExercise.data.repeat_audio 
+        ? audioFiles.zweimal 
+        : audioFiles.einmal;
+  
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: false,
         playsInSilentModeIOS: true,
         staysActiveInBackground: false,
         shouldDuckAndroid: true,
       });
-
+  
       const { sound: newSound } = await Audio.Sound.createAsync(
-        require('../../../assets/audios/Hoeren_start_zweimal.mp3'),
+        audioSource, // ✅ Utiliser la variable pré-compilée
         { 
           shouldPlay: true, 
           isLooping: false,
@@ -235,7 +246,7 @@ const ExerciseModal = ({
         },
         onPlaybackStatusUpdate
       );
-
+  
       if (isMounted.current) {
         startAudioRef.current = newSound;
       } else {
@@ -246,8 +257,9 @@ const ExerciseModal = ({
       console.error('Erreur lors de la lecture de l\'audio de démarrage:', error);
       setIsStartAudioPlaying(false);
     }
-  }, [onPlaybackStatusUpdate]);
+  }, [onPlaybackStatusUpdate, selectedExercise]);
 
+  
   // Fonction pour nettoyer l'audio
   const cleanupStartAudio = useCallback(async () => {
     if (startAudioRef.current) {

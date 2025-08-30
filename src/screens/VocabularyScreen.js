@@ -404,6 +404,11 @@ const getLastExerciseIndex = (levelId) => {
     setShowExerciseSelector(true);
   };
 
+  const handleSelectIndex=(value) => {
+    setActualIndex(value)
+    console.log("Yeah Value :",value)
+  }
+
   const handleExerciseSelect = (exercise) => {
     setSelectedExercise(exercise);
     setShowExerciseSelector(false);
@@ -457,7 +462,7 @@ const getLastExerciseIndex = (levelId) => {
     setExerciseResults(results);
     setShowResults(true);
     
-    await finishExerciseWithSync('vokabeln', selectedLevel, selectedExercise.id, results);
+    await finishExerciseWithSync('vokabeln', selectedLevel, selectedExercise.id, results,actualIndex);
   };
 
   const handleRestartExercise = () => {
@@ -470,13 +475,14 @@ const getLastExerciseIndex = (levelId) => {
   
 
   const handleNextExercise = () => {
-    const currentIndex = getLastExerciseIndex(selectedLevel)
-    setActualIndex(currentIndex)
-    console.log("currentIndex",currentIndex)
+    
+    
+    console.log("lastIndex",actualIndex)
     console.log("availableExercises",availableExercises.length)
 
-    if (currentIndex < availableExercises.length - 1) {
-      const nextExercise = availableExercises[currentIndex + 1];
+    if (actualIndex < availableExercises.length - 1) {
+      const nextExercise = availableExercises[actualIndex + 1];
+      setActualIndex(actualIndex+ 1)
       setSelectedExercise(nextExercise);
       setSelectedAnswers({});
       setShowResults(false);
@@ -508,6 +514,7 @@ const getLastExerciseIndex = (levelId) => {
         levels={levels}
         onBack={() => navigation.goBack()}
         onSelectLevel={handleLevelSelect}
+ 
         getUbungenForLevel={getExercisesForLevel}
         getLastExerciseIndex={getLastExerciseIndex}
         userNativeLanguage={userNativeLanguage}
@@ -518,6 +525,7 @@ const getLastExerciseIndex = (levelId) => {
         levelInfo={levels.find(l => l.id === selectedLevel)}
         availableExercises={availableExercises}
         onSelectExercise={handleExerciseSelect}
+        onSelectIndex={handleSelectIndex}
         onCancel={handleCloseSelectorPopup}
         initialExerciseIndex={initialExerciseIndex}
       />

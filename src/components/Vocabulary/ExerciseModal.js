@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { Modal, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import VocabularyView from './VocabularyView';
-import ResultsView from './ResultsView';
 import { colors } from '../../styles/colors';
 
 const ExerciseModal = ({
@@ -20,69 +19,99 @@ const ExerciseModal = ({
   onRevealWord,
   actualIndex
 }) => {
+  // TOUS LES HOOKS DOIVENT ÊTRE APPELÉS AVANT TOUT RETURN
+  
+  // État pour gérer l'affichage de l'image en plein écran
+  const [showFullScreenImg, setShowFullScreenImg] = useState(null);
+  
+  // Refs stables
+  const vocabularyAudioRef = useRef(null);
+
+  // Calculs memoizés des indices d'exercice
+  const exerciseData = useMemo(() => {
+    if (!availableExercises || actualIndex === undefined) {
+      return {
+        currentExerciseIndex: 0,
+        hasNextExercise: false,
+        currentExerciseNumber: 1,
+        totalExercises: 1
+      };
+    }
+
+    return {
+      currentExerciseIndex: actualIndex,
+      hasNextExercise: actualIndex < availableExercises.length - 1,
+      currentExerciseNumber: actualIndex + 1,
+      totalExercises: availableExercises.length
+    };
+  }, [availableExercises, actualIndex]);
+
+  // Fonction pour ouvrir l'image en plein écran
+  const handleShowFullScreenImage = useCallback((imageUrl) => {
+    setShowFullScreenImg(imageUrl);
+  }, []);
+
+  // Fonction pour fermer l'image en plein écran
+  const handleCloseFullScreenImage = useCallback(() => {
+    setShowFullScreenImg(null);
+  }, []);
+
+  // Fonction de fermeture avec nettoyage
+  const handleClose = useCallback(() => {
+    
+    if (onClose) {
+      onClose();
+    }
+  }, [onClose]);
+
+  // Fonction pour exercice suivant avec nettoyage
+  const handleNextExercise = useCallback(() => {
+    
+    if (onNextExercise) {
+      onNextExercise();
+    }
+  }, [onNextExercise]);
+
+  // Nettoyage à la destruction du composant
+  useEffect(() => {
+    return () => {
+
+    };
+  }, []);
+
+  // Early return APRÈS tous les hooks pour éviter l'erreur "order of hooks"
   if (!visible || !selectedExercise) {
     return null;
   }
-
-  // Trouver l'index de l'exercice actuel pour navigation
-  const currentExerciseIndex = actualIndex;
-  const hasNextExercise = currentExerciseIndex < availableExercises.length  - 1;
-
-  // Index pour affichage (commence à 1 au lieu de 0)
-  const currentExerciseNumber = currentExerciseIndex  + 1;
-  const totalExercises = availableExercises.length;
-       
-  // État pour gérer l'affichage de l'image en plein écran
-  const [showFullScreenImg, setShowFullScreenImg] = useState(null);
-
-  // Fonction pour ouvrir l'image en plein écran
-  const handleShowFullScreenImage = (imageUrl) => {
-    setShowFullScreenImg(imageUrl);
-  };
-
-  // Fonction pour fermer l'image en plein écran
-  const handleCloseFullScreenImage = () => {
-    setShowFullScreenImg(null);
-  };
 
   return (
     <Modal
       visible={visible}
       animationType="slide"
       presentationStyle="fullScreen"
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
       statusBarTranslucent={true}
     >
-      <View style={[styles.container, { marginTop: Platform.OS == "ios" ? 30 : 0 }]}>
+      <View style={[styles.container, { marginTop: Platform.OS === "ios" ? 30 : 0 }]}>
         <View style={styles.content}>
-          {/* {showResults ? (
-            <ResultsView
-              selectedUbung={selectedExercise}
-              levelInfo={levelInfo}
-              onBack={onClose}
-              onRestart={onRestart}
-              onNext={hasNextExercise ? onNextExercise : null}
-            />
-          ) : ( */}
-            <VocabularyView
-              vocabularyItem={selectedExercise}
-              currentTextIndex={0}
-              selectedAnswers={selectedAnswers}
-              levelInfo={levelInfo}
-              currentExerciseNumber={currentExerciseNumber}
-              totalExercises={totalExercises}
-              onNext={hasNextExercise ? onNextExercise : null}
-              onBack={onClose}
-              onNextText={() => {}}
-              onPreviousText={() => {}}
-              onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
-              onFinishExercise={onFinishExercise}
-              onShowFullScreenImage={handleShowFullScreenImage}
-              onRevealWord={onRevealWord} // NOUVEAU: Passer le callback
-              levelId={levelInfo?.id} // NOUVEAU: Passer l'ID du niveau
-              actualIndex={actualIndex}
-            />
-          {/* )} */}
+          <VocabularyView
+            vocabularyItem={selectedExercise}
+            currentTextIndex={0}
+            selectedAnswers={selectedAnswers}
+            levelInfo={levelInfo}
+            currentExerciseNumber={exerciseData.currentExerciseNumber}
+            totalExercises={exerciseData.totalExercises}
+            onNext={exerciseData.hasNextExercise ? handleNextExercise : null}
+            onBack={handleClose}
+            onNextText={() => {}}
+            onPreviousText={() => {}}
+            onSelectAnswer={(questionIndex, optionId) => onSelectAnswer(questionIndex, optionId)}
+            onFinishExercise={onFinishExercise}
+            onShowFullScreenImage={handleShowFullScreenImage}
+            onRevealWord={onRevealWord}
+            levelId={levelInfo?.id}
+            actualIndex={actualIndex}
+          />
         </View>
       </View>
     </Modal>

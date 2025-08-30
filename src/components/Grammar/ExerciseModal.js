@@ -26,6 +26,7 @@ const ExerciseModal = ({
     ...selectedExercise,
     data: [{
       Text: selectedExercise.data.Text,
+      text_language_explanations:selectedExercise.data.text_language_explanations || "",
       questions: selectedExercise.data.questions
     }]
   };

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { colors } from '../../styles/colors';
 
-const StatCard = ({ skill, answered, total, correct }) => {
+const StatCard = ({ skill, answered, total, correct,average,level }) => {
   // Calculer le pourcentage de progression
   const progressPercentage = total > 0 ? (answered / total) * 100 : 0;
   
@@ -40,14 +40,16 @@ const StatCard = ({ skill, answered, total, correct }) => {
           <Text style={styles.statLabel}>Richtig</Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statValue}>{answered - correct}</Text>
-          <Text style={styles.statLabel}>Falsch</Text>
+        <Text style={[styles.statValue, { color: colors.primary }]}>
+            {average > 0 ? average : '0.0'}%
+          </Text>
+          <Text style={styles.statLabel}>Durchnitt</Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={[styles.statValue, { color: colors.primary }]}>
-            {answered > 0 ? successPercentage.toFixed(1) : '0.0'}%
+          <Text style={[styles.statValue, { color: colors.success }]}>
+            {level !== 0 ? level : '0'}
           </Text>
-          <Text style={styles.statLabel}>Erfolg</Text>
+          <Text style={styles.statLabel}>Stufe</Text>
         </View>
       </View>
     </View>

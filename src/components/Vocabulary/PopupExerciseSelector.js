@@ -31,6 +31,7 @@ const PopupExerciseSelector = ({
   levelInfo, 
   availableExercises, 
   onSelectExercise, 
+  onSelectIndex,
   onCancel,
   userNativeLanguage = "FR",
   initialExerciseIndex = 0
@@ -290,6 +291,8 @@ useEffect(() => {
   const handleConfirm = () => {
     const selectedExercise = availableExercises[selectedExerciseIndex];
     onSelectExercise(selectedExercise);
+    onSelectIndex(selectedExerciseIndex)
+    console.log("Exercice choisit : ",selectedExerciseIndex)
   };
 
   return (

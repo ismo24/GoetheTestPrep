@@ -57,6 +57,7 @@ const ExerciseView = ({
   };
 
   useEffect(() => {
+    console.log("Exercice actuel :",currentText.text_language_explanations?currentText.text_language_explanations : "rien a montrer")
     if (showResults) {
       setIsProcessing(false);
     }
@@ -80,18 +81,18 @@ const ExerciseView = ({
     const newHiddenState = !isTextHidden;
     setIsTextHidden(newHiddenState);
 
-    Animated.parallel([
-      Animated.timing(textHeight, {
-        toValue: newHiddenState ? 0 : 1,
-        duration: 300,
-        useNativeDriver: false,
-      }),
-      Animated.timing(opacity, {
-        toValue: newHiddenState ? 0 : 1,
-        duration: 250,
-        useNativeDriver: false,
-      })
-    ]).start();
+    // Animated.parallel([
+    //   Animated.timing(textHeight, {
+    //     toValue: newHiddenState ? 0 : 1,
+    //     duration: 300,
+    //     useNativeDriver: false,
+    //   }),
+    //   Animated.timing(opacity, {
+    //     toValue: newHiddenState ? 0 : 1,
+    //     duration: 250,
+    //     useNativeDriver: false,
+    //   })
+    // ]).start();
   };
 
   // Vérifier si toutes les questions ont une réponse
@@ -135,14 +136,15 @@ const ExerciseView = ({
         >
           <TouchableOpacity 
             onPress={toggleTextVisibility} 
-            style={isTextHidden ? styles.passageHeaderHidden : styles.passageHeader}
+            style={styles.passageHeader}  //isTextHidden ? styles.passageHeaderHidden : styles.passageHeader
           >
             <Text style={styles.passageTitle}>Grammatik</Text>
-            <View style={styles.eyeButton}>
+            <View style={[styles.eyeButton,{backgroundColor:isTextHidden ?"black" : 'white'}]}>
               <Ionicons 
-                name={isTextHidden ? "eye-off-outline" : "eye-outline"} 
+               name={isTextHidden ? "language-outline" : "language"}
+              //  <ion-icon name="language-outline"></ion-icon>
                 size={20} 
-                color={colors.gray} 
+                color={isTextHidden ?'white' : "black"} 
               />
             </View>
           </TouchableOpacity>
@@ -161,7 +163,8 @@ const ExerciseView = ({
           >
             <View style={styles.separatorLine} />
             <Text style={styles.passageText}>
-              {currentText.Text}
+              {/* {currentText.Text} */}
+               {isTextHidden?currentText.Text :currentText.text_language_explanations[userNativeLanguage]}
             </Text>
           </Animated.View>
         </Animated.View>
@@ -334,10 +337,10 @@ const ExerciseView = ({
 
           {hasNextExercise ? (
             <TouchableOpacity
-              style={[styles.actionButton, { backgroundColor: "black" }]}
+              style={[styles.actionButton, styles.restartButton]}
               onPress={onNextExercise}
             >
-              <Text style={styles.actionButtonText}>
+              <Text style={styles.restartButtonText}>
                 {translations.buttons.continue[userNativeLanguage]}
               </Text>
             </TouchableOpacity>
@@ -457,6 +460,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: colors.text,
+    opacity:0
   },
   eyeButton: {
     padding: 4,
@@ -473,6 +477,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: colors.text,
     marginBottom: 16,
+    fontWeight:"600"
   },
   questionsSection: {
     marginHorizontal: 16,
@@ -578,7 +583,7 @@ const styles = StyleSheet.create({
   },
   stickyButtonContainer: {
     position: 'absolute',
-    bottom: '8%',
+    bottom: '4%',
     left: 0,
     right: 0,
     paddingHorizontal: 16,
@@ -659,19 +664,21 @@ const styles = StyleSheet.create({
   },
   resultsButtonContainer: {
     position: "absolute",
-    bottom: "4%",
+    bottom: 0,
+    backgroundColor:"white",
     left: 0,
     right: 0,
     paddingHorizontal: 16,
     paddingVertical: 12,
     flexDirection: "row",
     gap: 12,
+    justifyContent: "space-between"
   },
   actionButton: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    width: 150,
     paddingVertical: 16,
     borderRadius: 12,
     gap: 8,

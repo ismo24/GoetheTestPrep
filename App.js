@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar, Platform, View, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppDataProvider } from './src/context/AppDataContext.js';
 import AppInitializer from './src/components/common/AppInitializer.js';
 import { useFonts } from "expo-font";
+
 
 // NOUVEAU : Import du composant d'animation
 import SplashAnimation from './src/components/common/SplashAnimation.js';
@@ -29,19 +30,7 @@ const Stack = createStackNavigator();
 const AppNavigator = () => {
   const { isAuthenticated, loading } = useAuth();
 
-  // Écran de chargement pendant la vérification de l'authentification
-  // if (loading) {
-  //   return (
-  //     <View style={{
-  //       flex: 1,
-  //       justifyContent: 'center',
-  //       alignItems: 'center',
-  //       backgroundColor: '#FFFFFF'
-  //     }}>
-  //       <ActivityIndicator size="large" color="#FF6B47" />
-  //     </View>
-  //   );
-  // }
+  
 
   return (
     <NavigationContainer>
@@ -73,20 +62,14 @@ export default function App() {
     "OpenSans-Regular": require("./assets/Fonts/OpenSans-VariableFont_wdth,wght.ttf"),
   });
 
-  // NOUVEAU : État pour contrôler l'affichage de l'animation
-  // const [showSplashAnimation, setShowSplashAnimation] = useState(true);
+ 
 
   // Attendez que les polices soient chargées
   if (!fontsLoaded) {
     return null; // ou un écran de chargement
   }
 
-  // NOUVEAU : Afficher l'animation de splash après le chargement des polices
-  // if (showSplashAnimation) {
-  //   return (
-  //     <SplashAnimation onFinish={() => setShowSplashAnimation(false)} />
-  //   );
-  // }
+  
 
   return (
     // MODIFICATION : Envelopper avec AuthProvider en premier

@@ -29,7 +29,8 @@ const userDataReducer = (state, action) => {
               }
             }
           }
-        }
+        },
+        lastExerciseUpdate: Date.now()
       };
       
     case 'UPDATE_LEVEL_INDEX':
@@ -119,6 +120,21 @@ const userDataReducer = (state, action) => {
         }
       };
     }
+
+    case 'UPDATE_OVERALL_STATS':
+      return {
+        ...state,
+        overallStats: {
+          data: action.payload.stats,
+          lastUpdated: action.payload.timestamp
+        }
+      };
+
+    case 'CLEAR_STATS_CACHE':
+      return {
+        ...state,
+        overallStats: null
+      };
       
     default:
       return state;
@@ -193,7 +209,9 @@ export const AppDataProvider = ({ children }) => {
         C2: { index: 0, total: 0, data: {} }
       }
     },
-    currentSession: {} // Pour les réponses temporaires
+    currentSession: {}, // Pour les réponses temporaires
+    overallStats: null, // Cache des statistiques globales
+    lastExerciseUpdate: null
   };
 
   const [lernData, lernDispatch] = useReducer(lernDataReducer, {

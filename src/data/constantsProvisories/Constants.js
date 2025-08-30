@@ -970,6 +970,7 @@ export const Fahigkeiten = {
         well_Answered: false,
         audio_url:
           "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
+        repeat_audio:true,
         questions: [
           {
             title: "Was möchte der Kunde trinken?",
@@ -1007,6 +1008,7 @@ export const Fahigkeiten = {
         well_Answered: false,
         audio_url:
           "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
+        repeat_audio:false,
         questions: [
           {
             title: "Was möchte der Kunde trinken?",
@@ -1044,6 +1046,7 @@ export const Fahigkeiten = {
         well_Answered: false,
         audio_url:
           "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
+        repeat_audio:true,
         questions: [
           {
             title: "Was möchte der Kunde trinken?",
@@ -2027,6 +2030,7 @@ export const Fahigkeiten = {
         word: "Ich",
         text: "___ esse einen Apfel",
         sentence: "Ich esse einen Apfel",
+        word_in_sentence:"Ich",
         image_url: "https://www.conservation-nature.fr/wp-content/uploads/visuel/fruit/shutterstock_575378506-1024x901.jpg",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2072,6 +2076,7 @@ export const Fahigkeiten = {
         word: "Apfel",
         text: "ich esse einen _____",
         sentence: "Ich esse einen Apfel",
+        word_in_sentence:"Apfel",
         image_url: "https://www.conservation-nature.fr/wp-content/uploads/visuel/fruit/shutterstock_575378506-1024x901.jpg",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2117,6 +2122,7 @@ export const Fahigkeiten = {
         word: "Haus",
         text: "Mein ____ ist groß",
         sentence: "Mein Haus ist groß",
+        word_in_sentence:"Haus",
         image_url: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2162,6 +2168,7 @@ export const Fahigkeiten = {
         word: "Wasser",
         text: "Ich trinke ______",
         sentence: "Ich trinke Wasser",
+        word_in_sentence:"Wasser",
         image_url: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2207,6 +2214,7 @@ export const Fahigkeiten = {
         word: "Hund",
         text: "Der ____ bellt laut",
         sentence: "Der Hund bellt laut",
+        word_in_sentence:"Hund",
         image_url: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500&h=500&fit=crop&crop=face",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2255,6 +2263,7 @@ export const Fahigkeiten = {
         word: "Gesundheit",
         text: "Die ____ ist wichtig",
         sentence: "Die Gesundheit ist wichtig",
+        word_in_sentence:"Gesundheit",
         image_url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2300,6 +2309,7 @@ export const Fahigkeiten = {
         word: "Verkehr",
         text: "Der ____ ist heute stark",
         sentence: "Der Verkehr ist heute stark",
+        word_in_sentence:"Verkehr",
         image_url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2345,6 +2355,7 @@ export const Fahigkeiten = {
         word: "Erfahrung",
         text: "Ich sammle neue ________",
         sentence: "Ich sammle neue Erfahrung",
+        word_in_sentence:"Erfahrung",
         image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop&crop=face",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2390,6 +2401,7 @@ export const Fahigkeiten = {
         word: "Umwelt",
         text: "Wir schützen die ______",
         sentence: "Wir schützen die Umwelt",
+        word_in_sentence:"Umwelt",
         image_url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2435,6 +2447,7 @@ export const Fahigkeiten = {
         word: "Freundschaft",
         text: "Eine gute _________ ist wertvoll",
         sentence: "Eine gute Freundschaft ist wertvoll",
+        word_in_sentence:"Freundschaft",
         image_url: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2483,6 +2496,7 @@ export const Fahigkeiten = {
         word: "Verantwortung",
         text: "Er übernimmt die volle __________",
         sentence: "Er übernimmt die volle Verantwortung",
+        word_in_sentence:"Verantwortung",
         image_url: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2528,6 +2542,7 @@ export const Fahigkeiten = {
         word: "Gesellschaft",
         text: "Die moderne _________ verändert sich schnell",
         sentence: "Die moderne Gesellschaft verändert sich schnell",
+        word_in_sentence:"Gesellschaft",
         image_url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2573,6 +2588,7 @@ export const Fahigkeiten = {
         word: "Entwicklung",
         text: "Die __________ der Technologie ist beeindruckend",
         sentence: "Die Entwicklung der Technologie ist beeindruckend",
+        word_in_sentence:"Entwicklung",
         image_url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2618,6 +2634,7 @@ export const Fahigkeiten = {
         word: "Herausforderung",
         text: "Das ist eine große ____________",
         sentence: "Das ist eine große Herausforderung",
+        word_in_sentence:"Herausforderung",
         image_url: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2663,6 +2680,7 @@ export const Fahigkeiten = {
         word: "Möglichkeit",
         text: "Es gibt viele __________",
         sentence: "Es gibt viele Möglichkeiten",
+        word_in_sentence:"Möglichkeiten",
         image_url: "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2711,6 +2729,7 @@ export const Fahigkeiten = {
         word: "Nachhaltigkeit",
         text: "__________ ist ein wichtiges Thema",
         sentence: "Nachhaltigkeit ist ein wichtiges Thema",
+        word_in_sentence:"Nachhaltigkeit",
         image_url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2756,6 +2775,7 @@ export const Fahigkeiten = {
         word: "Globalisierung",
         text: "Die _____________ beeinflusst alle Länder",
         sentence: "Die Globalisierung beeinflusst alle Länder",
+        word_in_sentence:"Globalisierung",
         image_url: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2801,6 +2821,7 @@ export const Fahigkeiten = {
         word: "Kompromiss",
         text: "Wir müssen einen _________ finden",
         sentence: "Wir müssen einen Kompromiss finden",
+        word_in_sentence:"Kompromiss",
         image_url: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2846,6 +2867,7 @@ export const Fahigkeiten = {
         word: "Kreativität",
         text: "_________ ist in diesem Beruf wichtig",
         sentence: "Kreativität ist in diesem Beruf wichtig",
+        word_in_sentence:"Kreativität",
         image_url: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2891,6 +2913,7 @@ export const Fahigkeiten = {
         word: "Effizienz",
         text: "Die ________ des Systems wurde verbessert",
         sentence: "Die Effizienz des Systems wurde verbessert",
+        word_in_sentence:"Effizienz",
         image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2939,6 +2962,7 @@ export const Fahigkeiten = {
         word: "Paradigmenwechsel",
         text: "Ein ______________ ist notwendig",
         sentence: "Ein Paradigmenwechsel ist notwendig",
+        word_in_sentence:"Paradigmenwechsel",
         image_url: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -2984,6 +3008,7 @@ export const Fahigkeiten = {
         word: "Ambivalenz",
         text: "Die ________ seiner Gefühle war deutlich",
         sentence: "Die Ambivalenz seiner Gefühle war deutlich",
+        word_in_sentence:"Ambivalenz",
         image_url: "https://images.unsplash.com/photo-1553708881-112abc53fe54?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -3029,6 +3054,7 @@ export const Fahigkeiten = {
         word: "Interdisziplinär",
         text: "Der Ansatz ist ____________",
         sentence: "Der Ansatz ist interdisziplinär",
+        word_in_sentence:"Ansatz",
         image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -3074,6 +3100,7 @@ export const Fahigkeiten = {
         word: "Kontroverse",
         text: "Diese _________ dauert schon Jahre",
         sentence: "Diese Kontroverse dauert schon Jahre",
+        word_in_sentence:"Kontroverse",
         image_url: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -3119,6 +3146,7 @@ export const Fahigkeiten = {
         word: "Dialektik",
         text: "Die ________ zwischen Theorie und Praxis",
         sentence: "Die Dialektik zwischen Theorie und Praxis",
+        word_in_sentence:"Dialektik",
         image_url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -3167,6 +3195,7 @@ export const Fahigkeiten = {
         word: "Epistemologie",
         text: "Die ____________ beschäftigt sich mit Erkenntnistheorie",
         sentence: "Die Epistemologie beschäftigt sich mit Erkenntnistheorie",
+        word_in_sentence:"Epistemologie",
         image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop&crop=face",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -3212,6 +3241,7 @@ export const Fahigkeiten = {
         word: "Hermeneutik",
         text: "Die __________ ist eine Interpretationslehre",
         sentence: "Die Hermeneutik ist eine Interpretationslehre",
+        word_in_sentence:"Hermeneutik",
         image_url: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -3257,6 +3287,7 @@ export const Fahigkeiten = {
         word: "Phänomenologie",
         text: "Die _____________ untersucht Bewusstseinsphänomene",
         sentence: "Die Phänomenologie untersucht Bewusstseinsphänomene",
+        word_in_sentence:"Phänomenologie",
         image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -3302,6 +3333,7 @@ export const Fahigkeiten = {
         word: "Ontologie",
         text: "Die ________ fragt nach dem Sein",
         sentence: "Die Ontologie fragt nach dem Sein",
+        word_in_sentence:"Ontologie",
         image_url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -3347,6 +3379,7 @@ export const Fahigkeiten = {
         word: "Heuristik",
         text: "Diese ________ führt zu schnellen Lösungen",
         sentence: "Diese Heuristik führt zu schnellen Lösungen",
+        word_in_sentence:"Heuristik",
         image_url: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=500&h=500&fit=crop",
         audio_url:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
         word_languages_explanations: {
@@ -3395,6 +3428,24 @@ export const Fahigkeiten = {
         id: "grA11",
         well_Answered: false,
         Text: "Die Possessivpronomen (Besitzanzeigende Fürwörter) zeigen an, wem etwas gehört. Sie richten sich nach der Person (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) und werden wie Adjektive dekliniert. Im Nominativ Maskulinum: mein Vater, im Akkusativ: meinen Vater.",
+        text_language_explanations: {
+          FR: "Les pronoms possessifs (mots indiquant la possession) montrent à qui appartient quelque chose. Ils s'accordent avec la personne (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) et se déclinent comme les adjectifs. Au nominatif masculin : mein Vater, à l'accusatif : meinen Vater.",
+          EN: "Possessive pronouns (words indicating possession) show who something belongs to. They correspond to the person (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) and are declined like adjectives. In nominative masculine: mein Vater, in accusative: meinen Vater.",
+          ES: "Los pronombres posesivos (palabras que indican posesión) muestran a quién pertenece algo. Se corresponden con la persona (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) y se declinan como los adjetivos. En nominativo masculino: mein Vater, en acusativo: meinen Vater.",
+          PT: "Os pronomes possessivos (palavras que indicam posse) mostram a quem algo pertence. Eles correspondem à pessoa (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) e declinam-se como adjetivos. No nominativo masculino: mein Vater, no acusativo: meinen Vater.",
+          PL: "Zaimki dzierżawcze (słowa wskazujące posiadanie) pokazują, do kogo coś należy. Odpowiadają osobie (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) i odmieniają się jak przymiotniki. W mianowniku rodzaju męskiego: mein Vater, w bierniku: meinen Vater.",
+          RU: "Притяжательные местоимения (слова, обозначающие принадлежность) показывают, кому что-то принадлежит. Они соответствуют лицу (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) и склоняются как прилагательные. В именительном падеже мужского рода: mein Vater, в винительном: meinen Vater.",
+          TR: "İyelik zamirleri (sahipliği gösteren kelimeler) bir şeyin kime ait olduğunu gösterir. Kişiye göre değişir (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) ve sıfatlar gibi çekimlenir. Yalın halde eril: mein Vater, belirtme halde: meinen Vater.",
+          IT: "I pronomi possessivi (parole che indicano possesso) mostrano a chi appartiene qualcosa. Corrispondono alla persona (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) e si declinano come gli aggettivi. Al nominativo maschile: mein Vater, all'accusativo: meinen Vater.",
+          UK: "Присвійні займенники (слова, що вказують на належність) показують, кому щось належить. Вони відповідають особі (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) і відмінюються як прикметники. У називному відмінку чоловічого роду: mein Vater, у знахідному: meinen Vater.",
+          VI: "Đại từ sở hữu (từ chỉ sự sở hữu) cho biết cái gì thuộc về ai. Chúng tương ứng với ngôi (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) và biến đổi như tính từ. Ở chủ cách giống đực: mein Vater, ở đối cách: meinen Vater.",
+          TL: "Ang mga possessive pronoun (mga salitang nagpapahiwatig ng pagmamay-ari) ay nagpapakita kung kanino ang isang bagay. Tumutugma sila sa tao (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) at nagbabago tulad ng mga pang-uri. Sa nominative masculine: mein Vater, sa accusative: meinen Vater.",
+          ZH: "物主代词（表示所属关系的词）显示某物属于谁。它们根据人称变化（ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr），像形容词一样变格。阳性主格：mein Vater，宾格：meinen Vater。",
+          ID: "Kata ganti kepunyaan (kata yang menunjukkan kepemilikan) menunjukkan milik siapa sesuatu. Mereka sesuai dengan orang (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) dan dideklinasi seperti kata sifat. Dalam nominativ maskulin: mein Vater, dalam akusativ: meinen Vater.",
+          TH: "สรรพนามแสดงความเป็นเจ้าของ (คำที่แสดงการครอบครอง) แสดงให้เห็นว่าสิ่งใดเป็นของใคร พวกมันสอดคล้องกับบุคคล (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) และผันเหมือนคำคุณศัพท์ ใน nominative masculine: mein Vater, ใน accusative: meinen Vater",
+          MS: "Kata ganti nama pemilikan (perkataan yang menunjukkan pemilikan) menunjukkan kepunyaan siapa sesuatu. Ia bersesuaian dengan orang (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) dan dideklinasi seperti kata sifat. Dalam kes nominativ maskulin: mein Vater, dalam akusativ: meinen Vater.",
+          AR: "ضمائر الملكية (كلمات تشير إلى الملكية) تبين لمن ينتمي الشيء. تتطابق مع الشخص (ich → mein, du → dein, er → sein, sie → ihr, wir → unser, ihr → euer, sie/Sie → ihr/Ihr) وتتصرف مثل الصفات. في حالة الفاعل المذكر: mein Vater، في حالة المفعول به: meinen Vater."
+        },
         questions: [
           {
             title: "Er spielt mit ____ Vater.",
@@ -3460,6 +3511,24 @@ export const Fahigkeiten = {
         id: "grA12",
         well_Answered: false,
         Text: "Die Artikel (der, die, das) zeigen das Geschlecht der Nomen an. Im Deutschen gibt es drei Geschlechter: maskulin (der), feminin (die) und neutral (das). Die Artikel verändern sich je nach Fall: Nominativ (der/die/das), Akkusativ (den/die/das), Dativ (dem/der/dem), Genitiv (des/der/des).",
+        text_language_explanations: {
+          FR: "Les articles (der, die, das) indiquent le genre des noms. En allemand, il y a trois genres : masculin (der), féminin (die) et neutre (das). Les articles changent selon le cas : nominatif (der/die/das), accusatif (den/die/das), datif (dem/der/dem), génitif (des/der/des).",
+          EN: "The articles (der, die, das) indicate the gender of nouns. In German, there are three genders: masculine (der), feminine (die) and neuter (das). The articles change according to case: nominative (der/die/das), accusative (den/die/das), dative (dem/der/dem), genitive (des/der/des).",
+          ES: "Los artículos (der, die, das) indican el género de los sustantivos. En alemán hay tres géneros: masculino (der), femenino (die) y neutro (das). Los artículos cambian según el caso: nominativo (der/die/das), acusativo (den/die/das), dativo (dem/der/dem), genitivo (des/der/des).",
+          PT: "Os artigos (der, die, das) indicam o gênero dos substantivos. Em alemão há três gêneros: masculino (der), feminino (die) e neutro (das). Os artigos mudam conforme o caso: nominativo (der/die/das), acusativo (den/die/das), dativo (dem/der/dem), genitivo (des/der/des).",
+          PL: "Rodzajniki (der, die, das) wskazują rodzaj rzeczowników. W niemieckim są trzy rodzaje: męski (der), żeński (die) i nijaki (das). Rodzajniki zmieniają się w zależności od przypadka: mianownik (der/die/das), biernik (den/die/das), celownik (dem/der/dem), dopełniacz (des/der/des).",
+          RU: "Артикли (der, die, das) показывают род существительных. В немецком языке есть три рода: мужской (der), женский (die) и средний (das). Артикли изменяются по падежам: именительный (der/die/das), винительный (den/die/das), дательный (dem/der/dem), родительный (des/der/des).",
+          TR: "Artikeller (der, die, das) isimlerin cinsiyetini gösterir. Almancada üç cinsiyet vardır: eril (der), dişil (die) ve nötr (das). Artikeller duruma göre değişir: yalın (der/die/das), belirtme (den/die/das), yönelme (dem/der/dem), ilgi (des/der/des).",
+          IT: "Gli articoli (der, die, das) indicano il genere dei sostantivi. In tedesco ci sono tre generi: maschile (der), femminile (die) e neutro (das). Gli articoli cambiano secondo il caso: nominativo (der/die/das), accusativo (den/die/das), dativo (dem/der/dem), genitivo (des/der/des).",
+          UK: "Артиклі (der, die, das) вказують на рід іменників. У німецькій мові є три роди: чоловічий (der), жіночий (die) та середній (das). Артиклі змінюються за відмінками: називний (der/die/das), знахідний (den/die/das), давальний (dem/der/dem), родовий (des/der/des).",
+          VI: "Các mạo từ (der, die, das) chỉ giới tính của danh từ. Trong tiếng Đức có ba giới tính: giống đực (der), giống cái (die) và trung tính (das). Các mạo từ thay đổi theo cách: chủ cách (der/die/das), đối cách (den/die/das), cho cách (dem/der/dem), sở hữu cách (des/der/des).",
+          TL: "Ang mga artikulo (der, die, das) ay nagpapahiwatig ng kasarian ng mga pangngalan. Sa Aleman, may tatlong kasarian: masculine (der), feminine (die) at neuter (das). Ang mga artikulo ay nagbabago ayon sa kaso: nominative (der/die/das), accusative (den/die/das), dative (dem/der/dem), genitive (des/der/des).",
+          ZH: "冠词（der, die, das）表示名词的性别。德语有三个性别：阳性（der）、阴性（die）和中性（das）。冠词根据格变变化：主格（der/die/das）、宾格（den/die/das）、与格（dem/der/dem）、属格（des/der/des）。",
+          ID: "Artikel (der, die, das) menunjukkan jenis kelamin kata benda. Dalam bahasa Jerman ada tiga jenis kelamin: maskulin (der), feminin (die) dan netral (das). Artikel berubah sesuai kasus: nominativ (der/die/das), akusativ (den/die/das), dativ (dem/der/dem), genitiv (des/der/des).",
+          TH: "คำกำหนด (der, die, das) บ่งบอกเพศของคำนาม ในภาษาเยอรมันมี 3 เพศ: เพศชาย (der), เพศหญิง (die) และเพศกลาง (das) คำกำหนดเปลี่ยนตาม case: nominative (der/die/das), accusative (den/die/das), dative (dem/der/dem), genitive (des/der/des)",
+          MS: "Artikel (der, die, das) menunjukkan jantina kata nama. Dalam bahasa Jerman terdapat tiga jantina: maskulin (der), feminin (die) dan neutral (das). Artikel berubah mengikut kes: nominativ (der/die/das), akusativ (den/die/das), dativ (dem/der/dem), genitiv (des/der/des).",
+          AR: "أدوات التعريف (der, die, das) تشير إلى جنس الأسماء. في الألمانية هناك ثلاثة أجناس: مذكر (der)، مؤنث (die) ومحايد (das). الأدوات تتغير حسب الحالة: الفاعل (der/die/das)، المفعول به المباشر (den/die/das)، المفعول به غير المباشر (dem/der/dem)، الإضافة (des/der/des)."
+        },
         questions: [
           {
             title: "Ich kaufe ____ Buch.",
@@ -3496,6 +3565,24 @@ export const Fahigkeiten = {
         id: "grA13",
         well_Answered: false,
         Text: "Die Präpositionen bestimmen den Fall des folgenden Nomens. Einige Präpositionen verlangen immer den Dativ (mit, nach, aus, zu, von, bei, seit), andere immer den Akkusativ (durch, für, gegen, ohne, um). Wechselpräpositionen (an, auf, hinter, in, neben, über, unter, vor, zwischen) verwenden Dativ für 'wo?' und Akkusativ für 'wohin?'.",
+        text_language_explanations: {
+          FR: "Les prépositions déterminent le cas du nom qui suit. Certaines prépositions demandent toujours le datif (mit, nach, aus, zu, von, bei, seit), d'autres toujours l'accusatif (durch, für, gegen, ohne, um). Les prépositions mixtes (an, auf, hinter, in, neben, über, unter, vor, zwischen) utilisent le datif pour 'où ?' et l'accusatif pour 'vers où ?'.",
+          EN: "Prepositions determine the case of the following noun. Some prepositions always require the dative (mit, nach, aus, zu, von, bei, seit), others always the accusative (durch, für, gegen, ohne, um). Two-way prepositions (an, auf, hinter, in, neben, über, unter, vor, zwischen) use dative for 'where?' and accusative for 'where to?'.",
+          ES: "Las preposiciones determinan el caso del sustantivo siguiente. Algunas preposiciones siempre requieren dativo (mit, nach, aus, zu, von, bei, seit), otras siempre acusativo (durch, für, gegen, ohne, um). Las preposiciones mixtas (an, auf, hinter, in, neben, über, unter, vor, zwischen) usan dativo para '¿dónde?' y acusativo para '¿adónde?'.",
+          PT: "As preposições determinam o caso do substantivo seguinte. Algumas preposições sempre requerem dativo (mit, nach, aus, zu, von, bei, seit), outras sempre acusativo (durch, für, gegen, ohne, um). As preposições mistas (an, auf, hinter, in, neben, über, unter, vor, zwischen) usam dativo para 'onde?' e acusativo para 'para onde?'.",
+          PL: "Przyimki określają przypadek następującego rzeczownika. Niektóre przyimki zawsze wymagają celownika (mit, nach, aus, zu, von, bei, seit), inne zawsze biernika (durch, für, gegen, ohne, um). Przyimki przemieszne (an, auf, hinter, in, neben, über, unter, vor, zwischen) używają celownika dla 'gdzie?' i biernika dla 'dokąd?'.",
+          RU: "Предлоги определяют падеж следующего существительного. Некоторые предлоги всегда требуют дательного падежа (mit, nach, aus, zu, von, bei, seit), другие всегда винительного (durch, für, gegen, ohne, um). Переменные предлоги (an, auf, hinter, in, neben, über, unter, vor, zwischen) используют дательный для 'где?' и винительный для 'куда?'.",
+          TR: "Edatlar takip eden ismin durumunu belirler. Bazı edatlar her zaman datif ister (mit, nach, aus, zu, von, bei, seit), diğerleri her zaman akuzatif (durch, für, gegen, ohne, um). Değişken edatlar (an, auf, hinter, in, neben, über, unter, vor, zwischen) 'nerede?' için datif, 'nereye?' için akuzatif kullanır.",
+          IT: "Le preposizioni determinano il caso del sostantivo seguente. Alcune preposizioni richiedono sempre il dativo (mit, nach, aus, zu, von, bei, seit), altre sempre l'accusativo (durch, für, gegen, ohne, um). Le preposizioni miste (an, auf, hinter, in, neben, über, unter, vor, zwischen) usano il dativo per 'dove?' e l'accusativo per 'verso dove?'.",
+          UK: "Прийменники визначають відмінок наступного іменника. Деякі прийменники завжди вимагають давального відмінка (mit, nach, aus, zu, von, bei, seit), інші завжди знахідного (durch, für, gegen, ohne, um). Змінні прийменники (an, auf, hinter, in, neben, über, unter, vor, zwischen) використовують давальний для 'де?' та знахідний для 'куди?'.",
+          VI: "Các giới từ xác định cách của danh từ theo sau. Một số giới từ luôn cần cho cách (mit, nach, aus, zu, von, bei, seit), những giới từ khác luôn cần đối cách (durch, für, gegen, ohne, um). Các giới từ thay đổi (an, auf, hinter, in, neben, über, unter, vor, zwischen) dùng cho cách cho 'ở đâu?' và đối cách cho 'đến đâu?'.",
+          TL: "Ang mga preposisyon ay tumutukoy sa kaso ng sumusunod na pangngalan. Ang ilang preposisyon ay palaging nangangailangan ng dative (mit, nach, aus, zu, von, bei, seit), ang iba naman ay accusative (durch, für, gegen, ohne, um). Ang mga two-way prepositions (an, auf, hinter, in, neben, über, unter, vor, zwischen) ay gumagamit ng dative para sa 'saan?' at accusative para sa 'saan patungo?'.",
+          ZH: "介词决定后续名词的格。有些介词总是要求与格（mit, nach, aus, zu, von, bei, seit），其他总是要求宾格（durch, für, gegen, ohne, um）。双向介词（an, auf, hinter, in, neben, über, unter, vor, zwischen）对'在哪里？'用与格，对'去哪里？'用宾格。",
+          ID: "Preposisi menentukan kasus kata benda yang mengikuti. Beberapa preposisi selalu memerlukan dativ (mit, nach, aus, zu, von, bei, seit), yang lain selalu akusativ (durch, für, gegen, ohne, um). Preposisi dua arah (an, auf, hinter, in, neben, über, unter, vor, zwischen) menggunakan dativ untuk 'di mana?' dan akusativ untuk 'ke mana?'.",
+          TH: "คำบุพบทกำหนด case ของคำนามที่ตาม บางคำบุพบทต้องการ dative เสมอ (mit, nach, aus, zu, von, bei, seit) บางคำต้องการ accusative เสมอ (durch, für, gegen, ohne, um) คำบุพบทสองทิศทาง (an, auf, hinter, in, neben, über, unter, vor, zwischen) ใช้ dative สำหรับ 'ที่ไหน?' และ accusative สำหรับ 'ไปไหน?'",
+          MS: "Kata sendi menentukan kes kata nama yang berikut. Sesetengah kata sendi sentiasa memerlukan dativ (mit, nach, aus, zu, von, bei, seit), yang lain sentiasa akusativ (durch, für, gegen, ohne, um). Kata sendi dua hala (an, auf, hinter, in, neben, über, unter, vor, zwischen) menggunakan dativ untuk 'di mana?' dan akusativ untuk 'ke mana?'.",
+          AR: "حروف الجر تحدد حالة الاسم التالي. بعض حروف الجر تتطلب دائماً حالة المفعول به غير المباشر (mit, nach, aus, zu, von, bei, seit)، وأخرى تتطلب دائماً المفعول به المباشر (durch, für, gegen, ohne, um). حروف الجر المتغيرة (an, auf, hinter, in, neben, über, unter, vor, zwischen) تستخدم المفعول به غير المباشر لـ'أين؟' والمفعول به المباشر لـ'إلى أين؟'."
+        },
         questions: [
           {
             title: "Das Bild hängt an ____ Wand.",
@@ -3527,13 +3614,31 @@ export const Fahigkeiten = {
             },
           },
         ],
-      },
+      }
     ],
     A2: [
       {
         id: "grA21",
         well_Answered: false,
         Text: "Die Adjektivdeklination richtet sich nach dem Artikel vor dem Adjektiv. Nach dem bestimmten Artikel (der/die/das) haben Adjektive meist die Endung -e oder -en (schwache Deklination). Nach dem unbestimmten Artikel (ein/eine/ein) übernimmt das Adjektiv teilweise die Artikelendung (gemischte Deklination). Ohne Artikel hat das Adjektiv die Artikelendung (starke Deklination).",
+        text_language_explanations: {
+          FR: "La déclinaison des adjectifs dépend de l'article qui précède l'adjectif. Après l'article défini (der/die/das), les adjectifs ont généralement la terminaison -e ou -en (déclinaison faible). Après l'article indéfini (ein/eine/ein), l'adjectif reprend partiellement la terminaison de l'article (déclinaison mixte). Sans article, l'adjectif a la terminaison de l'article (déclinaison forte).",
+          EN: "Adjective declension depends on the article before the adjective. After the definite article (der/die/das), adjectives usually have the ending -e or -en (weak declension). After the indefinite article (ein/eine/ein), the adjective partially takes over the article ending (mixed declension). Without an article, the adjective has the article ending (strong declension).",
+          ES: "La declinación de los adjetivos depende del artículo que precede al adjetivo. Después del artículo definido (der/die/das), los adjetivos generalmente tienen la terminación -e o -en (declinación débil). Después del artículo indefinido (ein/eine/ein), el adjetivo toma parcialmente la terminación del artículo (declinación mixta). Sin artículo, el adjetivo tiene la terminación del artículo (declinación fuerte).",
+          PT: "A declinação dos adjetivos depende do artigo que precede o adjetivo. Após o artigo definido (der/die/das), os adjetivos geralmente têm a terminação -e ou -en (declinação fraca). Após o artigo indefinido (ein/eine/ein), o adjetivo assume parcialmente a terminação do artigo (declinação mista). Sem artigo, o adjetivo tem a terminação do artigo (declinação forte).",
+          PL: "Deklinacja przymiotników zależy od rodzajnika przed przymiotnikiem. Po rodzajniku określonym (der/die/das), przymiotniki mają zwykle końcówkę -e lub -en (deklinacja słaba). Po rodzajniku nieokreślonym (ein/eine/ein), przymiotnik częściowo przejmuje końcówkę rodzajnika (deklinacja mieszana). Bez rodzajnika przymiotnik ma końcówkę rodzajnika (deklinacja mocna).",
+          RU: "Склонение прилагательных зависит от артикля перед прилагательным. После определенного артикля (der/die/das) прилагательные обычно имеют окончание -e или -en (слабое склонение). После неопределенного артикля (ein/eine/ein) прилагательное частично принимает окончание артикля (смешанное склонение). Без артикля прилагательное имеет окончание артикля (сильное склонение).",
+          TR: "Sıfat çekimi, sıfattan önceki artikele bağlıdır. Belirli artikelden (der/die/das) sonra sıfatlar genellikle -e veya -en son ekini alır (zayıf çekim). Belirsiz artikelden (ein/eine/ein) sonra sıfat kısmen artikel son ekini alır (karışık çekim). Artikel olmadan sıfat, artikel son ekini alır (güçlü çekim).",
+          IT: "La declinazione degli aggettivi dipende dall'articolo davanti all'aggettivo. Dopo l'articolo determinativo (der/die/das), gli aggettivi hanno generalmente la desinenza -e o -en (declinazione debole). Dopo l'articolo indeterminativo (ein/eine/ein), l'aggettivo assume parzialmente la desinenza dell'articolo (declinazione mista). Senza articolo, l'aggettivo ha la desinenza dell'articolo (declinazione forte).",
+          UK: "Відмінювання прикметників залежить від артикля перед прикметником. Після означеного артикля (der/die/das) прикметники зазвичай мають закінчення -e або -en (слабке відмінювання). Після неозначеного артикля (ein/eine/ein) прикметник частково бере закінчення артикля (змішане відмінювання). Без артикля прикметник має закінчення артикля (сильне відмінювання).",
+          VI: "Sự biến đổi của tính từ phụ thuộc vào mạo từ trước tính từ. Sau mạo từ xác định (der/die/das), tính từ thường có đuôi -e hoặc -en (biến đổi yếu). Sau mạo từ không xác định (ein/eine/ein), tính từ một phần lấy đuôi của mạo từ (biến đổi hỗn hợp). Không có mạo từ, tính từ có đuôi của mạo từ (biến đổi mạnh).",
+          TL: "Ang declension ng mga pang-uri ay umaasa sa artikulo bago ang pang-uri. Pagkatapos ng definite article (der/die/das), ang mga pang-uri ay karaniwang may ending na -e o -en (mahinang declension). Pagkatapos ng indefinite article (ein/eine/ein), ang pang-uri ay bahagyang kumukuha ng ending ng artikulo (mixed declension). Walang artikulo, ang pang-uri ay may ending ng artikulo (malakas na declension).",
+          ZH: "形容词变格取决于形容词前的冠词。在定冠词（der/die/das）后，形容词通常有词尾-e或-en（弱变格）。在不定冠词（ein/eine/ein）后，形容词部分承担冠词词尾（混合变格）。没有冠词时，形容词有冠词词尾（强变格）。",
+          ID: "Deklinasi adjektiva bergantung pada artikel sebelum adjektiva. Setelah artikel tertentu (der/die/das), adjektiva biasanya memiliki akhiran -e atau -en (deklinasi lemah). Setelah artikel tidak tentu (ein/eine/ein), adjektiva sebagian mengambil akhiran artikel (deklinasi campuran). Tanpa artikel, adjektiva memiliki akhiran artikel (deklinasi kuat).",
+          TH: "การผันคุณศัพท์ขึ้นอยู่กับคำกำหนดก่อนคุณศัพท์ หลังจากคำกำหนดแน่นอน (der/die/das) คุณศัพท์มักมีการสิ้นสุด -e หรือ -en (การผันแบบอ่อน) หลังจากคำกำหนดไม่แน่นอน (ein/eine/ein) คุณศัพท์รับการสิ้นสุดของคำกำหนดบางส่วน (การผันแบบผสม) ไม่มีคำกำหนด คุณศัพท์มีการสิ้นสุดของคำกำหนด (การผันแบบแข็ง)",
+          MS: "Deklinasi adjektif bergantung pada artikel sebelum adjektif. Selepas artikel tentu (der/die/das), adjektif biasanya mempunyai akhiran -e atau -en (deklinasi lemah). Selepas artikel tidak tentu (ein/eine/ein), adjektif sebahagiannya mengambil akhiran artikel (deklinasi campuran). Tanpa artikel, adjektif mempunyai akhiran artikel (deklinasi kuat).",
+          AR: "تصريف الصفات يعتمد على أداة التعريف قبل الصفة. بعد أداة التعريف المحددة (der/die/das)، الصفات عادة لها النهاية -e أو -en (التصريف الضعيف). بعد أداة التعريف غير المحددة (ein/eine/ein)، الصفة تأخذ جزئياً نهاية الأداة (التصريف المختلط). بدون أداة، الصفة لها نهاية الأداة (التصريف القوي)."
+        },
         questions: [
           {
             title: "Ich sehe einen ____ Mann.",
@@ -3570,6 +3675,24 @@ export const Fahigkeiten = {
         id: "grA22",
         well_Answered: false,
         Text: "Die Modalverben (können, müssen, dürfen, sollen, wollen, mögen) drücken die Art und Weise aus, wie eine Handlung ausgeführt wird. Sie stehen meist mit einem Infinitiv am Satzende. Die Modalverben werden konjugiert, der Infinitiv bleibt unverändert. Beispiel: Ich kann schwimmen. Du musst arbeiten.",
+        text_language_explanations: {
+          FR: "Les verbes modaux (können, müssen, dürfen, sollen, wollen, mögen) expriment la manière dont une action est exécutée. Ils sont généralement accompagnés d'un infinitif en fin de phrase. Les verbes modaux sont conjugués, l'infinitif reste inchangé. Exemple: Ich kann schwimmen. Du musst arbeiten.",
+          EN: "Modal verbs (können, müssen, dürfen, sollen, wollen, mögen) express the manner in which an action is performed. They usually stand with an infinitive at the end of the sentence. Modal verbs are conjugated, the infinitive remains unchanged. Example: Ich kann schwimmen. Du musst arbeiten.",
+          ES: "Los verbos modales (können, müssen, dürfen, sollen, wollen, mögen) expresan la manera en que se ejecuta una acción. Generalmente van con un infinitivo al final de la oración. Los verbos modales se conjugan, el infinitivo permanece sin cambios. Ejemplo: Ich kann schwimmen. Du musst arbeiten.",
+          PT: "Os verbos modais (können, müssen, dürfen, sollen, wollen, mögen) expressam a maneira como uma ação é executada. Eles geralmente aparecem com um infinitivo no final da frase. Os verbos modais são conjugados, o infinitivo permanece inalterado. Exemplo: Ich kann schwimmen. Du musst arbeiten.",
+          PL: "Czasowniki modalne (können, müssen, dürfen, sollen, wollen, mögen) wyrażają sposób, w jaki wykonywana jest czynność. Zazwyczaj występują z bezokolicznikiem na końcu zdania. Czasowniki modalne są koniugowane, bezokolicznik pozostaje niezmieniony. Przykład: Ich kann schwimmen. Du musst arbeiten.",
+          RU: "Модальные глаголы (können, müssen, dürfen, sollen, wollen, mögen) выражают способ выполнения действия. Они обычно стоят с инфинитивом в конце предложения. Модальные глаголы спрягаются, инфинитив остается неизменным. Пример: Ich kann schwimmen. Du musst arbeiten.",
+          TR: "Modal fiiller (können, müssen, dürfen, sollen, wollen, mögen) bir eylemin nasıl gerçekleştirildiğini ifade eder. Genellikle cümle sonunda bir mastar ile bulunurlar. Modal fiiller çekimlenir, mastar değişmez kalır. Örnek: Ich kann schwimmen. Du musst arbeiten.",
+          IT: "I verbi modali (können, müssen, dürfen, sollen, wollen, mögen) esprimono il modo in cui un'azione viene eseguita. Di solito stanno con un infinito alla fine della frase. I verbi modali sono coniugati, l'infinito rimane invariato. Esempio: Ich kann schwimmen. Du musst arbeiten.",
+          UK: "Модальні дієслова (können, müssen, dürfen, sollen, wollen, mögen) виражають спосіб виконання дії. Вони зазвичай стоять з інфінітивом в кінці речення. Модальні дієслова відмінюються, інфінітив залишається незмінним. Приклад: Ich kann schwimmen. Du musst arbeiten.",
+          VI: "Các động từ tình thái (können, müssen, dürfen, sollen, wollen, mögen) thể hiện cách thức thực hiện một hành động. Chúng thường đứng với một động từ nguyên mẫu ở cuối câu. Các động từ tình thái được chia, động từ nguyên mẫu không thay đổi. Ví dụ: Ich kann schwimmen. Du musst arbeiten.",
+          TL: "Ang mga modal verb (können, müssen, dürfen, sollen, wollen, mögen) ay nagpapahayag ng paraan kung paano ginagawa ang isang aksyon. Karaniwang kasama nila ang infinitive sa dulo ng pangungusap. Ang mga modal verb ay naka-conjugate, ang infinitive ay nananatiling hindi nagbabago. Halimbawa: Ich kann schwimmen. Du musst arbeiten.",
+          ZH: "情态动词（können, müssen, dürfen, sollen, wollen, mögen）表达动作执行的方式。它们通常与句末的不定式连用。情态动词要变位，不定式保持不变。例如：Ich kann schwimmen. Du musst arbeiten。",
+          ID: "Kata kerja modal (können, müssen, dürfen, sollen, wollen, mögen) mengekspresikan cara suatu tindakan dilakukan. Mereka biasanya berdiri dengan infinitif di akhir kalimat. Kata kerja modal dikonjugasi, infinitif tetap tidak berubah. Contoh: Ich kann schwimmen. Du musst arbeiten.",
+          TH: "Modal verbs (können, müssen, dürfen, sollen, wollen, mögen) แสดงถึงลักษณะการกระทำ พวกมันมักอยู่กับ infinitive ที่ท้ายประโยค Modal verbs ต้องผันคำกริยา infinitive ไม่เปลี่ยน ตัวอย่าง: Ich kann schwimmen. Du musst arbeiten",
+          MS: "Kata kerja modal (können, müssen, dürfen, sollen, wollen, mögen) menyatakan cara sesuatu tindakan dilakukan. Mereka biasanya berdiri dengan infinitif di akhir ayat. Kata kerja modal dikonjugasi, infinitif kekal tidak berubah. Contoh: Ich kann schwimmen. Du musst arbeiten.",
+          AR: "الأفعال الناقصة (können, müssen, dürfen, sollen, wollen, mögen) تعبر عن طريقة تنفيذ الفعل. عادة ما تقف مع مصدر في نهاية الجملة. الأفعال الناقصة تُصرف، المصدر يبقى دون تغيير. مثال: Ich kann schwimmen. Du musst arbeiten."
+        },
         questions: [
           {
             title: "Er ____ heute nicht arbeiten.",
@@ -3606,6 +3729,24 @@ export const Fahigkeiten = {
         id: "grA23",
         well_Answered: false,
         Text: "Das Perfekt wird mit haben oder sein + Partizip II gebildet. Die meisten Verben bilden das Perfekt mit 'haben'. Verben der Bewegung und Zustandsveränderung verwenden 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Das Partizip II steht am Satzende.",
+        text_language_explanations: {
+          FR: "Le parfait se forme avec haben ou sein + participe II. La plupart des verbes forment le parfait avec 'haben'. Les verbes de mouvement et de changement d'état utilisent 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Le participe II se place en fin de phrase.",
+          EN: "The perfect tense is formed with haben or sein + past participle II. Most verbs form the perfect with 'haben'. Verbs of movement and change of state use 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). The past participle II stands at the end of the sentence.",
+          ES: "El perfecto se forma con haben o sein + participio II. La mayoría de los verbos forman el perfecto con 'haben'. Los verbos de movimiento y cambio de estado usan 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). El participio II va al final de la oración.",
+          PT: "O perfeito é formado com haben ou sein + particípio II. A maioria dos verbos forma o perfeito com 'haben'. Verbos de movimento e mudança de estado usam 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). O particípio II fica no final da frase.",
+          PL: "Perfekt tworzy się z haben lub sein + imiesłów II. Większość czasowników tworzy perfekt z 'haben'. Czasowniki ruchu i zmiany stanu używają 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Imiesłów II stoi na końcu zdania.",
+          RU: "Перфект образуется с haben или sein + причастие II. Большинство глаголов образуют перфект с 'haben'. Глаголы движения и изменения состояния используют 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Причастие II стоит в конце предложения.",
+          TR: "Perfekt, haben veya sein + sıfat-fiil II ile kurulur. Çoğu fiil perfekti 'haben' ile kurar. Hareket ve durum değişikliği fiilleri 'sein' kullanır (gehen → ich bin gegangen, werden → ich bin geworden). Sıfat-fiil II cümle sonunda durur.",
+          IT: "Il perfetto si forma con haben o sein + participio II. La maggior parte dei verbi forma il perfetto con 'haben'. I verbi di movimento e cambiamento di stato usano 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Il participio II sta alla fine della frase.",
+          UK: "Перфект утворюється з haben або sein + дієприкметник II. Більшість дієслів утворюють перфект з 'haben'. Дієслова руху та зміни стану використовують 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Дієприкметник II стоїть в кінці речення.",
+          VI: "Thì hoàn thành được tạo bằng haben hoặc sein + phân từ II. Hầu hết động từ tạo thì hoàn thành với 'haben'. Động từ chuyển động và thay đổi trạng thái dùng 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Phân từ II đứng ở cuối câu.",
+          TL: "Ang perfect tense ay binubuo gamit ang haben o sein + past participle II. Karamihan ng mga pandiwa ay bumubuo ng perfect gamit ang 'haben'. Ang mga pandiwa ng paggalaw at pagbabago ng estado ay gumagamit ng 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Ang past participle II ay nakatayo sa dulo ng pangungusap.",
+          ZH: "现在完成时用haben或sein + 过去分词II构成。大部分动词用'haben'构成完成时。运动动词和状态变化动词用'sein'(gehen → ich bin gegangen, werden → ich bin geworden)。过去分词II放在句末。",
+          ID: "Perfekt dibentuk dengan haben atau sein + partizip II. Sebagian besar kata kerja membentuk perfekt dengan 'haben'. Kata kerja gerakan dan perubahan keadaan menggunakan 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Partizip II berdiri di akhir kalimat.",
+          TH: "Perfect tense สร้างด้วย haben หรือ sein + past participle II กริยาส่วนใหญ่สร้าง perfect ด้วย 'haben' กริยาที่แสดงการเคลื่อนไหวและการเปลี่ยนสถานะใช้ 'sein' (gehen → ich bin gegangen, werden → ich bin geworden) Past participle II อยู่ที่ท้ายประโยค",
+          MS: "Perfekt dibentuk dengan haben atau sein + partizip II. Kebanyakan kata kerja membentuk perfekt dengan 'haben'. Kata kerja pergerakan dan perubahan keadaan menggunakan 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). Partizip II berdiri di akhir ayat.",
+          AR: "الماضي التام يُكون مع haben أو sein + اسم المفعول II. معظم الأفعال تكون الماضي التام مع 'haben'. أفعال الحركة وتغيير الحالة تستخدم 'sein' (gehen → ich bin gegangen, werden → ich bin geworden). اسم المفعول II يقف في نهاية الجملة."
+        },
         questions: [
           {
             title: "Ich ____ nach Hause gegangen.",
@@ -3637,13 +3778,31 @@ export const Fahigkeiten = {
             },
           },
         ],
-      },
+      }
     ],
     B1: [
       {
         id: "grB11",
         well_Answered: false,
         Text: "Die Relativpronomen (der, die, das, welcher, welche, welches) leiten Relativsätze ein und beziehen sich auf ein Nomen im Hauptsatz. Sie richten sich in Genus und Numerus nach dem Bezugswort, im Fall nach ihrer Funktion im Relativsatz. Beispiel: Der Mann, den ich sehe, ist mein Lehrer. (Akkusativ, weil Objekt im Relativsatz)",
+        text_language_explanations: {
+          FR: "Les pronoms relatifs (der, die, das, welcher, welche, welches) introduisent des propositions relatives et se rapportent à un nom dans la proposition principale. Ils s'accordent en genre et en nombre avec le mot de référence, en cas selon leur fonction dans la relative. Exemple: Der Mann, den ich sehe, ist mein Lehrer. (Accusatif, car objet dans la relative)",
+          EN: "Relative pronouns (der, die, das, welcher, welche, welches) introduce relative clauses and refer to a noun in the main clause. They agree in gender and number with the antecedent, in case according to their function in the relative clause. Example: Der Mann, den ich sehe, ist mein Lehrer. (Accusative, because object in the relative clause)",
+          ES: "Los pronombres relativos (der, die, das, welcher, welche, welches) introducen oraciones de relativo y se refieren a un sustantivo en la oración principal. Concuerdan en género y número con la palabra de referencia, en caso según su función en la relativa. Ejemplo: Der Mann, den ich sehe, ist mein Lehrer. (Acusativo, porque es objeto en la relativa)",
+          PT: "Os pronomes relativos (der, die, das, welcher, welche, welches) introduzem orações relativas e referem-se a um substantivo na oração principal. Concordam em gênero e número com a palavra de referência, em caso conforme sua função na relativa. Exemplo: Der Mann, den ich sehe, ist mein Lehrer. (Acusativo, porque é objeto na relativa)",
+          PL: "Zaimki względne (der, die, das, welcher, welche, welches) wprowadzają zdania względne i odnoszą się do rzeczownika w zdaniu głównym. Zgadzają się rodzajem i liczbą ze słowem odniesienia, przypadkiem według swojej funkcji w zdaniu względnym. Przykład: Der Mann, den ich sehe, ist mein Lehrer. (Biernik, bo dopełnienie w zdaniu względnym)",
+          RU: "Относительные местоимения (der, die, das, welcher, welche, welches) вводят придаточные предложения и относятся к существительному в главном предложении. Они согласуются в роде и числе с опорным словом, в падеже согласно их функции в придаточном. Пример: Der Mann, den ich sehe, ist mein Lehrer. (Винительный, так как дополнение в придаточном)",
+          TR: "İlgi zamirleri (der, die, das, welcher, welche, welches) sıfat cümlelerini başlatır ve ana cümledeki bir isme gönderme yapar. Referans kelimeyle cinsiyet ve sayıda, sıfat cümlesindeki işlevlerine göre durumda uyum sağlarlar. Örnek: Der Mann, den ich sehe, ist mein Lehrer. (Akuzatif, çünkü sıfat cümlesinde nesne)",
+          IT: "I pronomi relativi (der, die, das, welcher, welche, welches) introducono proposizioni relative e si riferiscono a un sostantivo nella proposizione principale. Concordano in genere e numero con la parola di riferimento, nel caso secondo la loro funzione nella relativa. Esempio: Der Mann, den ich sehe, ist mein Lehrer. (Accusativo, perché oggetto nella relativa)",
+          UK: "Відносні займенники (der, die, das, welcher, welche, welches) вводять підрядні означальні речення і відносяться до іменника в головному реченні. Вони узгоджуються в роді та числі з опорним словом, у відмінку згідно з їх функцією в підрядному. Приклад: Der Mann, den ich sehe, ist mein Lehrer. (Знахідний, бо додаток у підрядному)",
+          VI: "Đại từ quan hệ (der, die, das, welcher, welche, welches) dẫn nhập mệnh đề quan hệ và tham chiếu đến một danh từ trong mệnh đề chính. Chúng thống nhất về giống và số với từ tham chiếu, về cách theo chức năng của chúng trong mệnh đề quan hệ. Ví dụ: Der Mann, den ich sehe, ist mein Lehrer. (Đối cách, vì là tân ngữ trong mệnh đề quan hệ)",
+          TL: "Ang mga relative pronoun (der, die, das, welcher, welche, welches) ay nangunguna sa mga relative clause at tumutukoy sa isang pangngalan sa pangunahing pangungusap. Sumasang-ayon sila sa kasarian at bilang sa reference word, sa kaso ayon sa kanilang tungkulin sa relative clause. Halimbawa: Der Mann, den ich sehe, ist mein Lehrer. (Accusative, dahil object sa relative clause)",
+          ZH: "关系代词（der, die, das, welcher, welche, welches）引导关系从句并指向主句中的名词。它们在性和数上与先行词一致，在格上根据它们在关系从句中的功能。例如：Der Mann, den ich sehe, ist mein Lehrer。（宾格，因为是关系从句中的宾语）",
+          ID: "Kata ganti relatif (der, die, das, welcher, welche, welches) memperkenalkan klausa relatif dan merujuk pada kata benda dalam klausa utama. Mereka sesuai dalam jenis kelamin dan jumlah dengan kata acuan, dalam kasus sesuai fungsi mereka dalam klausa relatif. Contoh: Der Mann, den ich sehe, ist mein Lehrer. (Akusativ, karena objek dalam klausa relatif)",
+          TH: "สรรพนามสัมพันธ์ (der, die, das, welcher, welche, welches) นำหน้าประโยคสัมพันธ์และอ้างถึงคำนามในประโยคหลัก พวกมันสอดคล้องกันในเพศและจำนวนกับคำอ้างอิง ใน case ตามหน้าที่ในประโยคสัมพันธ์ ตัวอย่าง: Der Mann, den ich sehe, ist mein Lehrer (Accusative เพราะเป็น object ในประโยคสัมพันธ์)",
+          MS: "Kata ganti nama relatif (der, die, das, welcher, welche, welches) memperkenalkan klausa relatif dan merujuk kepada kata nama dalam klausa utama. Mereka bersetuju dalam jantina dan bilangan dengan perkataan rujukan, dalam kes mengikut fungsi mereka dalam klausa relatif. Contoh: Der Mann, den ich sehe, ist mein Lehrer. (Akusativ, kerana objek dalam klausa relatif)",
+          AR: "الضمائر الموصولة (der, die, das, welcher, welche, welches) تقدم الجمل الموصولة وتشير إلى اسم في الجملة الرئيسية. تتفق في الجنس والعدد مع الكلمة المرجعية، في الحالة حسب وظيفتها في الجملة الموصولة. مثال: Der Mann, den ich sehe, ist mein Lehrer. (المفعول المباشر، لأنه مفعول في الجملة الموصولة)"
+        },
         questions: [
           {
             title: "Das ist die Frau, ____ ich gestern getroffen habe.",
@@ -3680,6 +3839,24 @@ export const Fahigkeiten = {
         id: "grB12",
         well_Answered: false,
         Text: "Der Konjunktiv II drückt Irrealität, Höflichkeit oder Wünsche aus. Er wird mit würde + Infinitiv oder mit speziellen Konjunktiv-II-Formen gebildet. Starke Verben bekommen oft einen Umlaut: ich war → ich wäre, ich hatte → ich hätte. Bei schwachen Verben verwendet man meist würde + Infinitiv.",
+        text_language_explanations: {
+          FR: "Le subjonctif II exprime l'irréalité, la politesse ou les souhaits. Il se forme avec würde + infinitif ou avec des formes spéciales de subjonctif II. Les verbes forts prennent souvent un tréma : ich war → ich wäre, ich hatte → ich hätte. Pour les verbes faibles, on utilise généralement würde + infinitif.",
+          EN: "The subjunctive II expresses unreality, politeness or wishes. It is formed with würde + infinitive or with special subjunctive II forms. Strong verbs often get an umlaut: ich war → ich wäre, ich hatte → ich hätte. With weak verbs, würde + infinitive is usually used.",
+          ES: "El subjuntivo II expresa irrealidad, cortesía o deseos. Se forma con würde + infinitivo o con formas especiales de subjuntivo II. Los verbos fuertes a menudo reciben diéresis: ich war → ich wäre, ich hatte → ich hätte. Con verbos débiles se usa generalmente würde + infinitivo.",
+          PT: "O subjuntivo II expressa irrealidade, polidez ou desejos. É formado com würde + infinitivo ou com formas especiais de subjuntivo II. Verbos fortes frequentemente recebem trema: ich war → ich wäre, ich hatte → ich hätte. Com verbos fracos geralmente usa-se würde + infinitivo.",
+          PL: "Tryb łączący II wyraża nierealnośc, grzeczność lub życzenia. Tworzy się go z würde + bezokolicznik lub ze specjalnymi formami trybu łączącego II. Czasowniki mocne często dostają przegłos: ich war → ich wäre, ich hatte → ich hätte. Przy czasownikach słabych używa się zwykle würde + bezokolicznik.",
+          RU: "Конъюнктив II выражает нереальность, вежливость или пожелания. Он образуется с würde + инфинитив или со специальными формами конъюнктива II. Сильные глаголы часто получают умлаут: ich war → ich wäre, ich hatte → ich hätte. У слабых глаголов обычно используется würde + инфинитив.",
+          TR: "Konjunktiv II gerçek dışılık, nezaket veya istekleri ifade eder. würde + mastar veya özel Konjunktiv II formlarıyla kurulur. Güçlü fiiller genellikle sesli harf değişimi alır: ich war → ich wäre, ich hatte → ich hätte. Zayıf fiillerde genellikle würde + mastar kullanılır.",
+          IT: "Il congiuntivo II esprime irrealtà, cortesia o desideri. Si forma con würde + infinito o con forme speciali di congiuntivo II. I verbi forti spesso prendono la metafonesi: ich war → ich wäre, ich hatte → ich hätte. Con i verbi deboli si usa generalmente würde + infinito.",
+          UK: "Конъюнктив II виражає нереальність, ввічливість або бажання. Він утворюється з würde + інфінітив або зі спеціальними формами конъюнктива II. Сильні дієслова часто отримують умлаут: ich war → ich wäre, ich hatte → ich hätte. У слабких дієсловах зазвичай використовується würde + інфінітив.",
+          VI: "Thể giả định II thể hiện sự không thực, lịch sự hoặc ước muốn. Nó được tạo bằng würde + động từ nguyên mẫu hoặc với các dạng đặc biệt của thể giả định II. Động từ mạnh thường có dấu chấm trên: ich war → ich wäre, ich hatte → ich hätte. Với động từ yếu thường dùng würde + động từ nguyên mẫu.",
+          TL: "Ang subjunctive II ay nagpapahayag ng kawalang-totoo, kagalangan o mga nais. Ito ay nabubuo gamit ang würde + infinitive o gamit ang mga espesyal na anyo ng subjunctive II. Ang mga malakas na pandiwa ay madalas na nakakakuha ng umlaut: ich war → ich wäre, ich hatte → ich hätte. Sa mga mahinang pandiwa, ginagamit ang würde + infinitive.",
+          ZH: "第二虚拟式表达非现实、礼貌或愿望。它用würde + 不定式或特殊的第二虚拟式形式构成。强变化动词常常有变音：ich war → ich wäre, ich hatte → ich hätte。弱变化动词通常用würde + 不定式。",
+          ID: "Konjunktiv II mengekspresikan ketidaknyataan, kesopanan atau keinginan. Dibentuk dengan würde + infinitif atau dengan bentuk khusus Konjunktiv II. Kata kerja kuat sering mendapat umlaut: ich war → ich wäre, ich hatte → ich hätte. Pada kata kerja lemah biasanya menggunakan würde + infinitif.",
+          TH: "Subjunctive II แสดงความไม่เป็นจริง ความสุภาพ หรือความปรารถนา สร้างด้วย würde + infinitive หรือรูปแบบพิเศษของ subjunctive II กริยาเข้มแข็งมักได้ umlaut: ich war → ich wäre, ich hatte → ich hätte กริยาอ่อนแอมักใช้ würde + infinitive",
+          MS: "Subjungtif II menyatakan ketidaknyataan, kesopanan atau keinginan. Ia dibentuk dengan würde + infinitif atau dengan bentuk khas subjungtif II. Kata kerja kuat sering mendapat umlaut: ich war → ich wäre, ich hatte → ich hätte. Pada kata kerja lemah biasanya menggunakan würde + infinitif.",
+          AR: "صيغة التمني الثانية تعبر عن عدم الواقعية، الأدب أو الأمنيات. تُكون مع würde + مصدر أو بأشكال خاصة لصيغة التمني الثانية. الأفعال القوية غالباً ما تحصل على umlaut: ich war → ich wäre, ich hatte → ich hätte. مع الأفعال الضعيفة عادة ما يُستخدم würde + مصدر."
+        },
         questions: [
           {
             title: "Wenn ich Zeit ____, würde ich kommen.",
@@ -3716,6 +3893,24 @@ export const Fahigkeiten = {
         id: "grB13",
         well_Answered: false,
         Text: "Die Passivbildung erfolgt mit werden + Partizip II (Vorgangspassiv) oder sein + Partizip II (Zustandspassiv). Das Vorgangspassiv betont den Vorgang: Das Haus wird gebaut. Das Zustandspassiv betont das Ergebnis: Das Haus ist gebaut. Der Handelnde kann mit 'von' + Dativ genannt werden.",
+        text_language_explanations: {
+          FR: "La formation du passif se fait avec werden + participe II (passif d'action) ou sein + participe II (passif d'état). Le passif d'action souligne le processus : Das Haus wird gebaut. Le passif d'état souligne le résultat : Das Haus ist gebaut. L'agent peut être mentionné avec 'von' + datif.",
+          EN: "The passive is formed with werden + past participle II (process passive) or sein + past participle II (state passive). The process passive emphasizes the action: Das Haus wird gebaut. The state passive emphasizes the result: Das Haus ist gebaut. The agent can be mentioned with 'von' + dative.",
+          ES: "La formación de la pasiva se hace con werden + participio II (pasiva de proceso) o sein + participio II (pasiva de estado). La pasiva de proceso enfatiza la acción: Das Haus wird gebaut. La pasiva de estado enfatiza el resultado: Das Haus ist gebaut. El agente puede mencionarse con 'von' + dativo.",
+          PT: "A formação da passiva é feita com werden + particípio II (passiva de processo) ou sein + particípio II (passiva de estado). A passiva de processo enfatiza a ação: Das Haus wird gebaut. A passiva de estado enfatiza o resultado: Das Haus ist gebaut. O agente pode ser mencionado com 'von' + dativo.",
+          PL: "Tworzenie strony biernej odbywa się z werden + imiesłów II (strona bierna czynności) lub sein + imiesłów II (strona bierna stanu). Strona bierna czynności podkreśla działanie: Das Haus wird gebaut. Strona bierna stanu podkreśla wynik: Das Haus ist gebaut. Działający może być wymieniony z 'von' + celownik.",
+          RU: "Образование пассива происходит с werden + причастие II (пассив действия) или sein + причастие II (пассив состояния). Пассив действия подчеркивает процесс: Das Haus wird gebaut. Пассив состояния подчеркивает результат: Das Haus ist gebaut. Деятель может быть назван с 'von' + дательный падеж.",
+          TR: "Pasif yapım werden + sıfat-fiil II (eylem pasifi) veya sein + sıfat-fiil II (durum pasifi) ile olur. Eylem pasifi süreci vurgular: Das Haus wird gebaut. Durum pasifi sonucu vurgular: Das Haus ist gebaut. Eylemci 'von' + datif ile belirtilebilir.",
+          IT: "La formazione del passivo avviene con werden + participio II (passivo d'azione) o sein + participio II (passivo di stato). Il passivo d'azione enfatizza il processo: Das Haus wird gebaut. Il passivo di stato enfatizza il risultato: Das Haus ist gebaut. L'agente può essere menzionato con 'von' + dativo.",
+          UK: "Утворення пасиву відбувається з werden + дієприкметник II (пасив дії) або sein + дієприкметник II (пасив стану). Пасив дії підкреслює процес: Das Haus wird gebaut. Пасив стану підкреслює результат: Das Haus ist gebaut. Діяч може бути названий з 'von' + давальний відмінок.",
+          VI: "Việc tạo thể bị động thực hiện với werden + quá khứ phân từ II (thể bị động quá trình) hoặc sein + quá khứ phân từ II (thể bị động trạng thái). Thể bị động quá trình nhấn mạnh hành động: Das Haus wird gebaut. Thể bị động trạng thái nhấn mạnh kết quả: Das Haus ist gebaut. Chủ thể hành động có thể được đề cập với 'von' + cho cách.",
+          TL: "Ang pagbuo ng passive ay ginagawa gamit ang werden + past participle II (process passive) o sein + past participle II (state passive). Ang process passive ay nagbibigay-diin sa aksyon: Das Haus wird gebaut. Ang state passive ay nagbibigay-diin sa resulta: Das Haus ist gebaut. Ang gumagawa ay maaaring banggitin gamit ang 'von' + dative.",
+          ZH: "被动语态的构成用werden + 过去分词II（过程被动）或sein + 过去分词II（状态被动）。过程被动强调动作：Das Haus wird gebaut。状态被动强调结果：Das Haus ist gebaut。施动者可以用'von' + 第三格来表示。",
+          ID: "Pembentukan pasif dilakukan dengan werden + partisip II (pasif proses) atau sein + partisip II (pasif keadaan). Pasif proses menekankan tindakan: Das Haus wird gebaut. Pasif keadaan menekankan hasil: Das Haus ist gebaut. Pelaku dapat disebutkan dengan 'von' + dativ.",
+          TH: "การสร้าง passive ทำด้วย werden + past participle II (process passive) หรือ sein + past participle II (state passive) Process passive เน้นการกระทำ: Das Haus wird gebaut State passive เน้นผลลัพธ์: Das Haus ist gebaut ผู้กระทำสามารถกล่าวถึงด้วย 'von' + dative",
+          MS: "Pembentukan pasif dilakukan dengan werden + partisip II (pasif proses) atau sein + partisip II (pasif keadaan). Pasif proses menekankan tindakan: Das Haus wird gebaut. Pasif keadaan menekankan hasil: Das Haus ist gebaut. Pelaku boleh disebut dengan 'von' + dativ.",
+          AR: "تكوين المبني للمجهول يحدث مع werden + اسم المفعول II (مبني للمجهول العملي) أو sein + اسم المفعول II (مبني للمجهول الحالي). المبني للمجهول العملي يؤكد على العملية: Das Haus wird gebaut. المبني للمجهول الحالي يؤكد على النتيجة: Das Haus ist gebaut. الفاعل يمكن ذكره مع 'von' + حالة المفعول به غير المباشر."
+        },
         questions: [
           {
             title: "Das Auto ____ repariert.",
@@ -3747,13 +3942,31 @@ export const Fahigkeiten = {
             },
           },
         ],
-      },
+      }
     ],
     B2: [
       {
         id: "grB21",
         well_Answered: false,
         Text: "Die Partizipialkonstruktionen ersetzen oft Relativsätze und machen den Stil konziser. Das Partizip I (laufend, sprechend) drückt Gleichzeitigkeit aus, das Partizip II (gelaufen, gesprochen) Vorzeitigkeit oder passive Bedeutung. Sie werden wie Adjektive dekliniert: der singende Vogel, die geschriebenen Briefe.",
+        text_language_explanations: {
+          FR: "Les constructions participiales remplacent souvent les propositions relatives et rendent le style plus concis. Le participe I (laufend, sprechend) exprime la simultanéité, le participe II (gelaufen, gesprochen) l'antériorité ou le sens passif. Ils se déclinent comme les adjectifs : der singende Vogel, die geschriebenen Briefe.",
+          EN: "Participial constructions often replace relative clauses and make the style more concise. The present participle I (laufend, sprechend) expresses simultaneity, the past participle II (gelaufen, gesprochen) anteriority or passive meaning. They are declined like adjectives: der singende Vogel, die geschriebenen Briefe.",
+          ES: "Las construcciones participiales a menudo reemplazan las oraciones de relativo y hacen el estilo más conciso. El participio I (laufend, sprechend) expresa simultaneidad, el participio II (gelaufen, gesprochen) anterioridad o significado pasivo. Se declinan como adjetivos: der singende Vogel, die geschriebenen Briefe.",
+          PT: "As construções participiais frequentemente substituem as orações relativas e tornam o estilo mais conciso. O particípio I (laufend, sprechend) expressa simultaneidade, o particípio II (gelaufen, gesprochen) anterioridade ou significado passivo. Eles declinam como adjetivos: der singende Vogel, die geschriebenen Briefe.",
+          PL: "Konstrukcje imiesłowowe często zastępują zdania względne i czynią styl bardziej zwięzłym. Imiesłów I (laufend, sprechend) wyraża równoczesność, imiesłów II (gelaufen, gesprochen) wcześniejszość lub znaczenie bierne. Odmieniają się jak przymiotniki: der singende Vogel, die geschriebenen Briefe.",
+          RU: "Причастные конструкции часто заменяют придаточные предложения и делают стиль более лаконичным. Причастие I (laufend, sprechend) выражает одновременность, причастие II (gelaufen, gesprochen) предшествование или пассивное значение. Они склоняются как прилагательные: der singende Vogel, die geschriebenen Briefe.",
+          TR: "Sıfat-fiil yapıları genellikle sıfat cümlelerini değiştirir ve stili daha özlü hale getirir. Sıfat-fiil I (laufend, sprechend) eşzamanlılık ifade eder, sıfat-fiil II (gelaufen, gesprochen) öncelik veya pasif anlam ifade eder. Sıfatlar gibi çekimlenirler: der singende Vogel, die geschriebenen Briefe.",
+          IT: "Le costruzioni participiali spesso sostituiscono le proposizioni relative e rendono lo stile più conciso. Il participio I (laufend, sprechend) esprime simultaneità, il participio II (gelaufen, gesprochen) anteriorità o significato passivo. Si declinano come aggettivi: der singende Vogel, die geschriebenen Briefe.",
+          UK: "Дієприкметникові конструкції часто замінюють підрядні означальні речення і роблять стиль більш стислим. Дієприкметник I (laufend, sprechend) виражає одночасність, дієприкметник II (gelaufen, gesprochen) попередність або пасивне значення. Вони відмінюються як прикметники: der singende Vogel, die geschriebenen Briefe.",
+          VI: "Các cấu trúc phân từ thường thay thế mệnh đề quan hệ và làm cho văn phong ngắn gọn hơn. Phân từ I (laufend, sprechend) thể hiện tính đồng thời, phân từ II (gelaufen, gesprochen) tính trước đó hoặc nghĩa bị động. Chúng biến cách như tính từ: der singende Vogel, die geschriebenen Briefe.",
+          TL: "Ang mga participial construction ay madalas na pumapalit sa mga relative clause at ginagawang mas maikli ang istilo. Ang participle I (laufend, sprechend) ay nagpapahayag ng simultaneity, ang participle II (gelaufen, gesprochen) ay anteriority o passive meaning. Sila ay declined tulad ng mga adjective: der singende Vogel, die geschriebenen Briefe.",
+          ZH: "分词结构常常替代关系从句，使文体更加简洁。分词I（laufend, sprechend）表达同时性，分词II（gelaufen, gesprochen）表达先行性或被动意义。它们像形容词一样变格：der singende Vogel, die geschriebenen Briefe。",
+          ID: "Konstruksi partisipal sering menggantikan klausa relatif dan membuat gaya lebih ringkas. Partisip I (laufend, sprechend) mengekspresikan kesimultanan, partisip II (gelaufen, gesprochen) keantecedensi atau makna pasif. Mereka dideklinasi seperti adjektiva: der singende Vogel, die geschriebenen Briefe.",
+          TH: "Participial constructions มักจะแทนที่ relative clauses และทำให้สไตล์กระชับขึ้น Participle I (laufend, sprechend) แสดงความพร้อมกัน, participle II (gelaufen, gesprochen) แสดงความก่อนหน้าหรือความหมายแบบ passive พวกมันผันเหมือนคุณศัพท์: der singende Vogel, die geschriebenen Briefe",
+          MS: "Konstruksi partisipal sering menggantikan klausa relatif dan menjadikan gaya lebih ringkas. Partisip I (laufend, sprechend) menyatakan kesimultanan, partisip II (gelaufen, gesprochen) keutamaan atau makna pasif. Mereka dideklinasi seperti adjektif: der singende Vogel, die geschriebenen Briefe.",
+          AR: "التراكيب التشاركية غالباً ما تحل محل الجمل الموصولة وتجعل الأسلوب أكثر إيجازاً. اسم الفاعل I (laufend, sprechend) يعبر عن التزامن، اسم المفعول II (gelaufen, gesprochen) يعبر عن السبق أو المعنى المبني للمجهول. يُعربان مثل الصفات: der singende Vogel, die geschriebenen Briefe."
+        },
         questions: [
           {
             title: "Die ____ Touristen fotografierten alles.",
@@ -3790,6 +4003,24 @@ export const Fahigkeiten = {
         id: "grB22",
         well_Answered: false,
         Text: "Die erweiterte Attributkonstruktion ist eine komplexe Nominalphrase mit Partizipien oder Adjektiven und deren Ergänzungen. Sie steht zwischen Artikel und Nomen und wird vollständig dekliniert. Beispiel: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Diese Konstruktion ist charakteristisch für formelle Texte.",
+        text_language_explanations: {
+          FR: "La construction d'attribut étendu est une phrase nominale complexe avec des participes ou des adjectifs et leurs compléments. Elle se place entre l'article et le nom et est entièrement déclinée. Exemple : der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Cette construction est caractéristique des textes formels.",
+          EN: "The extended attribute construction is a complex noun phrase with participles or adjectives and their complements. It stands between the article and noun and is fully declined. Example: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. This construction is characteristic of formal texts.",
+          ES: "La construcción de atributo extendido es una frase nominal compleja con participios o adjetivos y sus complementos. Se sitúa entre el artículo y el sustantivo y se declina completamente. Ejemplo: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Esta construcción es característica de textos formales.",
+          PT: "A construção de atributo estendido é uma frase nominal complexa com particípios ou adjetivos e seus complementos. Fica entre o artigo e o substantivo e é totalmente declinada. Exemplo: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Esta construção é característica de textos formais.",
+          PL: "Rozszerzona konstrukcja atrybutowa to złożona fraza nominalna z imiesłowami lub przymiotnikami i ich uzupełnieniami. Stoi między rodzajnikiem a rzeczownikiem i jest w pełni deklinowana. Przykład: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Ta konstrukcja jest charakterystyczna dla tekstów formalnych.",
+          RU: "Расширенная атрибутивная конструкция - это сложная именная группа с причастиями или прилагательными и их дополнениями. Она стоит между артиклем и существительным и полностью склоняется. Пример: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Эта конструкция характерна для формальных текстов.",
+          TR: "Genişletilmiş öznitelik yapısı, sıfat-fiiller veya sıfatlar ve bunların tamamlayıcıları ile karmaşık bir isim öbeğidir. Artikel ile isim arasında durur ve tamamen çekimlenir. Örnek: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Bu yapı resmi metinlerin karakteristiğidir.",
+          IT: "La costruzione di attributo esteso è una frase nominale complessa con participi o aggettivi e i loro complementi. Si trova tra l'articolo e il sostantivo ed è completamente declinata. Esempio: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Questa costruzione è caratteristica dei testi formali.",
+          UK: "Розширена атрибутивна конструкція - це складна іменна фраза з дієприкметниками або прикметниками та їх доповненнями. Вона стоїть між артиклем і іменником і повністю відмінюється. Приклад: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Ця конструкція характерна для формальних текстів.",
+          VI: "Cấu trúc thuộc tính mở rộng là một cụm danh từ phức tạp với phân từ hoặc tính từ và các bổ ngữ của chúng. Nó đứng giữa mạo từ và danh từ và được biến cách hoàn toàn. Ví dụ: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Cấu trúc này đặc trưng cho văn bản trang trọng.",
+          TL: "Ang extended attribute construction ay isang kumplikadong noun phrase na may mga participle o adjective at ang kanilang mga complement. Nakatayo ito sa pagitan ng article at noun at ganap na declined. Halimbawa: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Ang construction na ito ay karakteristiko ng mga pormal na teksto.",
+          ZH: "扩展定语结构是带有分词或形容词及其补语的复杂名词短语。它位于冠词和名词之间，完全变格。例如：der gestern eingetroffene Zug, die seit Jahren bestehende Tradition。这种结构是正式文本的特征。",
+          ID: "Konstruksi atribut diperluas adalah frasa nominal kompleks dengan partisip atau adjektiva dan pelengkapnya. Ini berdiri antara artikel dan kata benda dan sepenuhnya dideklinasi. Contoh: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Konstruksi ini karakteristik teks formal.",
+          TH: "Extended attribute construction เป็นวลีคำนามที่ซับซ้อนด้วย participles หรือคุณศัพท์และ complements ของพวกมัน มันยืนอยู่ระหว่างคำกำหนดและคำนามและ fully declined ตัวอย่าง: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition การสร้างนี้เป็นลักษณะเฉพาะของข้อความที่เป็นทางการ",
+          MS: "Konstruksi atribut diperluas adalah frasa nominal yang kompleks dengan partisip atau adjektif dan pelengkapnya. Ia berdiri antara artikel dan kata nama dan sepenuhnya dideklinasi. Contoh: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. Konstruksi ini adalah ciri teks formal.",
+          AR: "تركيب الصفة الموسعة هو عبارة اسمية معقدة مع أسماء الفاعل أو الصفات ومكملاتها. تقف بين أداة التعريف والاسم وتُعرب بالكامل. مثال: der gestern eingetroffene Zug, die seit Jahren bestehende Tradition. هذا التركيب مميز للنصوص الرسمية."
+        },
         questions: [
           {
             title: "Die vom Minister ____ Entscheidung war umstritten.",
@@ -3826,6 +4057,24 @@ export const Fahigkeiten = {
         id: "grB23",
         well_Answered: false,
         Text: "Die subjektiven Modalverben drücken die Einstellung des Sprechers zur Aussage aus. 'müssen' drückt starke Vermutung aus, 'können' Möglichkeit, 'mögen' schwache Vermutung, 'sollen' Hörensagen, 'wollen' Behauptung. Sie stehen mit Infinitiv Perfekt: Er muss gekommen sein. Sie will reich gewesen sein.",
+        text_language_explanations: {
+          FR: "Les verbes modaux subjectifs expriment l'attitude du locuteur envers l'énoncé. 'müssen' exprime une forte supposition, 'können' la possibilité, 'mögen' une faible supposition, 'sollen' le ouï-dire, 'wollen' l'affirmation. Ils se construisent avec l'infinitif parfait : Er muss gekommen sein. Sie will reich gewesen sein.",
+          EN: "Subjective modal verbs express the speaker's attitude towards the statement. 'müssen' expresses strong assumption, 'können' possibility, 'mögen' weak assumption, 'sollen' hearsay, 'wollen' claim. They are used with perfect infinitive: Er muss gekommen sein. Sie will reich gewesen sein.",
+          ES: "Los verbos modales subjetivos expresan la actitud del hablante hacia la declaración. 'müssen' expresa fuerte suposición, 'können' posibilidad, 'mögen' suposición débil, 'sollen' rumor, 'wollen' afirmación. Se usan con infinitivo perfecto: Er muss gekommen sein. Sie will reich gewesen sein.",
+          PT: "Os verbos modais subjetivos expressam a atitude do falante em relação à declaração. 'müssen' expressa forte suposição, 'können' possibilidade, 'mögen' suposição fraca, 'sollen' boato, 'wollen' afirmação. São usados com infinitivo perfeito: Er muss gekommen sein. Sie will reich gewesen sein.",
+          PL: "Subiektywne czasowniki modalne wyrażają stosunek mówiącego do wypowiedzi. 'müssen' wyraża silne przypuszczenie, 'können' możliwość, 'mögen' słabe przypuszczenie, 'sollen' pogłoski, 'wollen' twierdzenie. Występują z bezokolicznikiem dokonanym: Er muss gekommen sein. Sie will reich gewesen sein.",
+          RU: "Субъективные модальные глаголы выражают отношение говорящего к высказыванию. 'müssen' выражает сильное предположение, 'können' возможность, 'mögen' слабое предположение, 'sollen' слухи, 'wollen' утверждение. Они используются с перфектным инфинитивом: Er muss gekommen sein. Sie will reich gewesen sein.",
+          TR: "Öznel modal fiiller konuşanın ifadeye karşı tutumunu ifade eder. 'müssen' güçlü varsayım, 'können' olasılık, 'mögen' zayıf varsayım, 'sollen' dedikodu, 'wollen' iddia ifade eder. Perfekt mastar ile kullanılırlar: Er muss gekommen sein. Sie will reich gewesen sein.",
+          IT: "I verbi modali soggettivi esprimono l'atteggiamento del parlante verso l'affermazione. 'müssen' esprime forte supposizione, 'können' possibilità, 'mögen' supposizione debole, 'sollen' sentito dire, 'wollen' affermazione. Si usano con infinito perfetto: Er muss gekommen sein. Sie will reich gewesen sein.",
+          UK: "Суб'єктивні модальні дієслова виражають ставлення мовця до висловлювання. 'müssen' виражає сильне припущення, 'können' можливість, 'mögen' слабке припущення, 'sollen' чутки, 'wollen' твердження. Вони вживаються з перфектним інфінітивом: Er muss gekommen sein. Sie will reich gewesen sein.",
+          VI: "Các động từ tình thái chủ quan thể hiện thái độ của người nói đối với phát biểu. 'müssen' thể hiện suy đoán mạnh, 'können' khả năng, 'mögen' suy đoán yếu, 'sollen' nghe nói, 'wollen' khẳng định. Chúng được dùng với động từ nguyên mẫu hoàn thành: Er muss gekommen sein. Sie will reich gewesen sein.",
+          TL: "Ang mga subjective modal verb ay nagpapahayag ng saloobin ng nagsasalita sa pahayag. Ang 'müssen' ay nagpapahayag ng malakas na pagkakapalagay, 'können' posibilidad, 'mögen' mahinang pagkakapalagay, 'sollen' balita, 'wollen' pangangako. Ginagamit sila sa perfect infinitive: Er muss gekommen sein. Sie will reich gewesen sein.",
+          ZH: "主观情态动词表达说话者对陈述的态度。'müssen'表达强烈推测，'können'表达可能性，'mögen'表达微弱推测，'sollen'表达传闻，'wollen'表达声称。它们与完成时不定式连用：Er muss gekommen sein. Sie will reich gewesen sein。",
+          ID: "Kata kerja modal subjektif mengekspresikan sikap pembicara terhadap pernyataan. 'müssen' mengekspresikan dugaan kuat, 'können' kemungkinan, 'mögen' dugaan lemah, 'sollen' kabar angin, 'wollen' klaim. Mereka digunakan dengan infinitif perfek: Er muss gekommen sein. Sie will reich gewesen sein.",
+          TH: "Subjective modal verbs แสดงทัศนคติของผู้พูดต่อข้อความ 'müssen' แสดงการสันนิษฐานที่แข็งแกร่ง, 'können' ความเป็นไปได้, 'mögen' การสันนิษฐานที่อ่อนแอ, 'sollen' ข่าวลือ, 'wollen' การอ้าง ใช้กับ perfect infinitive: Er muss gekommen sein. Sie will reich gewesen sein",
+          MS: "Kata kerja modal subjektif menyatakan sikap penutur terhadap kenyataan. 'müssen' menyatakan andaian kuat, 'können' kemungkinan, 'mögen' andaian lemah, 'sollen' khabar angin, 'wollen' dakwaan. Mereka digunakan dengan infinitif perfek: Er muss gekommen sein. Sie will reich gewesen sein.",
+          AR: "الأفعال الناقصة الذاتية تعبر عن موقف المتحدث من البيان. 'müssen' يعبر عن افتراض قوي، 'können' إمكانية، 'mögen' افتراض ضعيف، 'sollen' إشاعة، 'wollen' ادعاء. تُستخدم مع المصدر التام: Er muss gekommen sein. Sie will reich gewesen sein."
+        },
         questions: [
           {
             title: "Er ____ den Schlüssel verloren haben.",
@@ -3857,13 +4106,31 @@ export const Fahigkeiten = {
             },
           },
         ],
-      },
+      }
     ],
     C1: [
       {
         id: "grC11",
         well_Answered: false,
         Text: "Die Graduierung von Adjektiven und Adverbien erfolgt durch Komparativ und Superlativ, aber auch durch Graduierungspartikeln (sehr, ziemlich, äußerst, überaus). Intensivierung kann auch durch Präfixe (uralt, hochmodern) oder Wortbildung (bildschön, steinreich) erreicht werden. Die Wahl der Graduierung hängt von Stil und Kontext ab.",
+        text_language_explanations: {
+          FR: "La gradation des adjectifs et adverbes se fait par le comparatif et le superlatif, mais aussi par des particules de gradation (sehr, ziemlich, äußerst, überaus). L'intensification peut aussi être atteinte par des préfixes (uralt, hochmodern) ou la formation de mots (bildschön, steinreich). Le choix de la gradation dépend du style et du contexte.",
+          EN: "The grading of adjectives and adverbs is done through comparative and superlative, but also through grading particles (sehr, ziemlich, äußerst, überaus). Intensification can also be achieved through prefixes (uralt, hochmodern) or word formation (bildschön, steinreich). The choice of grading depends on style and context.",
+          ES: "La graduación de adjetivos y adverbios se hace mediante comparativo y superlativo, pero también mediante partículas de graduación (sehr, ziemlich, äußerst, überaus). La intensificación también puede lograrse mediante prefijos (uralt, hochmodern) o formación de palabras (bildschön, steinreich). La elección de graduación depende del estilo y contexto.",
+          PT: "A graduação de adjetivos e advérbios é feita através de comparativo e superlativo, mas também através de partículas de graduação (sehr, ziemlich, äußerst, überaus). A intensificação também pode ser alcançada através de prefixos (uralt, hochmodern) ou formação de palavras (bildschön, steinreich). A escolha da graduação depende do estilo e contexto.",
+          PL: "Stopniowanie przymiotników i przysłówków odbywa się przez stopień wyższy i najwyższy, ale także przez partykuły stopniujące (sehr, ziemlich, äußerst, überaus). Intensyfikacja może być również osiągnięta przez przedrostki (uralt, hochmodern) lub słowotwórstwo (bildschön, steinreich). Wybór stopniowania zależy od stylu i kontekstu.",
+          RU: "Градация прилагательных и наречий осуществляется через сравнительную и превосходную степени, а также через градационные частицы (sehr, ziemlich, äußerst, überaus). Интенсификация может также достигаться префиксами (uralt, hochmodern) или словообразованием (bildschön, steinreich). Выбор градации зависит от стиля и контекста.",
+          TR: "Sıfat ve zarfların derecelendirilmesi karşılaştırma ve üstünlük dereceleri, ayrıca derecelendirme partikülleri (sehr, ziemlich, äußerst, überaus) ile yapılır. Yoğunlaştırma ayrıca önekler (uralt, hochmodern) veya kelime türetimi (bildschön, steinreich) ile de sağlanabilir. Derecelendirme seçimi stil ve bağlama bağlıdır.",
+          IT: "La gradazione di aggettivi e avverbi avviene tramite comparativo e superlativo, ma anche tramite particelle di gradazione (sehr, ziemlich, äußerst, überaus). L'intensificazione può essere raggiunta anche tramite prefissi (uralt, hochmodern) o formazione di parole (bildschön, steinreich). La scelta della gradazione dipende dallo stile e dal contesto.",
+          UK: "Градація прикметників і прислівників здійснюється через порівняльний і найвищий ступені, а також через градаційні частки (sehr, ziemlich, äußerst, überaus). Інтенсифікація може також досягатися префіксами (uralt, hochmodern) або словотвором (bildschön, steinreich). Вибір градації залежить від стилю і контексту.",
+          VI: "Sự phân cấp của tính từ và trạng từ được thực hiện thông qua so sánh hơn và so sánh nhất, cũng như thông qua các tiểu từ phân cấp (sehr, ziemlich, äußerst, überaus). Sự tăng cường cũng có thể đạt được thông qua tiền tố (uralt, hochmodern) hoặc tạo từ (bildschön, steinreich). Việc lựa chọn phân cấp phụ thuộc vào phong cách và ngữ cảnh.",
+          TL: "Ang pag-grade ng mga pang-uri at pang-abay ay ginagawa sa pamamagitan ng comparative at superlative, ngunit din sa pamamagitan ng mga grading particle (sehr, ziemlich, äußerst, überaus). Ang intensification ay maaari ding makamit sa pamamagitan ng mga prefix (uralt, hochmodern) o word formation (bildschön, steinreich). Ang pagpili ng grading ay nakadepende sa estilo at konteksto.",
+          ZH: "形容词和副词的级别划分通过比较级和最高级进行，也通过级别化小品词（sehr, ziemlich, äußerst, überaus）。强化也可以通过前缀（uralt, hochmodern）或构词（bildschön, steinreich）实现。级别划分的选择取决于风格和语境。",
+          ID: "Penggradaan adjektiva dan adverbia dilakukan melalui komparatif dan superlatif, tetapi juga melalui partikel penggradaan (sehr, ziemlich, äußerst, überaus). Intensifikasi juga dapat dicapai melalui prefiks (uralt, hochmodern) atau pembentukan kata (bildschön, steinreich). Pilihan penggradaan tergantung pada gaya dan konteks.",
+          TH: "การจัดระดับของคุณศัพท์และกริยาวิเศษณ์ทำผ่านขั้นกว่าและขั้นสูงสุด แต่ยังผ่าน grading particles (sehr, ziemlich, äußerst, überaus) การเสริมความรุนแรงยังสามารถทำได้ผ่านคำนำหน้า (uralt, hochmodern) หรือการสร้างคำ (bildschön, steinreich) การเลือกการจัดระดับขึ้นอยู่กับสไตล์และบริบท",
+          MS: "Penggredan adjektif dan adverb dilakukan melalui perbandingan dan superlatif, tetapi juga melalui partikel penggredan (sehr, ziemlich, äußerst, überaus). Pengintensifan juga boleh dicapai melalui awalan (uralt, hochmodern) atau pembentukan perkataan (bildschön, steinreich). Pilihan penggredan bergantung pada gaya dan konteks.",
+          AR: "تدريج الصفات والظروف يتم من خلال المقارنة والتفضيل، ولكن أيضاً من خلال جسيمات التدريج (sehr, ziemlich, äußerst, überaus). يمكن أيضاً تحقيق التكثيف من خلال البادئات (uralt, hochmodern) أو تكوين الكلمات (bildschön, steinreich). اختيار التدريج يعتمد على الأسلوب والسياق."
+        },
         questions: [
           {
             title: "Diese Lösung ist ____ ungeeignet für unser Problem.",
@@ -3900,9 +4167,29 @@ export const Fahigkeiten = {
         id: "grC12",
         well_Answered: false,
         Text: "Die nominalen Satzgefüge entstehen durch Nominalisierung von Nebensätzen. Anstatt 'Nachdem er angekommen war...' verwendet man 'Nach seiner Ankunft...'. Dies macht den Stil konziser und objektiver. Typische Nominalisierungen: Präposition + nominalisiertes Verb (bei der Durchführung, während der Bearbeitung).",
+        text_language_explanations: {
+          FR: "Les structures phrastiques nominales naissent de la nominalisation de propositions subordonnées. Au lieu de 'Nachdem er angekommen war...' on utilise 'Nach seiner Ankunft...'. Cela rend le style plus concis et objectif. Nominalisations typiques : préposition + verbe nominalisé (bei der Durchführung, während der Bearbeitung).",
+          EN: "Nominal sentence structures arise from the nominalization of subordinate clauses. Instead of 'Nachdem er angekommen war...' one uses 'Nach seiner Ankunft...'. This makes the style more concise and objective. Typical nominalizations: preposition + nominalized verb (bei der Durchführung, während der Bearbeitung).",
+          ES: "Las estructuras oracionales nominales surgen de la nominalización de oraciones subordinadas. En lugar de 'Nachdem er angekommen war...' se usa 'Nach seiner Ankunft...'. Esto hace el estilo más conciso y objetivo. Nominalizaciones típicas: preposición + verbo nominalizado (bei der Durchführung, während der Bearbeitung).",
+          PT: "As estruturas frasais nominais surgem da nominalização de orações subordinadas. Em vez de 'Nachdem er angekommen war...' usa-se 'Nach seiner Ankunft...'. Isso torna o estilo mais conciso e objetivo. Nominalizações típicas: preposição + verbo nominalizado (bei der Durchführung, während der Bearbeitung).",
+          PL: "Nominalne struktury zdaniowe powstają z nominalizacji zdań podrzędnych. Zamiast 'Nachdem er angekommen war...' używa się 'Nach seiner Ankunft...'. To sprawia, że styl jest bardziej zwięzły i obiektywny. Typowe nominalizacje: przyimek + znominalizowany czasownik (bei der Durchführung, während der Bearbeitung).",
+          RU: "Номинальные структуры предложений возникают из номинализации придаточных предложений. Вместо 'Nachdem er angekommen war...' используется 'Nach seiner Ankunft...'. Это делает стиль более лаконичным и объективным. Типичные номинализации: предлог + номинализованный глагол (bei der Durchführung, während der Bearbeitung).",
+          TR: "Nominal cümle yapıları, yan cümlelerin isimleştirilmesinden doğar. 'Nachdem er angekommen war...' yerine 'Nach seiner Ankunft...' kullanılır. Bu stili daha özlü ve nesnel yapar. Tipik isimleştirmeler: edat + isimleştirilmiş fiil (bei der Durchführung, während der Bearbeitung).",
+          IT: "Le strutture frasali nominali nascono dalla nominalizzazione di proposizioni subordinate. Invece di 'Nachdem er angekommen war...' si usa 'Nach seiner Ankunft...'. Questo rende lo stile più conciso e obiettivo. Nominalizzazioni tipiche: preposizione + verbo nominalizzato (bei der Durchführung, während der Bearbeitung).",
+          UK: "Номінальні структури речень виникають з номіналізації підрядних речень. Замість 'Nachdem er angekommen war...' використовується 'Nach seiner Ankunft...'. Це робить стиль більш лаконічним і об'єктивним. Типові номіналізації: прийменник + номіналізоване дієслово (bei der Durchführung, während der Bearbeitung).",
+          VI: "Các cấu trúc câu danh từ phát sinh từ việc danh từ hóa các mệnh đề phụ. Thay vì 'Nachdem er angekommen war...' người ta dùng 'Nach seiner Ankunft...'. Điều này làm cho văn phong ngắn gọn và khách quan hơn. Danh từ hóa điển hình: giới từ + động từ được danh từ hóa (bei der Durchführung, während der Bearbeitung).",
+          TL: "Ang mga nominal sentence structure ay nagmumula sa nominalization ng mga subordinate clause. Sa halip na 'Nachdem er angekommen war...' ginagamit ang 'Nach seiner Ankunft...'. Ginagawa nito ang estilo na mas maikli at objektibo. Karaniwang nominalization: preposition + nominalized verb (bei der Durchführung, während der Bearbeitung).",
+          ZH: "名词性句子结构源于从句的名词化。不用'Nachdem er angekommen war...'而用'Nach seiner Ankunft...'。这使文体更简洁客观。典型的名词化：介词 + 名词化动词（bei der Durchführung, während der Bearbeitung）。",
+          ID: "Struktur kalimat nominal muncul dari nominalisasi klausa subordinat. Alih-alih 'Nachdem er angekommen war...' digunakan 'Nach seiner Ankunft...'. Ini membuat gaya lebih ringkas dan objektif. Nominalisasi tipikal: preposisi + kata kerja ternominalisasi (bei der Durchführung, während der Bearbeitung).",
+          TH: "โครงสร้างประโยคนามเกิดจากการทำให้เป็นคำนามของอนุประโยค แทนที่จะเป็น 'Nachdem er angekommen war...' ใช้ 'Nach seiner Ankunft...' สิ่งนี้ทำให้สไตล์กระชับและเป็นกลางมากขึ้น การทำให้เป็นคำนามทั่วไป: คำบุพบท + กริยาที่เป็นคำนาม (bei der Durchführung, während der Bearbeitung)",
+          MS: "Struktur ayat nominal timbul daripada nominalisasi klausa subordinat. Daripada 'Nachdem er angekommen war...' digunakan 'Nach seiner Ankunft...'. Ini menjadikan gaya lebih ringkas dan objektif. Nominalisasi tipikal: kata sendi + kata kerja ternominalisasi (bei der Durchführung, während der Bearbeitung).",
+          AR: "الهياكل الجملية الاسمية تنشأ من اسمية الجمل التابعة. بدلاً من 'Nachdem er angekommen war...' يُستخدم 'Nach seiner Ankunft...'. هذا يجعل الأسلوب أكثر إيجازاً وموضوعية. الاسميات النمطية: حرف جر + فعل مُسمى (bei der Durchführung, während der Bearbeitung)."
+        },
+        
         questions: [
           {
             title: "_____ der Verhandlungen war schwierig.",
+            text_language_explanations:"",
             options: [
               { id: "a", text: "Die Führung", isCorrect: true },
               { id: "b", text: "Das Führen", isCorrect: false },
@@ -3936,6 +4223,24 @@ export const Fahigkeiten = {
         id: "grC13",
         well_Answered: false,
         Text: "Die funktionalen Satzperspektiven zeigen verschiedene Informationsstrukturen. Das Thema (bekannte Information) steht meist am Satzanfang, das Rhema (neue Information) am Ende. Durch Umstellung kann die Betonung verändert werden: 'Den Film habe ich gesehen' betont 'den Film', 'Gesehen habe ich den Film' betont 'gesehen'.",
+        text_language_explanations: {
+          FR: "Les perspectives fonctionnelles de phrase montrent différentes structures d'information. Le thème (information connue) se trouve généralement au début de phrase, le rhème (nouvelle information) à la fin. Par inversion, l'accentuation peut être modifiée : 'Den Film habe ich gesehen' accentue 'den Film', 'Gesehen habe ich den Film' accentue 'gesehen'.",
+          EN: "Functional sentence perspectives show different information structures. The theme (known information) usually stands at the beginning of the sentence, the rheme (new information) at the end. Through rearrangement, the emphasis can be changed: 'Den Film habe ich gesehen' emphasizes 'den Film', 'Gesehen habe ich den Film' emphasizes 'gesehen'.",
+          ES: "Las perspectivas funcionales de oración muestran diferentes estructuras de información. El tema (información conocida) generalmente está al inicio de la oración, el rema (información nueva) al final. Mediante reordenamiento, se puede cambiar el énfasis: 'Den Film habe ich gesehen' enfatiza 'den Film', 'Gesehen habe ich den Film' enfatiza 'gesehen'.",
+          PT: "As perspectivas funcionais de frase mostram diferentes estruturas de informação. O tema (informação conhecida) geralmente fica no início da frase, o rema (informação nova) no final. Através de reordenação, a ênfase pode ser alterada: 'Den Film habe ich gesehen' enfatiza 'den Film', 'Gesehen habe ich den Film' enfatiza 'gesehen'.",
+          PL: "Funkcjonalne perspektywy zdaniowe pokazują różne struktury informacyjne. Temat (znana informacja) zwykle stoi na początku zdania, remat (nowa informacja) na końcu. Przez przestawienie można zmienić akcent: 'Den Film habe ich gesehen' akcentuje 'den Film', 'Gesehen habe ich den Film' akcentuje 'gesehen'.",
+          RU: "Функциональные перспективы предложения показывают различные информационные структуры. Тема (известная информация) обычно стоит в начале предложения, рема (новая информация) в конце. Перестановкой можно изменить ударение: 'Den Film habe ich gesehen' подчеркивает 'den Film', 'Gesehen habe ich den Film' подчеркивает 'gesehen'.",
+          TR: "İşlevsel cümle perspektifleri farklı bilgi yapılarını gösterir. Tema (bilinen bilgi) genellikle cümle başında, rema (yeni bilgi) sonda durur. Yer değiştirme ile vurgu değiştirilebilir: 'Den Film habe ich gesehen' 'den Film'i vurgular, 'Gesehen habe ich den Film' 'gesehen'i vurgular.",
+          IT: "Le prospettive funzionali della frase mostrano diverse strutture informative. Il tema (informazione nota) si trova di solito all'inizio della frase, il rema (informazione nuova) alla fine. Attraverso il riordino, l'enfasi può essere cambiata: 'Den Film habe ich gesehen' enfatizza 'den Film', 'Gesehen habe ich den Film' enfatizza 'gesehen'.",
+          UK: "Функціональні перспективи речення показують різні інформаційні структури. Тема (відома інформація) зазвичай стоїть на початку речення, рема (нова інформація) в кінці. Перестановкою можна змінити наголос: 'Den Film habe ich gesehen' підкреслює 'den Film', 'Gesehen habe ich den Film' підкреслює 'gesehen'.",
+          VI: "Các góc nhìn chức năng của câu cho thấy các cấu trúc thông tin khác nhau. Chủ đề (thông tin đã biết) thường đứng ở đầu câu, vần (thông tin mới) ở cuối. Qua việc sắp xếp lại, trọng âm có thể được thay đổi: 'Den Film habe ich gesehen' nhấn mạnh 'den Film', 'Gesehen habe ich den Film' nhấn mạnh 'gesehen'.",
+          TL: "Ang mga functional sentence perspective ay nagpapakita ng iba't ibang information structure. Ang theme (kilalang impormasyon) ay karaniwang nasa simula ng pangungusap, ang rheme (bagong impormasyon) sa dulo. Sa pamamagitan ng pag-rearrange, maaaring baguhin ang emphasis: 'Den Film habe ich gesehen' ay binibigyang-diin ang 'den Film', 'Gesehen habe ich den Film' ay binibigyang-diin ang 'gesehen'.",
+          ZH: "功能性句子视角显示不同的信息结构。主题（已知信息）通常在句首，述位（新信息）在句末。通过重新排列可以改变重点：'Den Film habe ich gesehen'强调'den Film'，'Gesehen habe ich den Film'强调'gesehen'。",
+          ID: "Perspektif kalimat fungsional menunjukkan struktur informasi yang berbeda. Tema (informasi yang diketahui) biasanya berdiri di awal kalimat, rema (informasi baru) di akhir. Melalui penataan ulang, penekanan dapat diubah: 'Den Film habe ich gesehen' menekankan 'den Film', 'Gesehen habe ich den Film' menekankan 'gesehen'.",
+          TH: "มุมมองประโยคเชิงหน้าที่แสดงโครงสร้างข้อมูลที่แตกต่างกัน หัวข้อ (ข้อมูลที่รู้แล้ว) มักอยู่ที่ต้นประโยค rheme (ข้อมูลใหม่) อยู่ที่ท้าย ผ่านการจัดใหม่ จุดเน้นสามารถเปลี่ยนได้: 'Den Film habe ich gesehen' เน้น 'den Film', 'Gesehen habe ich den Film' เน้น 'gesehen'",
+          MS: "Perspektif ayat berfungsi menunjukkan struktur maklumat yang berbeza. Tema (maklumat yang diketahui) biasanya berdiri pada permulaan ayat, rema (maklumat baru) di akhir. Melalui penyusunan semula, penekanan boleh diubah: 'Den Film habe ich gesehen' menekankan 'den Film', 'Gesehen habe ich den Film' menekankan 'gesehen'.",
+          AR: "منظورات الجملة الوظيفية تُظهر هياكل معلوماتية مختلفة. الموضوع (معلومات معروفة) عادة يقف في بداية الجملة، المسند (معلومات جديدة) في النهاية. من خلال إعادة الترتيب، يمكن تغيير التأكيد: 'Den Film habe ich gesehen' يؤكد على 'den Film'، 'Gesehen habe ich den Film' يؤكد على 'gesehen'."
+        },
         questions: [
           {
             title: "____ hat er mir nicht erzählt.",
@@ -3974,6 +4279,7 @@ export const Fahigkeiten = {
         id: "grC21",
         well_Answered: false,
         Text: "Die Diskursmarker strukturieren komplexe Texte und zeigen logische Beziehungen zwischen Argumenten. Sie können konzessiv (allerdings, freilich), adversativ (hingegen, demgegenüber), konsekutiv (folglich, mithin) oder explanativ (das heißt, sprich) sein. Die Wahl hängt von der gewünschten argumentativen Nuancierung ab.",
+        text_language_explanations:"",
         questions: [
           {
             title: "Die Theorie ist plausibel; ____ fehlen empirische Belege.",
@@ -4010,6 +4316,7 @@ export const Fahigkeiten = {
         id: "grC22",
         well_Answered: false,
         Text: "Die metaphorischen und metonymischen Sprachverwendungen durchziehen die deutsche Sprache auf allen Ebenen. Metaphern übertragen Bedeutungen (Zeit ist Geld), Metonymien ersetzen durch Assoziation (Bonn für die deutsche Regierung). Diese Figuren sind besonders in gehobener Sprache und Fachsprachen prevalent.",
+        text_language_explanations:"",
         questions: [
           {
             title: "Das Parlament hat ____ Stimme erhoben.",
@@ -4046,6 +4353,7 @@ export const Fahigkeiten = {
         id: "grC23",
         well_Answered: false,
         Text: "Die stilistischen Register variieren je nach Kommunikationssituation erheblich. Gehobene Sprache verwendet komplexe Syntax, Nominalisierungen und Fremdwörter. Fachsprachen haben spezifische Terminologien. Umgangssprache bevorzugt einfache Strukturen und Ellipsen. Die Registerwahl beeinflusst grammatische Entscheidungen maßgeblich.",
+        text_language_explanations:"",
         questions: [
           {
             title: "Die Implementierung dieser Maßnahme ____ einer gründlichen Evaluation.",

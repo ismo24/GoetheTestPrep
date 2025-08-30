@@ -430,7 +430,7 @@ const ExerciseView = ({
         <View style={styles.resultsButtonContainer}>
           <TouchableOpacity
             style={[styles.actionButton, styles.restartButton]}
-            onPress={handleRestart}
+            onPress={onRestart}
           >
             <Text style={styles.restartButtonText}>
               {translations.buttons.repeat[userNativeLanguage]}
@@ -439,10 +439,10 @@ const ExerciseView = ({
 
           {hasNextExercise ? (
             <TouchableOpacity
-              style={[styles.actionButton, { backgroundColor: 'black' }]}
-              onPress={handleNextExercise}
+              style={[styles.actionButton, styles.restartButton]}
+              onPress={onNextExercise}
             >
-              <Text style={styles.actionButtonText}>
+              <Text style={styles.restartButtonText}>
                 {translations.buttons.continue[userNativeLanguage]}
               </Text>
             </TouchableOpacity>
@@ -746,19 +746,21 @@ const styles = StyleSheet.create({
   },
   resultsButtonContainer: {
     position: "absolute",
-    bottom: "4%",
+    bottom: 0,
+    backgroundColor:"white",
     left: 0,
     right: 0,
     paddingHorizontal: 16,
     paddingVertical: 12,
     flexDirection: "row",
     gap: 12,
+    justifyContent: "space-between"
   },
   actionButton: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    width: 150,
     paddingVertical: 16,
     borderRadius: 12,
     gap: 8,

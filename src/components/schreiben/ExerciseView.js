@@ -240,10 +240,10 @@ const ExerciseView = ({
 
           {hasNextExercise ? (
             <TouchableOpacity
-              style={[styles.actionButton, { backgroundColor: 'black' }]}
+              style={[styles.actionButton, styles.restartButton]}
               onPress={onNextExercise}
             >
-              <Text style={styles.actionButtonText}>
+              <Text style={styles.restartButtonText}>
                 {translations.buttons.continue[userNativeLanguage]}
               </Text>
             </TouchableOpacity>
@@ -519,24 +519,26 @@ const styles = StyleSheet.create({
   },
   // ✅ NOUVEAUX STYLES pour les boutons de résultats
   resultsButtonContainer: {
-    position: 'absolute',
-    bottom: '4%',
+    position: "absolute",
+    bottom: 0,
+    backgroundColor:"white",
     left: 0,
     right: 0,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 12,
+    justifyContent: "space-between"
   },
   actionButton: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 150,
     paddingVertical: 16,
     borderRadius: 12,
     gap: 8,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
