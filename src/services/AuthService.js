@@ -1,5 +1,5 @@
 // services/AuthService.js - Version Expo corrigée
-import { initializeApp, getApps } from 'firebase/app';
+import { auth } from './firebase.config';
 import { 
   initializeAuth,
   getReactNativePersistence,
@@ -18,36 +18,9 @@ import {
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import { FirebaseDataService } from './DataService';
 
 
-// Configuration Firebase - Remplacez par vos vraies valeurs
-const firebaseConfig = {
-  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID
-};
-
-// Initialisation Firebase
-let app;
-if (getApps().length === 0) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
-}
-
-let auth;
-try {
-  auth = initializeAuth(app, {
-    persistence: getReactNativePersistence(AsyncStorage)
-  });
-} catch (error) {
-  // Si déjà initialisé, utiliser getAuth
-  auth = getAuth(app);
-}
 
 class AuthService {
   constructor() {
@@ -59,8 +32,15 @@ class AuthService {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       const user = userCredential.user;
+
+      const updateUser=await FirebaseDataService.syncAuthenticatedUserLocalDataBySigningIn(user.uid) 
       
-      await this.saveUserLocally(user);
+      if(!updateUser.success){
+        await this.saveUserLocally(user);
+      }else{
+        console.log("mise à jour des données utilisateur réussies")
+      }
+
       
       return {
         success: true,
@@ -92,6 +72,9 @@ class AuthService {
 
       await this.saveUserLocally(user);
 
+
+      await this.manageUserInfosFirstUpload(user)
+
       return {
         success: true,
         user: {
@@ -108,6 +91,40 @@ class AuthService {
       };
     }
   }
+
+
+
+  // Après connexion/création de compte réussie
+  async manageUserInfosFirstUpload(user) {
+  try {
+    const userId = user.uid;
+    
+    // Récupérer les données locales existantes
+    const localUserData = await FirebaseDataService.getLocalUserData();
+    
+    // Synchroniser avec Firebase
+    const syncResult = await FirebaseDataService.syncUserDataBySigningUp(
+      userId,
+      {
+        email: user.email,
+        displayName: user.displayName,
+        nativeLanguage: 'FR', // ou depuis vos préférences
+        subscription: '',
+        paiementInfos: ''
+      },
+      localUserData !== false ? localUserData : null
+    );
+    
+    if (syncResult.success) {
+      // Mettre à jour le contexte utilisateur
+      console.log("mise à jours des données utilisateur réussies")
+      // userDispatch({ type: 'LOAD_USER_DATA', payload: syncResult.userData });
+    }
+    
+  } catch (error) {
+    console.error('Erreur lors de la synchronisation:', error);
+  }
+};
 
   
 

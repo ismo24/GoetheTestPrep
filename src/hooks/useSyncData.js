@@ -1,8 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useUserData } from '../context/AppDataContext';
 import { DataService } from '../services/DataService';
+import { useAuth } from './useAuth';
 
 export const useSyncData = () => {
+
+  const { isAuthenticated, user, loading: authLoading } = useAuth();
   const { userData, userDispatch } = useUserData();
   const [isSyncing, setIsSyncing] = useState(false);
   const [lastSyncTime, setLastSyncTime] = useState(null);
@@ -43,7 +46,7 @@ export const useSyncData = () => {
   // Synchronisation automatique en arrière-plan
   const autoSync = useCallback(async () => {
     if (await DataService.checkNetworkConnection()) {
-      await syncNow();
+      // await syncNow();
     }
   }, [syncNow]);
 

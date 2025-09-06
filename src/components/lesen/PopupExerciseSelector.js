@@ -40,6 +40,10 @@ const PopupExerciseSelector = ({
   const [fadeAnim] = useState(new Animated.Value(0));
   const [scaleAnim] = useState(new Animated.Value(0.8));
 
+  // useEffect(()=>{
+  //   console.log("availableExercises",availableExercises)
+  // },[])
+
   // Traductions pour l'interface
   const interfaceTranslations = {
     noExercisesAvailable: {
@@ -244,6 +248,7 @@ const PopupExerciseSelector = ({
 
   const handleConfirm = () => {
     const selectedExercise = availableExercises[selectedExerciseIndex];
+    console.log("selected exercice :", selectedExercise)
     onSelectExercise(selectedExercise);
   };
 

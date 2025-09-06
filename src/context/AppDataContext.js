@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useReducer } from 'react';
+
+import React, { createContext, useContext, useReducer, useEffect, useRef } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Contexts séparés
 const LernDataContext = createContext();
@@ -11,6 +13,7 @@ const userDataReducer = (state, action) => {
       return action.payload;
       
     case 'UPDATE_EXERCISE_RESULT':
+      
       const { skillType, level, exerciseId, note } = action.payload;
       return {
         ...state,
@@ -224,6 +227,37 @@ export const AppDataProvider = ({ children }) => {
   });
 
   const [userData, userDispatch] = useReducer(userDataReducer, initialUserData);
+
+ 
+   // NOUVEAU : Effect pour sauvegarder automatiquement les données utilisateurs
+   useEffect(() => {
+       const saveUserData = async () => {
+         try {
+           await AsyncStorage.setItem('userData', JSON.stringify(userData));
+           await AsyncStorage.setItem("userLastSync", new Date().toISOString());
+         } catch (error) {
+           console.error('Erreur sauvegarde automatique userData:', error);
+         }
+       };  
+       saveUserData();
+     
+   }, [userData]);
+
+   // NOUVEAU : Effect pour sauvegarder automatiquement les données utilisateurs
+   useEffect(() => {
+       const savelernData = async () => {
+         try {
+           await AsyncStorage.setItem('lernData', JSON.stringify(lernData));
+           await AsyncStorage.setItem("lernDataLastSync",  new Date().toISOString());
+         } catch (error) {
+           console.error('Erreur sauvegarde automatique lernData:', error);
+         }
+       };  
+       savelernData();
+     
+   }, [lernData]);
+
+   //Pensez plus tard à implémenter un système de suivi pour LernData si nécéssaire
 
   return (
     <LernDataContext.Provider value={{ lernData, lernDispatch }}>

@@ -478,6 +478,9 @@ const getOverallUserStats = useCallback(() => {
 
   // Obtenir les réponses courantes d'un exercice
   const getCurrentAnswers = useCallback((exerciseId) => {
+    if (!userData || !userData.currentSession) {
+      return {};
+    }
     return userData.currentSession[exerciseId]?.answers || {};
   }, [userData.currentSession]);
 
