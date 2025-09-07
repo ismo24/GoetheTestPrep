@@ -17,6 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../styles/colors";
 import ProgressBar from "../common/ProgressBar";
 import AudioPlayer from "./AudioPlayer";
+import { useExerciseData } from "../../hooks/useExerciseData";
 
 const ExerciseView = ({
   selectedUbung,
@@ -44,6 +45,18 @@ const ExerciseView = ({
   const hasFinishedExercise = useRef(false);
   const audioPlayerRef = useRef(null);
   const [audioKey, setAudioKey] = useState(0);
+  const [maxIndex, setMaxIndex] = useState();
+  const { getLevelStats } = useExerciseData();
+  
+useEffect(() => {
+  const levelStats = getLevelStats('hoeren', levelInfo.id);
+  const total = levelStats.total;
+  if(total && !isNaN(total)){
+    setMaxIndex(total)
+  }
+  
+}, [])
+
 
   const translations = {
     explanation: {
@@ -262,7 +275,7 @@ const ExerciseView = ({
         <View style={styles.exerciseCounter}>
           <ProgressBar
             currentIndex={currentExerciseNumber || 1}
-            totalCount={totalExercises || 1}
+            totalCount={maxIndex || 1}
             height={8}
             backgroundColor="#E5E5E5"
             progressColor={colors.primary}

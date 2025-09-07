@@ -17,6 +17,7 @@ const ExerciseModal = ({
   onFinishExercise,
   onRestart,
   onNextExercise,
+  handleSyncAvailablesExercises
 }) => {
   if (!visible || !selectedExercise) {
     return null;
@@ -69,7 +70,7 @@ const ExerciseModal = ({
               totalExercises={totalExercises}
               showResults={showResults} // AJOUT : Passer l'état showResults
               hasNextExercise={hasNextExercise} // AJOUT : Info sur exercice suivant
-            
+              handleSyncAvailablesExercises={handleSyncAvailablesExercises}
               onBack={onClose}
               onNextText={() => {}}
               onPreviousText={() => {}}

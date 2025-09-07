@@ -5,6 +5,7 @@ import { colors } from '../../styles/colors';
 import ProgressBar from '../common/ProgressBar';
 import AudioPlayerInvisible from './AudioPlayerInvisible';
 import BoldWordText from './BoldWordText';
+import { useExerciseData } from '../../hooks/useExerciseData';
 
 const VocabularyView = ({
   vocabularyItem,
@@ -16,13 +17,25 @@ const VocabularyView = ({
   onFinishVocabulary,
   onShowFullScreenImage,
   onRevealWord,
-  levelId
+  levelId,
+  levelInfo
 }) => {
   // États pour l'image
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isRevealed, setIsRevealed] = useState(false);
+  const [maxIndex, setMaxIndex] = useState();
+  const { getLevelStats } = useExerciseData();
+  
+useEffect(() => {
+  const levelStats = getLevelStats('vocabulary', levelInfo.id);
+  const total = levelStats.total;
+  if(total && !isNaN(total)){
+    setMaxIndex(total)
+  }
+  
+}, [])
 
   // Refs pour l'audio (évite les re-rendus)
   const audioPlayerRef = useRef(null);
@@ -190,7 +203,7 @@ const VocabularyView = ({
           <View style={styles.exerciseCounter}>
             <ProgressBar 
               currentIndex={currentExerciseNumber || 1}
-              totalCount={totalExercises || 1}
+              totalCount={maxIndex || 1}
               height={8}
               backgroundColor="#E5E5E5"
               progressColor={colors.primary}

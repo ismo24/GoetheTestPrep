@@ -19,33 +19,26 @@ export const useAppInitialization = () => {
   const loadData = useCallback(async () => {
     try {
 
-      async function initialiseDatabase(){
+      async function initialiseDatabase() {
         setIsLoading(true);
-      setError(null);
+        setError(null);
 
-      if (authLoading) {
-        return;
+        if (authLoading) {
+          return;
+        }
+        if (lernData.hasOwnProperty('lesen') && Object.keys(lernData.lesen).length === 0) {
+          console.log("Initialisation de l'application...");
+          const { lernData, userData } =  await FirebaseDataService.loadInitialData();
+
+          lernDispatch({ type: "LOAD_LERN_DATA", payload: lernData });
+          userDispatch({ type: "LOAD_USER_DATA", payload: userData });
+        }else{
+          console.log('lernData est déja initialisé');
+        }
       }
 
-      console.log("Initialisation de l'application...");
+      initialiseDatabase()
 
-      // Une seule fonction pour tout charger
-      const { lernData, userData } =
-        await FirebaseDataService.loadInitialData(); //isAuthenticated, user
-
-      lernDispatch({ type: "LOAD_LERN_DATA", payload: lernData });
-      userDispatch({ type: "LOAD_USER_DATA", payload: userData });
-      }
-
-      if (lernData.hasOwnProperty('lesen') && Object.keys(lernData.lesen).length === 0) {
-        console.log('lernData');
-        initialiseDatabase()
-      }else{
-        console.log('lernData est déja plein');
-      }
-     
-
-      // console.log('Initialisation terminée avec succès');
     } catch (err) {
       console.error("Erreur lors de l'initialisation:", err);
       setError(err.message);

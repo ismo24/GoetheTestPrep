@@ -1,10 +1,13 @@
 import { useCallback, useRef } from 'react';
 import { useLernData, useUserData } from '../context/AppDataContext';
+import { useAuth } from './useAuth';
+import { FirebaseDataService } from '../services/DataService';
 // import { DataService } from '../services/DataService';
 
 export const useExerciseData = () => {
   const { lernData } = useLernData();
   const { userData, userDispatch } = useUserData();
+  const { isAuthenticated, loading } = useAuth
   
   const processingExercises = useRef(new Set());
 
@@ -326,6 +329,70 @@ const getOverallUserStats = useCallback(() => {
     });
   }, [lernData, userData, getVokabelnExercisesForLevel]);
 
+
+  const updateExerciceRange = useCallback(async (skillType, level, targetIndex,user) => {
+    try {
+      console.log(`Mise à jour range exercices: ${skillType}_${level}, index: ${targetIndex} user: ${user.uid}   `);
+      
+      return  
+      // Vérifier si l'utilisateur est connecté
+      if (!user || !user.uid) {
+        console.warn('Utilisateur non connecté - impossible de mettre à jour la plage');
+        return {
+          success: false,
+          error: 'Utilisateur non connecté'
+        };
+      }
+  
+     
+      
+      // Exécuter la mise à jour de la plage sur Firebase et localement
+      const updateResult = await FirebaseDataService.updateToNewRangeAfterSignIn(
+        user.uid,
+        skillType,
+        level,
+        targetIndex
+      );
+      
+      if (!updateResult.success) {
+        console.error('Erreur mise à jour plage:', updateResult.error);
+        return updateResult;
+      }
+      
+      console.log('Plage mise à jour avec succès');
+      
+      // Déclencher une re-synchronisation des données dans le contexte
+      // Vous devrez peut-être adapter cette partie selon votre gestion d'état
+      if (updateResult.userData && updateResult.lernData) {
+        // Si vous avez des dispatchers pour mettre à jour le contexte global
+        // userDispatch({ type: 'SYNC_USER_DATA', payload: updateResult.userData });
+        // lernDispatch({ type: 'SYNC_LERN_DATA', payload: updateResult.lernData });
+        
+        console.log('Données locales synchronisées');
+      }
+      
+      // Récupérer les nouveaux exercices pour ce niveau
+      const updatedExercises = getExercisesForLevel(skillType, level);
+      
+      console.log(`Nouveaux exercices récupérés: ${updatedExercises.length} exercices`);
+      
+      return {
+        success: true,
+        exercises: updatedExercises,
+        newIndex: targetIndex,
+        message: `Plage mise à jour pour ${skillType} ${level}`
+      };
+      
+    } catch (error) {
+      console.error('Erreur updateExerciceRange:', error);
+      return {
+        success: false,
+        error: error.message,
+        exercises: []
+      };
+    }
+  }, [isAuthenticated, getExercisesForLevel]);
+
   // NOUVEAU: Fonction pour gérer la révélation des mots de vocabulaire
   const handleVocabularyReveal = useCallback(async (exerciseId, levelId, value, index) => {
     const userLevelData = userData.data.vokabeln?.[levelId] || { learning: [] };
@@ -567,6 +634,8 @@ const getOverallUserStats = useCallback(() => {
         
         if (exerciseIndex >= currentIndex && exerciseIndex < exercises.length - 1) {
           const newIndex = exerciseIndex + 1;
+
+          console.log(`📈 Mise à jour index ${skillType} ${level}: ${currentIndex} → ${newIndex}`);
           
           userDispatch({
             type: 'UPDATE_LEVEL_INDEX',
@@ -607,6 +676,7 @@ const getOverallUserStats = useCallback(() => {
     getOverallUserStats,
     saveOverallStats,
     getCachedOverallStats,
-    refreshOverallStats
+    refreshOverallStats,
+    updateExerciceRange
   };
 };

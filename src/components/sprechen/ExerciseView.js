@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
 import ProgressBar from '../common/ProgressBar';
 import SolutionCard from './SolutionCard';
+import { useExerciseData } from '../../hooks/useExerciseData';
 
 const ExerciseView = ({
   selectedUbung,
@@ -28,6 +29,18 @@ const ExerciseView = ({
   const [isTextHidden, setIsTextHidden] = useState(false);
   const [textHeight] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
+  const [maxIndex, setMaxIndex] = useState();
+  const { getLevelStats } = useExerciseData();
+  
+useEffect(() => {
+  const levelStats = getLevelStats('sprechen', levelInfo.id);
+  const total = levelStats.total;
+  if(total && !isNaN(total)){
+    setMaxIndex(total)
+  }
+  
+}, [])
+
 
   // ✅ NOUVEAU : Traductions
   const translations = {
@@ -73,7 +86,7 @@ const ExerciseView = ({
           <View style={styles.exerciseCounter}>
             <ProgressBar 
               currentIndex={currentExerciseNumber || 1}
-              totalCount={totalExercises || 1}
+              totalCount={maxIndex || 1}
               height={8}
               backgroundColor="#E5E5E5"
               progressColor={colors.primary}

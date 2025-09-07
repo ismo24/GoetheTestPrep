@@ -477,7 +477,7 @@ const getLastExerciseIndex = (levelId) => {
   };
 
   if(!isAuthenticated && initialExerciseIndex>2){
-    return(<AuthScreen />)
+    return(<AuthScreen unclosable={true} />)
   }
 
   return (

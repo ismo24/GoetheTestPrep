@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import AuthService from '../services/AuthService';
 
-const AuthScreen = ({ navigation, onClose }) => { // AJOUT : prop onClose
+const AuthScreen = ({ navigation, onClose,unclosable }) => { // AJOUT : prop onClose
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -166,12 +166,12 @@ const AuthScreen = ({ navigation, onClose }) => { // AJOUT : prop onClose
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {/* MODIFICATION : Header avec bouton de fermeture */}
           <View style={styles.header}>
-            <TouchableOpacity
-              style={styles.closeButton}
+            {<TouchableOpacity
+              style={unclosable?[styles.closeButton,{opacity:0}]:styles.closeButton}
               onPress={handleClose}
             >
               <Ionicons name="close" size={24} color="#666" />
-            </TouchableOpacity>
+            </TouchableOpacity>}
             <Text style={styles.headerTitle}>
               {isSignUp ? 'Sign Up' : 'Sign In'}
             </Text>

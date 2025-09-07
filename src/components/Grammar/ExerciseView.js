@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated, Platfor
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../styles/colors';
 import ProgressBar from '../common/ProgressBar';
+import { useExerciseData } from '../../hooks/useExerciseData';
 
 const ExerciseView = ({
   selectedUbung,
@@ -27,6 +28,18 @@ const ExerciseView = ({
   const [textHeight] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
   const [isProcessing, setIsProcessing] = useState(false);
+  const [maxIndex, setMaxIndex] = useState();
+  const { getLevelStats } = useExerciseData();
+  
+useEffect(() => {
+  const levelStats = getLevelStats('grammar', levelInfo.id);
+  const total = levelStats.total;
+  if(total && !isNaN(total)){
+    setMaxIndex(total)
+  }
+  
+}, [])
+
 
   const translations = {
     explanation: {
@@ -109,7 +122,7 @@ const ExerciseView = ({
         <View style={styles.exerciseCounter}>
           <ProgressBar 
             currentIndex={currentExerciseNumber || 1}
-            totalCount={totalExercises || 1}
+            totalCount={maxIndex || 1}
             height={8}
             backgroundColor="#E5E5E5"
             progressColor={colors.primary}

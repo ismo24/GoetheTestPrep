@@ -19,55 +19,437 @@ export class FirebaseDataService {
   // MÉTHODES DE CHARGEMENT INITIAL
   // ================================
 
-  static async loadInitialData() {
+  // ================================
+// NOUVELLE MÉTHODE DE CHARGEMENT INITIAL MODIFIÉE
+// ================================
+
+static async loadInitialData() {
+  try {
+    console.log('Chargement initial des données (limité à 50 par skill_level)...');
+
+    const asyncData = await AsyncStorage.getItem('user');
+    const user = asyncData ? JSON.parse(asyncData) : null;
+    const isAuthenticated = user?.uid ? true : false;
+
+    // 1. Initialiser l'objet userData avec les index et totaux
+    console.log('Initialisation des index utilisateur...');
+    const userDataStructure = await this.initializeUserDataIndexes(user?.uid, isAuthenticated);
+    
+    // 2. Récupérer les 50 exercices correspondant aux index actuels
+    console.log('Récupération des exercices pour les index actuels...');
+    const lernData = await this.fetchCurrentRangeLernData(userDataStructure);
+    
+    // 3. Récupérer les résultats des exercices pour cette plage
+    console.log('Récupération des résultats pour la plage actuelle...');
+    const userData = await this.fetchCurrentRangeUserData(userDataStructure, user?.uid, isAuthenticated);
+
+    console.log("userData",userData)
+
+    return {
+      lernData: lernData,
+      userData: userData
+    };
+
+  } catch (error) {
+    console.error("Erreur lors du chargement des données:", error);
+    
+    // Fallback vers les données locales en cas d'erreur réseau
     try {
-
-      // return loadLocalData()
-
-      console.log('Chargement initial des données...');
-
-      const asyncData=await AsyncStorage.getItem('user');
-      const user=asyncData?JSON.parse(asyncData):null
-      const isAuthenticated=user?.uid?true:false
-
-      // console.log("Présence de données utilisateur user.uid ?",user.uid)
-      
-      // 1. Charger les données d'apprentissage (exercices)
-      console.log('Récupération des exercices...');
-      const lernData = await this.fetchLernData();
-      
-      // 2. Déterminer le clientId
-      let clientId = null;
-      if (isAuthenticated && user) {
-        clientId = user.uid;
-      } 
-      
-      
-      // 3. Charger les données utilisateur selon le contexte
-      console.log(`Récupération données utilisateur (Auth: ${isAuthenticated}, ID: ${clientId})`);
-      const userData = await this.fetchUserData(clientId, lernData, isAuthenticated);
-  
+      return await this.loadLocalData();
+    } catch (localError) {
+      console.error("Erreur chargement données locales:", localError);
+      // Dernier recours : structure par défaut
       return {
-        lernData: lernData,
-        userData: userData
+        lernData: this.getDefaultLernDataStructure(),
+        userData: this.getDefaultUserStructure()
       };
-  
-    } catch (error) {
-      console.error("Erreur lors du chargement des données:", error);
+    }
+  }
+}
+
+// ================================
+// NOUVELLES FONCTIONS POUR LA GESTION DES INDEX
+// ================================
+
+static async initializeUserDataIndexes(userId = null, isAuthenticated = false) {
+  try {
+    console.log('Initialisation des index utilisateur...');
+    
+    const skillTypes = ["lesen", "hoeren", "sprechen", "schreiben", "grammar"];
+    const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+    const userDataIndexes = {};
+
+    // Si utilisateur authentifié, récupérer ses index depuis Firebase
+    if (isAuthenticated && userId) {
+      console.log('Récupération des index depuis Firebase...');
       
-      // Fallback vers les données locales en cas d'erreur réseau
+      for (const skillType of skillTypes) {
+        userDataIndexes[skillType] = {};
+        
+        for (const level of levels) {
+          try {
+            const summaryRef = doc(db, 'users', userId, 'skill_summaries', `${skillType}_${level}`);
+            const summarySnap = await getDoc(summaryRef);
+            
+            if (summarySnap.exists()) {
+              const data = summarySnap.data();
+              userDataIndexes[skillType][level] = {
+                index: data.index || 0,
+                total: data.total || 0
+              };
+            } else {
+              // Récupérer le total depuis les métadonnées et initialiser index à 0
+              const metadata = await this.getSkillLevelMetadata(skillType, level);
+              userDataIndexes[skillType][level] = {
+                index: 0,
+                total: metadata?.totalCount || 0
+              };
+            }
+          } catch (error) {
+            console.warn(`Erreur récupération index ${skillType}_${level}:`, error);
+            // Fallback vers métadonnées
+            const metadata = await this.getSkillLevelMetadata(skillType, level);
+            userDataIndexes[skillType][level] = {
+              index: 0,
+              total: metadata?.totalCount || 0
+            };
+          }
+        }
+      }
+    } else {
+      // Utilisateur non authentifié : index à 0 pour tous
+      console.log('Utilisateur non authentifié - initialisation index à 0...');
+      
+      for (const skillType of skillTypes) {
+        userDataIndexes[skillType] = {};
+        
+        for (const level of levels) {
+          // Récupérer le total depuis les métadonnées
+          const metadata = await this.getSkillLevelMetadata(skillType, level);
+          userDataIndexes[skillType][level] = {
+            index: 0,
+            total: metadata?.totalCount || 0
+          };
+        }
+      }
+    }
+
+    console.log('Index utilisateur initialisés:', userDataIndexes);
+    return userDataIndexes;
+    
+  } catch (error) {
+    console.error('Erreur initialisation index utilisateur:', error);
+    throw error;
+  }
+}
+
+// ================================
+// FONCTION POUR RÉCUPÉRER LES 50 EXERCICES ACTUELS
+// ================================
+
+static async fetchCurrentRangeLernData(userDataIndexes) {
+  try {
+    console.log('Récupération des exercices pour la plage actuelle...');
+    
+    const organizedData = {
+      lesen: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+      hoeren: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+      sprechen: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+      schreiben: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+      grammar: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] }
+    };
+
+    for (const [skillType, skillLevels] of Object.entries(userDataIndexes)) {
+      for (const [level, indexData] of Object.entries(skillLevels)) {
+        if (indexData.total > 0) {
+          const exercises = await this.fetchExercisesForCurrentRange(
+            skillType, 
+            level, 
+            indexData.index, 
+            indexData.total
+          );
+          organizedData[skillType][level] = exercises;
+        }
+      }
+    }
+
+    // Sauvegarder localement
+    await this.saveLocalLernData(organizedData);
+    
+    return organizedData;
+    
+  } catch (error) {
+    console.error('Erreur récupération exercices plage actuelle:', error);
+    throw error;
+  }
+}
+
+static async fetchExercisesForCurrentRange(skillType, level, currentIndex, totalExercises) {
+  try {
+    // Calculer la plage de 50 exercices autour de l'index actuel
+    const rangeStart = Math.max(0, Math.floor(currentIndex / 50) * 50);
+    const rangeEnd = Math.min(totalExercises - 1, rangeStart + 49);
+    
+    console.log(`Récupération ${skillType}_${level}: exercices ${rangeStart} à ${rangeEnd}`);
+    
+    // Déterminer quel batch contient cette plage
+    // Chaque batch contient 50 exercices, numérotés à partir de 1
+    const batchNumber = Math.floor(rangeStart / 50) + 1;
+    const skillLevel = `${skillType}_${level}`;
+    const batchName = `${skillLevel}_batch_${batchNumber.toString().padStart(2, "0")}`;
+    
+    console.log(`Récupération du batch: ${batchName}`);
+    
+    const batchRef = doc(db, "exercise_batches", batchName);
+    const batchSnap = await getDoc(batchRef);
+    
+    if (!batchSnap.exists()) {
+      console.warn(`Batch ${batchName} non trouvé`);
+      return [];
+    }
+    
+    const batchData = batchSnap.data();
+    const exercises = [];
+    
+    // Convertir chaque exercice du batch en objet avec ID
+    Object.entries(batchData).forEach(([exerciseId, exerciseData]) => {
+      exercises.push({
+        id: exerciseId,
+        ...exerciseData,
+        skillType: skillType,
+        level: level
+      });
+    });
+    
+    // Trier par ID et ne retourner que les 50 exercices de la plage
+    exercises.sort((a, b) => {
+      const aNum = parseInt(a.id.match(/\d+/)?.[0] || '0');
+      const bNum = parseInt(b.id.match(/\d+/)?.[0] || '0');
+      return aNum - bNum;
+    });
+    
+    console.log(`${skillType}_${level}: ${exercises.length} exercices récupérés`);
+    return exercises;
+    
+  } catch (error) {
+    console.error(`Erreur récupération exercices ${skillType}_${level}:`, error);
+    return [];
+  }
+}
+
+// ================================
+// FONCTION POUR RÉCUPÉRER LES RÉSULTATS DE LA PLAGE ACTUELLE
+// ================================
+
+static async fetchCurrentRangeUserData(userDataIndexes, userId = null, isAuthenticated = false) {
+  try {
+    console.log('Récupération des données utilisateur pour la plage actuelle...');
+    
+    // Structure de base
+    const userData = {
+      clientid: userId || "",
+      nativeLanguage: "FR",
+      subscription: "",
+      paiementInfos: "",
+      data: {}
+    };
+    
+    // Initialiser la structure data
+    for (const [skillType, skillLevels] of Object.entries(userDataIndexes)) {
+      userData.data[skillType] = {};
+      
+      for (const [level, indexData] of Object.entries(skillLevels)) {
+        userData.data[skillType][level] = {
+          index: indexData.index,
+          total: indexData.total,
+          data: {}
+        };
+        
+        // Récupérer les résultats pour la plage actuelle
+        if (isAuthenticated && userId && indexData.total > 0) {
+          const exerciseResults = await this.fetchExerciseResultsForCurrentRange(
+            userId,
+            skillType,
+            level,
+            indexData.index,
+            indexData.total
+          );
+          userData.data[skillType][level].data = exerciseResults;
+        } else {
+          // Utilisateur non authentifié : initialiser 50 exercices vides
+          const rangeStart = Math.max(0, Math.floor(indexData.index / 50) * 50);
+          const rangeEnd = Math.min(indexData.total - 1, rangeStart + 49);
+          
+          for (let i = rangeStart; i <= rangeEnd; i++) {
+            const exerciseId = `${skillType}_${level}_${(i + 1).toString().padStart(3, '0')}`;
+            userData.data[skillType][level].data[exerciseId] = {
+              lastNote: ""
+            };
+          }
+        }
+      }
+    }
+    
+    // Si utilisateur authentifié, récupérer aussi les infos de profil
+    if (isAuthenticated && userId) {
       try {
-        return await this.loadLocalData();
-      } catch (localError) {
-        console.error("Erreur chargement données locales:", localError);
-        // Dernier recours : structure par défaut
-        return {
-          lernData: await this.getLocalLernData(),
-          userData: this.getDefaultUserStructure()
+        const profileRef = doc(db, 'users', userId);
+        const profileSnap = await getDoc(profileRef);
+        
+        if (profileSnap.exists()) {
+          const profile = profileSnap.data().profile;
+          userData.nativeLanguage = profile.nativeLanguage || "FR";
+          userData.subscription = profile.subscription || "";
+          userData.paiementInfos = profile.paiementInfos || "";
+        }
+      } catch (error) {
+        console.warn('Erreur récupération profil utilisateur:', error);
+      }
+    }
+    
+    // Sauvegarder localement
+    await this.saveLocalUserData(userData);
+    
+    return userData;
+    
+  } catch (error) {
+    console.error('Erreur récupération données utilisateur plage actuelle:', error);
+    throw error;
+  }
+}
+
+static async fetchExerciseResultsForCurrentRange(userId, skillType, level, currentIndex, totalExercises) {
+  try {
+    // Calculer la plage de 50 exercices autour de l'index actuel
+    const rangeStart = Math.max(0, Math.floor(currentIndex / 50) * 50);
+    const rangeEnd = Math.min(totalExercises - 1, rangeStart + 49);
+    
+    console.log(`Récupération résultats ${skillType}_${level}: exercices ${rangeStart} à ${rangeEnd}`);
+    
+    // Les résultats sont stockés par batches de 1000
+    // Déterminer quels batches de résultats contiennent notre plage
+    const startResultBatch = Math.floor(rangeStart / 1000) + 1;
+    const endResultBatch = Math.floor(rangeEnd / 1000) + 1;
+    
+    const exerciseResults = {};
+    
+    // Récupérer les batches de résultats nécessaires
+    for (let batchNum = startResultBatch; batchNum <= endResultBatch; batchNum++) {
+      const batchName = `${skillType}_${level}_batch_${batchNum.toString().padStart(2, '0')}`;
+      
+      try {
+        const resultRef = doc(db, 'users', userId, 'exercise_results', batchName);
+        const resultSnap = await getDoc(resultRef);
+        
+        if (resultSnap.exists()) {
+          const batchResults = resultSnap.data();
+          
+          // Filtrer pour ne garder que les résultats de notre plage
+          Object.entries(batchResults).forEach(([exerciseId, result]) => {
+            const exerciseNum = parseInt(exerciseId.match(/\d+/)?.[0] || '0') - 1; // Index base 0
+            if (exerciseNum >= rangeStart && exerciseNum <= rangeEnd) {
+              exerciseResults[exerciseId] = result;
+            }
+          });
+        }
+      } catch (error) {
+        console.warn(`Erreur récupération batch résultats ${batchName}:`, error);
+      }
+    }
+    
+    // Compléter avec des résultats vides pour les exercices sans résultat
+    for (let i = rangeStart; i <= rangeEnd; i++) {
+      const exerciseId = `${skillType}_${level}_${(i + 1).toString().padStart(3, '0')}`;
+      if (!exerciseResults[exerciseId]) {
+        exerciseResults[exerciseId] = {
+          lastNote: ""
         };
       }
     }
+    
+    console.log(`${skillType}_${level}: ${Object.keys(exerciseResults).length} résultats récupérés`);
+    return exerciseResults;
+    
+  } catch (error) {
+    console.error(`Erreur récupération résultats ${skillType}_${level}:`, error);
+    return {};
   }
+}
+
+// ================================
+// FONCTIONS UTILITAIRES POUR LES NOUVELLES STRUCTURES
+// ================================
+
+static getDefaultLernDataStructure() {
+  return {
+    lesen: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+    hoeren: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+    sprechen: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+    schreiben: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] },
+    grammar: { A1: [], A2: [], B1: [], B2: [], C1: [], C2: [] }
+  };
+}
+
+// ================================
+// FONCTION POUR NAVIGUER VERS UNE NOUVELLE PLAGE
+// ================================
+
+static async loadNewExerciseRange(skillType, level, newIndex, userId = null, isAuthenticated = false) {
+  try {
+    console.log(`Chargement nouvelle plage pour ${skillType}_${level}, index: ${newIndex}`);
+    
+    // 1. Récupérer le total d'exercices pour ce skill/level
+    const metadata = await this.getSkillLevelMetadata(skillType, level);
+    const totalExercises = metadata?.totalCount || 0;
+    
+    if (totalExercises === 0) {
+      console.warn(`Aucun exercice trouvé pour ${skillType}_${level}`);
+      return { exercises: [], results: {} };
+    }
+    
+    // 2. Récupérer les nouveaux exercices
+    const exercises = await this.fetchExercisesForCurrentRange(skillType, level, newIndex, totalExercises);
+    
+    // 3. Récupérer les résultats pour cette nouvelle plage
+    let exerciseResults = {};
+    if (isAuthenticated && userId) {
+      exerciseResults = await this.fetchExerciseResultsForCurrentRange(userId, skillType, level, newIndex, totalExercises);
+    } else {
+      // Utilisateur non authentifié : résultats vides
+      const rangeStart = Math.max(0, Math.floor(newIndex / 50) * 50);
+      const rangeEnd = Math.min(totalExercises - 1, rangeStart + 49);
+      
+      for (let i = rangeStart; i <= rangeEnd; i++) {
+        const exerciseId = `${skillType}_${level}_${(i + 1).toString().padStart(3, '0')}`;
+        exerciseResults[exerciseId] = { lastNote: "" };
+      }
+    }
+    
+    // 4. Mettre à jour l'index si utilisateur authentifié
+    if (isAuthenticated && userId) {
+      try {
+        const summaryRef = doc(db, 'users', userId, 'skill_summaries', `${skillType}_${level}`);
+        await updateDoc(summaryRef, {
+          index: newIndex,
+          lastUpdated: new Date()
+        });
+      } catch (error) {
+        console.warn('Erreur mise à jour index:', error);
+      }
+    }
+    
+    return {
+      exercises: exercises,
+      results: exerciseResults,
+      newIndex: newIndex,
+      total: totalExercises
+    };
+    
+  } catch (error) {
+    console.error('Erreur chargement nouvelle plage:', error);
+    throw error;
+  }
+}
   
   static async loadLocalData() {
     try {
@@ -553,50 +935,196 @@ static async syncUserDataBySigningUp(userId, userProfileData, localUserData) {
 
 
 
-
 static async syncAuthenticatedUserLocalDataBySigningIn(userId) {
   try {
-    console.log(`Récupération des données en ligne pour: ${userId}`);
+    console.log(`Récupération des données en ligne pour: ${userId} (limite 50 par skill_level)`);
 
-    // 1. Récupérer les données utilisateur en ligne uniquement
-    let onlineUserData;
-    try {
-      onlineUserData = await this.fetchExistingUserData(userId);
-      console.log('Données en ligne récupérées avec succès');
-    } catch (error) {
-      console.log('Utilisateur non trouvé en ligne, initialisation...');
-      // Nouvel utilisateur - initialiser avec les exercices disponibles
-      const organizedData = await this.fetchLernData();
-      onlineUserData = await this.fetchInitialUserData(userId, organizedData);
-    }
+    // 1. Initialiser les index utilisateur depuis Firebase
+    console.log('Récupération des index utilisateur depuis Firebase...');
+    const userDataIndexes = await this.initializeUserDataIndexes(userId, true);
+    
+    // 2. Récupérer les 50 exercices correspondant aux index
+    console.log('Récupération des exercices pour les index actuels...');
+    const lernData = await this.fetchCurrentRangeLernData(userDataIndexes);
+    
+    // 3. Récupérer les données utilisateur complètes avec résultats
+    console.log('Récupération des données utilisateur avec résultats...');
+    const userData = await this.fetchCurrentRangeUserData(userDataIndexes, userId, true);
 
-    // 2. Préparer les données finales avec session vide
+    // 4. Préparer les données finales avec session vide
     const finalUserData = {
-      ...onlineUserData,
-      currentSession: {} // 
+      ...userData,
+      currentSession: {}
     };
 
-    // 3. Sauvegarder localement (remplace complètement les données locales)
+    // 5. Sauvegarder localement (remplace complètement les données locales)
     await this.saveLocalUserData(finalUserData);
+    await this.saveLocalLernData(lernData);
     
-    // 4. Mettre à jour la date de dernière synchronisation
+    // 6. Mettre à jour la date de dernière synchronisation
     const profileRef = doc(db, 'users', userId);
     await updateDoc(profileRef, { 'profile.lastSync': new Date() });
     
+    console.log('Synchronisation terminée - 50 exercices par skill_level chargés');
+    
     return {
       success: true,
-      userData: finalUserData
+      userData: finalUserData,
+      lernData: lernData
     };
     
   } catch (error) {
     console.error('Erreur récupération données en ligne:', error);
+    
+    // Fallback : essayer de créer un nouvel utilisateur avec les données actuelles
+    try {
+      console.log('Tentative d\'initialisation nouvel utilisateur...');
+      
+      const userDataIndexes = await this.initializeUserDataIndexes(userId, false);
+      const lernData = await this.fetchCurrentRangeLernData(userDataIndexes);
+      const userData = await this.fetchCurrentRangeUserData(userDataIndexes, userId, false);
+      
+      // Créer le profil en ligne
+      await this.createUserProfileOnline(userId, userData);
+      
+      const finalUserData = {
+        ...userData,
+        currentSession: {}
+      };
+      
+      await this.saveLocalUserData(finalUserData);
+      await this.saveLocalLernData(lernData);
+      
+      return {
+        success: true,
+        userData: finalUserData,
+        lernData: lernData
+      };
+      
+    } catch (fallbackError) {
+      console.error('Erreur fallback:', fallbackError);
+      return {
+        success: false,
+        error: error.message
+      };
+    }
+  }
+}
+
+// ================================
+// FONCTION POUR CRÉER UN PROFIL UTILISATEUR EN LIGNE
+// ================================
+
+static async createUserProfileOnline(userId, userData) {
+  try {
+    console.log(`Création profil utilisateur en ligne: ${userId}`);
+    
+    const batch = writeBatch(db);
+    
+    // 1. Créer le profil utilisateur
+    const profileRef = doc(db, 'users', userId);
+    const profileData = {
+      clientid: userId,
+      nativeLanguage: userData.nativeLanguage || 'FR',
+      subscription: userData.subscription || '',
+      paiementInfos: userData.paiementInfos || '',
+      createdAt: new Date(),
+      lastSync: new Date()
+    };
+    
+    batch.set(profileRef, { profile: profileData });
+    
+    // 2. Créer les résumés par skill/level avec index à 0
+    Object.entries(userData.data).forEach(([skillType, skillLevels]) => {
+      Object.entries(skillLevels).forEach(([level, levelData]) => {
+        const summaryRef = doc(db, 'users', userId, 'skill_summaries', `${skillType}_${level}`);
+        batch.set(summaryRef, {
+          index: 0, // Nouvel utilisateur commence à 0
+          total: levelData.total,
+          createdAt: new Date()
+        });
+      });
+    });
+    
+    // 3. Créer les batches de résultats vides pour la première plage (0-49)
+    Object.entries(userData.data).forEach(([skillType, skillLevels]) => {
+      Object.entries(skillLevels).forEach(([level, levelData]) => {
+        if (levelData.total > 0) {
+          const batchName = `${skillType}_${level}_batch_01`; // Premier batch de résultats
+          const resultRef = doc(db, 'users', userId, 'exercise_results', batchName);
+          
+          // Créer les résultats vides pour les 50 premiers exercices
+          const batchData = {};
+          const maxExercises = Math.min(50, levelData.total);
+          
+          for (let i = 0; i < maxExercises; i++) {
+            const exerciseId = `${skillType}_${level}_${(i + 1).toString().padStart(3, '0')}`;
+            batchData[exerciseId] = { lastNote: "" };
+          }
+          
+          batch.set(resultRef, batchData);
+        }
+      });
+    });
+    
+    await batch.commit();
+    console.log('Profil utilisateur créé avec succès en ligne');
+    
+  } catch (error) {
+    console.error('Erreur création profil utilisateur:', error);
+    throw error;
+  }
+}
+
+// ================================
+// FONCTION POUR METTRE À JOUR VERS UNE NOUVELLE PLAGE APRÈS CONNEXION
+// ================================
+
+static async updateToNewRangeAfterSignIn(userId, skillType, level, targetIndex) {
+  try {
+    console.log(`Mise à jour vers nouvelle plage après connexion: ${skillType}_${level}, index: ${targetIndex}`);
+    
+    // 1. Charger la nouvelle plage d'exercices et résultats
+    const rangeData = await this.loadNewExerciseRange(skillType, level, targetIndex, userId, true);
+    
+    // 2. Mettre à jour les données locales
+    const localUserData = await this.getLocalUserData();
+    const localLernData = await this.getLocalLernData();
+    
+    if (localUserData && localLernData) {
+      // Mettre à jour userData
+      localUserData.data[skillType][level] = {
+        index: rangeData.newIndex,
+        total: rangeData.total,
+        data: rangeData.results
+      };
+      
+      // Mettre à jour lernData
+      localLernData[skillType][level] = rangeData.exercises;
+      
+      // Sauvegarder localement
+      await this.saveLocalUserData(localUserData);
+      await this.saveLocalLernData(localLernData);
+      
+      console.log(`Plage mise à jour localement pour ${skillType}_${level}`);
+      
+      return {
+        success: true,
+        userData: localUserData,
+        lernData: localLernData
+      };
+    }
+    
+    throw new Error('Données locales non trouvées');
+    
+  } catch (error) {
+    console.error('Erreur mise à jour plage après connexion:', error);
     return {
       success: false,
       error: error.message
     };
   }
 }
-
 
 
 
